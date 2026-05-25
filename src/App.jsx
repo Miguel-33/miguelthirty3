@@ -176,12 +176,62 @@ const FLOW = {
    PROJECTS
 ───────────────────────────────────────────────────────────── */
 const PROJECTS = [
-  { id: 1, type: "Website", name: "Isabella Transport", desc: "Full business site with service pages, contact form, and booking flow for a licensed carrier.", tag: "Transportation", accent: T.yellow, wide: true },
-  { id: 2, type: "Website", name: "Gregory S. Chatman", desc: "Personal brand site for an author and speaker — clean, fast, built to convert visitors into readers.", tag: "Personal Brand", accent: T.navy },
-  { id: 3, type: "Campaign Site", name: "Community Campaign", desc: "One-page action site built to collect signatures and drive awareness for a local initiative.", tag: "Campaign", accent: T.cobalt },
-  { id: 4, type: "Realtor Concept", name: "Agent Landing Page", desc: "Lead-gen concept for a real estate agent — listings, bio, and a direct inquiry form.", tag: "Real Estate", accent: T.ink },
-  { id: 5, type: "Print Design", name: "Business Cards + Flyers", desc: "Brand print package: matching cards, promo flyers, and a takeaway one-pager for a local service business.", tag: "Small Business", accent: T.orange },
-  { id: 6, type: "QR Campaign", name: "Storefront QR Sign", desc: "Designed and printed QR signs linking customers to a Google review page. Simple system, real results.", tag: "Local Business", accent: T.yellow, wide: true },
+  {
+    id: 1,
+    type: "Website",
+    name: "Isabella Transport",
+    desc: "Full business site with service pages, contact form, and booking flow for a licensed carrier.",
+    tag: "Transportation",
+    accent: T.yellow,
+    wide: true,
+    url: "https://isabellatransport.com",
+  },
+  {
+    id: 2,
+    type: "Website",
+    name: "Gregory S. Chatman",
+    desc: "Personal brand site for an author and speaker with sermons, videos, and a clean spiritual focus.",
+    tag: "Personal Brand",
+    accent: T.navy,
+    url: "https://gregoryschatman.com",
+  },
+  {
+    id: 3,
+    type: "Campaign Site",
+    name: "Joseph P. Day",
+    desc: "Campaign website with biography, accomplishments, endorsements, and voter-focused messaging.",
+    tag: "Campaign",
+    accent: T.cobalt,
+    url: "https://josephpday.com",
+  },
+  {
+    id: 4,
+    type: "Research Website",
+    name: "Blayne’s Family Research",
+    desc: "Genealogy-focused website built to present research services, credibility, and inquiry paths.",
+    tag: "Genealogy",
+    accent: T.ink,
+    url: "https://blaynesfamilyresearch.com",
+  },
+  {
+    id: 5,
+    type: "Print Design",
+    name: "Business Cards + Flyers",
+    desc: "Brand print package with matching cards, promo flyers, and takeaway graphics for local businesses.",
+    tag: "Small Business",
+    accent: T.orange,
+    url: "#contact",
+  },
+  {
+    id: 6,
+    type: "QR Campaign",
+    name: "QR Signs + Review Cards",
+    desc: "Simple QR systems that help customers find menus, forms, booking links, reviews, and social profiles.",
+    tag: "Local Business",
+    accent: T.yellow,
+    wide: true,
+    url: "#contact",
+  },
 ];
 
 /* ─────────────────────────────────────────────────────────────
@@ -286,18 +336,135 @@ const GLOBAL_CSS = `
   }
 
   /* Project card */
-  .proj-card {
-    border-radius: 18px;
-    padding: 28px 24px;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
-  }
-  .proj-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 44px rgba(35,37,40,0.13);
-  }
+.proj-card {
+  border-radius: 24px;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: var(--white);
+  border: 1px solid rgba(35,37,40,0.08);
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s, border-color 0.28s;
+}
+
+.proj-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 28px 70px rgba(35,37,40,0.16);
+  border-color: rgba(35,37,40,0.18);
+}
+
+.proj-card__top {
+  min-height: 120px;
+  background: var(--ink);
+  color: var(--white);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.proj-card__top::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  right: -52px;
+  bottom: -72px;
+  border-radius: 50%;
+  background: var(--yellow);
+  opacity: 0.95;
+}
+
+.proj-card__type {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+
+.proj-card__mark {
+  position: absolute;
+  z-index: 1;
+  right: 24px;
+  bottom: 16px;
+  font-family: var(--font-head);
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 0.8;
+  color: rgba(255,255,255,0.16);
+}
+
+.proj-card__body {
+  padding: 26px 24px 24px;
+  position: relative;
+}
+
+.proj-card__tag {
+  display: inline-flex;
+  margin-bottom: 18px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.proj-card__title {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(26px, 3vw, 38px);
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.proj-card__desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 26px;
+}
+
+.proj-card__cta {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.proj-card__cta span {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--yellow);
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.proj-card:hover .proj-card__cta span {
+  transform: translateX(4px);
+}
 
   /* CTA buttons */
   .btn-primary {
@@ -930,35 +1097,45 @@ function buildSummary(disc) {
    PROJECT CARD
 ───────────────────────────────────────────────────────────── */
 function ProjectCard({ project: p }) {
+  const isExternal = p.url?.startsWith("http");
+
   return (
-    <div
+    <a
       className={`proj-card${p.wide ? " proj-wide" : ""}`}
-      style={{ background: T.white }}
-      role="article"
-      aria-label={`${p.type}: ${p.name}`}
+      href={p.url || "#contact"}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+        display: "block",
+      }}
+      aria-label={`${p.type}: ${p.name}${isExternal ? " opens in a new tab" : ""}`}
     >
-      <div aria-hidden="true" style={{
-        position: "absolute", bottom: -20, right: -20, width: 100, height: 100,
-        borderRadius: "50%", background: p.accent, opacity: 0.1,
-        transition: "opacity 0.3s",
-      }} />
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16, gap: 8, flexWrap: "wrap" }}>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: p.accent, background: p.accent + "18", padding: "4px 10px", borderRadius: 20 }}>
-            {p.type}
-          </span>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: T.mid, background: "#f3f4f6", padding: "4px 10px", borderRadius: 20 }}>
-            {p.tag}
-          </span>
+      <div className="proj-card__top">
+        <span className="proj-card__type">{p.type}</span>
+        <div className="proj-card__mark" aria-hidden="true">
+          33
         </div>
-        <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 900, fontSize: "clamp(18px,2.2vw,24px)", textTransform: "uppercase", lineHeight: 1.05, marginBottom: 12, color: T.ink }}>
+      </div>
+
+      <div className="proj-card__body">
+        <span className="proj-card__tag">{p.tag}</span>
+
+        <h3 className="proj-card__title">
           {p.name}
         </h3>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: T.mid, lineHeight: 1.6 }}>
+
+        <p className="proj-card__desc">
           {p.desc}
         </p>
+
+        <span className="proj-card__cta">
+          {isExternal ? "View project" : "Ask for something similar"}
+          <span aria-hidden="true">→</span>
+        </span>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -968,6 +1145,7 @@ function ProjectCard({ project: p }) {
 function ContactSection({ disc }) {
   const [form, setForm] = useState({ name: "", email: "", what: "", timeline: "", budget: "", link: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Pre-fill "what" if discovery was completed
   useEffect(() => {
@@ -980,14 +1158,43 @@ function ContactSection({ disc }) {
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.name && form.email) setSent(true);
+
+    try {
+      const response = await fetch(
+        "https://formspree.io/f/xvzybvrd",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (response.ok) {
+        setSent(true);
+
+        setForm({
+          name: "",
+          email: "",
+          what: "",
+          timeline: "",
+          budget: "",
+          link: "",
+          message: "",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const headline = disc.step === 3
     ? `You're building: ${disc.tile.label}${disc.a1 ? ` for ${disc.a1}` : ""}. Tell me where to send the next step.`
-    : "Tell me what you need designed.";
+    : "Websites, flyers, logos, social graphics... just tell me what you need designed and I'll follow up with the next steps.";
 
   return (
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
@@ -1060,10 +1267,11 @@ function ContactSection({ disc }) {
             <button
               type="submit"
               className="btn-primary"
+              disabled={loading}
               aria-label="Submit your project inquiry"
               style={{ marginTop: 8 }}
             >
-              Send it over →
+              {loading ? "Sending..." : "Send it over →"}
             </button>
           </div>
         </form>
