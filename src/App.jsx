@@ -938,16 +938,49 @@ export default function MiguelThirty3() {
             <div style={{ fontFamily: "var(--font-head)", fontWeight: 900, fontSize: 26, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 8 }}>
               MIGUEL<span style={{ color: T.yellow }}>33</span>.COM
             </div>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
-              Digital Design Concierge<br />
-              Powered by Thirty3 Digital Designs
+            <div
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                color: "rgba(255,255,255,0.4)",
+                lineHeight: 1.7,
+              }}
+            >
+              Digital Design Concierge
+              <br />
+              Powered by{" "}
+              <a
+                href="https://thirty3digitaldesigns.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: T.yellow,
+                  textDecoration: "none",
+                  fontWeight: 600,
+                }}
+              >
+                Thirty3 Digital Designs
+              </a>
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {[["Start a project", "#contact"], ["See the work", "#work"], ["Instagram", "#"]].map(([label, href]) => (
-              <a key={label} href={href} style={{ fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+            {[["Start a project", "#contact"], ["See the work", "#work"], ["Instagram", "https://www.instagram.com/thirty3digitaldesigns/"]].map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,0.45)",
+                  textDecoration: "none",
+                  transition: "color 0.2s"
+                }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = T.yellow)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}>
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              >
                 {label} →
               </a>
             ))}
