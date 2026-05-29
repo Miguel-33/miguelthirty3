@@ -894,7 +894,7 @@ export default function MiguelThirty3() {
             I'm the designer behind Thirty3 Digital Designs. I help people turn loose ideas into websites, flyers, signs, brands, and digital tools that look sharp and actually make sense.
           </p>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: 44 }}>
-            My clients are small businesses, churches, schools, coaches, local organizations, and real people with real deadlines. You don't need to know the design terms. Just tell me what you're trying to make.
+            My clients are small businesses, local organizations, entrepreneurs, community groups, and people with real deadlines. You don't need to know the design terms. Just tell me what you're trying to build.
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 32px" }}>
