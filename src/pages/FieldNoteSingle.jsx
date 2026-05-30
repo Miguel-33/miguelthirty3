@@ -67,38 +67,39 @@ export default function FieldNoteSingle() {
                     </header>
 
                     <div className="article-content">
-                        {note.content.map((block, index) => {
-                            switch (block.type) {
-                                case "callout":
-                                    return (
-                                        <div key={index} className="article-callout">
-                                            {block.text}
-                                        </div>
-                                    );
+                        {Array.isArray(note.content)
+                            ? note.content.map((block, index) => {
+                                switch (block.type) {
+                                    case "callout":
+                                        return (
+                                            <div key={index} className="article-callout">
+                                                {block.text}
+                                            </div>
+                                        );
 
-                                case "strategy":
-                                    return (
-                                        <div key={index} className="article-strategy">
-                                            <span>Strategy Note</span>
-                                            <h3>{block.text}</h3>
-                                        </div>
-                                    );
+                                    case "strategy":
+                                        return (
+                                            <div key={index} className="article-strategy">
+                                                <span>Strategy Note</span>
+                                                <h3>{block.text}</h3>
+                                            </div>
+                                        );
 
-                                case "quote":
-                                    return (
-                                        <blockquote key={index} className="article-quote">
-                                            {block.text}
-                                        </blockquote>
-                                    );
+                                    case "quote":
+                                        return (
+                                            <blockquote key={index} className="article-quote">
+                                                {block.text}
+                                            </blockquote>
+                                        );
 
-                                default:
-                                    return (
-                                        <p key={index}>
-                                            {block.text}
-                                        </p>
-                                    );
-                            }
-                        })}
+                                    default:
+                                        return <p key={index}>{block.text}</p>;
+                                }
+                            })
+                            : note.content
+                                .trim()
+                                .split("\n\n")
+                                .map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                     </div>
 
                     <section className="article-cta">
