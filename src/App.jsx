@@ -283,6 +283,86 @@ const GLOBAL_CSS = `
     border-radius: 4px;
   }
 
+  .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 5vw;
+  background: rgba(248, 248, 248, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(35, 37, 40, 0.08);
+}
+
+.site-logo {
+  color: var(--ink, #232528);
+  text-decoration: none;
+}
+
+.site-logo span {
+  display: block;
+  font-family: var(--font-head, "Barlow Condensed", sans-serif);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+.site-logo b {
+  color: var(--yellow, #fbee16);
+  -webkit-text-stroke: 1px var(--ink, #232528);
+}
+
+.site-logo small {
+  display: block;
+  margin-top: -2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid, #6b7280);
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.site-nav-links a {
+  color: var(--ink, #232528);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.site-nav-links a:last-child {
+  background: var(--yellow, #fbee16);
+  padding: 10px 18px;
+  border-radius: 999px;
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    padding: 16px 20px;
+  }
+
+  .site-nav-links {
+    gap: 12px;
+  }
+
+  .site-nav-links a {
+    font-size: 12px;
+  }
+
+  .site-logo small {
+    display: none;
+  }
+}
+
   /* Tile grid */
   .tile-grid {
     display: grid;
@@ -660,9 +740,25 @@ export default function MiguelThirty3() {
             Digital Design Concierge
           </div>
         </div>
-        <button className="btn-primary" onClick={scrollToContact} aria-label="Start a project with Miguel" style={{ padding: "10px 22px", fontSize: 14 }}>
-          Start a Project
-        </button>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          <a
+            href="/field-notes"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 14,
+              fontWeight: 800,
+              color: T.ink,
+              textDecoration: "none",
+            }}
+          >
+            Field Notes
+          </a>
+
+          <button className="btn-primary" onClick={scrollToContact} aria-label="Start a project with Miguel" style={{ padding: "10px 22px", fontSize: 14 }}>
+            Start a Project
+          </button>
+        </div>
       </nav>
 
       {/* ════════════════════════════════════════
