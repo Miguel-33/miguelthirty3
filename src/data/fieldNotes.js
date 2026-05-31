@@ -223,4 +223,66 @@ export const fieldNotes = [
             },
         ],
     },
+    {
+        id: 4,
+        title: "How Much Does a Small Business Website Cost in Tennessee?",
+        seoTitle: "How Much Does a Small Business Website Cost in Tennessee? (2026 Guide)",
+        slug: "how-much-does-a-small-business-website-cost-in-tennessee",
+        date: "May 2026",
+        excerpt:
+            "Website pricing can vary dramatically. Here's what Tennessee small businesses should realistically expect when budgeting for a professional website in 2026.",
+        metaDescription:
+            "Learn how much a small business website costs in Tennessee, what affects pricing, and what to expect when hiring a web designer in 2026.",
+        content: [
+            {
+                type: "paragraph",
+                text: "One of the most common questions small business owners ask is simple: how much should a website cost?"
+            },
+            {
+                type: "paragraph",
+                text: "The answer depends on what you're trying to accomplish. A website is not just a digital brochure. It is often your first salesperson, first impression, and first opportunity to build trust."
+            },
+            {
+                type: "callout",
+                text: "A website should be viewed as an investment, not an expense."
+            },
+            {
+                type: "paragraph",
+                text: "In Tennessee, a professionally designed small business website typically ranges anywhere from $1,500 to $10,000 or more depending on complexity, functionality, content requirements, and customization."
+            },
+            {
+                type: "strategy",
+                text: "The cheapest website is rarely the most affordable website long-term."
+            },
+            {
+                type: "paragraph",
+                text: "Many business owners discover that inexpensive websites often require redesigns, fixes, replacements, or additional marketing investments because they fail to convert visitors into customers."
+            },
+            {
+                type: "paragraph",
+                text: "For most local service businesses, the goal is not simply having a website. The goal is having a website that clearly communicates value, builds trust, and encourages people to take action."
+            },
+            {
+                type: "quote",
+                text: "A website that generates customers is worth far more than a website that simply exists."
+            },
+            {
+                type: "paragraph",
+                text: "When comparing quotes, ask questions about content strategy, mobile responsiveness, SEO foundations, page speed, accessibility, hosting, maintenance, and future scalability."
+            },
+            {
+                type: "paragraph",
+                text: "A lower price may mean fewer features, less customization, or less strategic planning. Understanding exactly what is included is often more important than comparing numbers alone."
+            },
+            {
+                type: "paragraph",
+                text: "For many Clarksville and Middle Tennessee small businesses, a focused website with strong messaging, clear calls to action, and thoughtful design can provide an excellent return on investment."
+            },
+            {
+                type: "paragraph",
+                text: "The best website is not necessarily the most expensive one. It is the one that helps your business grow."
+            }
+        ]
+    },
+
 ];
