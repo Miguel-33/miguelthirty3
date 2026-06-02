@@ -7,17 +7,19 @@ import FieldNoteSingle from "./pages/FieldNoteSingle.jsx";
 import "./index.css";
 import "./App.css";
 import { HelmetProvider } from "react-helmet-async";
+import RequestWebsite from "./pages/RequestWebsite";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-  <HelmetProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/field-notes" element={<FieldNotes />} />
-        <Route path="/field-notes/:slug" element={<FieldNoteSingle />} />
-      </Routes>
-    </BrowserRouter>
-  </HelmetProvider>
-</React.StrictMode>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/field-notes" element={<FieldNotes />} />
+          <Route path="/field-notes/:slug" element={<FieldNoteSingle />} />
+          <Route path="/request-website" element={<RequestWebsite />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
+  </React.StrictMode>
 );

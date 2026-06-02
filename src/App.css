@@ -2,7 +2,7 @@
 
 :root {
   --ink: #232528;
-  --yellow: #F4D40A;
+  --yellow: #ffd100;
   --white: #ffffff;
   --offwhite: #faf9f7;
   --soft: #F3F2EE;
@@ -1121,7 +1121,7 @@ textarea.field-input {
 }
 
 .field-header__brand b {
-  color: #fbee16;
+  color: #ffd100;
   -webkit-text-stroke: 1px #232528;
 }
 
@@ -1151,8 +1151,21 @@ textarea.field-input {
 .field-header__links a:last-child {
   padding: 10px 18px;
   border-radius: 999px;
-  background: #fbee16;
+  background: #ffd100;
   color: #232528;
+}
+
+@media (max-width: 760px) {
+  .field-header__links a:nth-child(2),
+  .field-header__links a:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .field-header__links a:first-child {
+    display: none;
+  }
 }
 
 /* =========================================================

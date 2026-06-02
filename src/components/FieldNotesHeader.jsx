@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 export default function FieldNotesHeader() {
   const navigate = useNavigate();
 
-  const goToContact = (e) => {
+  const goToSection = (sectionId) => (e) => {
     e.preventDefault();
 
     navigate("/");
 
     setTimeout(() => {
-      document.getElementById("contact")?.scrollIntoView({
+      document.getElementById(sectionId)?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
@@ -22,13 +22,14 @@ export default function FieldNotesHeader() {
         <span>
           MIGUEL<b>33</b>
         </span>
-        <small>Digital Design Concierge</small>
+        <small>Websites, Flyers, Logos & Digital Design</small>
       </Link>
 
       <div className="field-header__links">
         <Link to="/">Home</Link>
-        <Link to="/field-notes">Field Notes</Link>
-        <a href="/#contact" onClick={goToContact}>
+        <Link to="/request-website">Request Website</Link>
+        <Link to="/field-notes">Notes</Link>
+        <a href="/#project-picker" onClick={goToSection("project-picker")}>
           Start a Project
         </a>
       </div>

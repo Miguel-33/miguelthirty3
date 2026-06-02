@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import "./App.css";
+import { useLocation } from "react-router-dom";
 
 const TILES = [
   { id: "website", label: "Website", sub: "Business sites, landing pages, portfolios, campaign sites.", icon: "⌁" },
@@ -160,6 +161,25 @@ export default function MiguelThirty3() {
     setTimeout(() => discRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
   };
 
+  const location = useLocation();
+
+  useEffect(() => {
+  const targetId = location.state?.scrollTo;
+
+  if (!targetId) return;
+
+  const scrollTimer = setTimeout(() => {
+    document.getElementById(targetId)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState({}, document.title);
+  }, 150);
+
+  return () => clearTimeout(scrollTimer);
+}, [location.state]);
+
   return (
     <main className="home-shell">
       <Header scrolled={scrolled} onStart={() => scrollTo("project-picker")} />
@@ -180,9 +200,9 @@ export default function MiguelThirty3() {
             <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
               Start a Project
             </button>
-            <button type="button" className="btn-ghost" onClick={() => scrollTo("contact")}>
-              Message Me
-            </button>
+            <a className="btn-ghost" href="/request-website">
+              Need a Website?
+            </a>
           </div>
         </div>
 
@@ -308,6 +328,7 @@ function Header({ scrolled, onStart }) {
 
       <div className="site-nav-links">
         <a href="#work">Work</a>
+        <a href="/request-website">Website Request</a>
         <a href="/field-notes">Notes</a>
         <button type="button" onClick={onStart}>Start a Project</button>
       </div>
@@ -521,11 +542,11 @@ function ContactSection({ disc }) {
       <h2>Tell me what you need designed.</h2>
 
       <p>{headline}</p>
-{disc.step === 3 && (
-  <div className="prefill-note">
-    Project added from your selection.
-  </div>
-)}
+      {disc.step === 3 && (
+        <div className="prefill-note">
+          Project added from your selection.
+        </div>
+      )}
       {sent ? (
         <div className="sent-card">
           <strong>Project received.</strong>
