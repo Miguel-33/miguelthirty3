@@ -98,8 +98,8 @@ const FIELD_NOTES = [
     href: "/field-notes/why-facebook-isnt-your-website",
   },
   {
-    title: "Affordable Web Design for Small Businesses",
-    href: "/field-notes/affordable-web-design-for-small-businesses",
+    title: "How Much Does a Small Business Website Cost in Tennessee?",
+    href: "/field-notes/how-much-does-a-small-business-website-cost-in-tennessee",
   },
 ];
 
@@ -186,19 +186,21 @@ export default function MiguelThirty3() {
 
       <section className="home-hero" aria-label="Thirty3 Digital Designs homepage">
         <div className="hero-copy">
-          <p className="eyebrow">Thirty3 Digital Designs • Clarksville, TN</p>
+          <p className="eyebrow">
+  Bold. Creative. Strategic.
+</p>
 
-          <h1>
-            What do you need designed?
-          </h1>
+<h1>
+  Small business websites that look good and get found.
+</h1>
 
-          <p className="hero-lede">
-            Choose a website, flyer, logo, QR sign, social graphic, or custom design. I’ll help shape the idea and send you the next step.
-          </p>
+<p className="hero-lede">
+  Websites, flyers, logos, and marketing materials designed to help your business stand out, build trust, and attract more customers.
+</p>
 
           <div className="hero-actions">
             <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
-              Start a Project
+              Start My Project
             </button>
             <a className="btn-ghost" href="/request-website">
               Need a Website?
