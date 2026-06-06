@@ -315,7 +315,6 @@ export default function MiguelThirty3() {
 
       <Footer />
 
-      <MobileStickyStart onStart={() => scrollTo("project-picker")} />
     </main>
   );
 }
@@ -652,13 +651,5 @@ function Footer() {
         </a>
       </div>
     </footer>
-  );
-}
-
-function MobileStickyStart({ onStart }) {
-  return (
-    <button type="button" className="mobile-sticky-start" onClick={onStart}>
-      Start a Project →
-    </button>
   );
 }
