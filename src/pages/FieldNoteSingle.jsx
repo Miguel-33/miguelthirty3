@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { fieldNotes } from "../data/fieldNotes";
 import FieldNotesHeader from "../components/FieldNotesHeader";
@@ -8,22 +8,6 @@ export default function FieldNoteSingle() {
     const navigate = useNavigate();
     const note = fieldNotes.find((item) => item.slug === slug);
 
-    const goToContact = (e) => {
-        e.preventDefault();
-
-        navigate("/", { replace: false });
-
-        setTimeout(() => {
-            const contact = document.getElementById("contact");
-
-            if (contact) {
-                contact.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            }
-        }, 300);
-    };
     if (!note) {
         return (
             <main className="article-page">
@@ -91,7 +75,20 @@ export default function FieldNoteSingle() {
                                                 {block.text}
                                             </blockquote>
                                         );
-
+                                    case "websiteCta":
+                                        return (
+                                            <div key={index} className="article-inline-cta">
+                                                <span>Need a website?</span>
+                                                <h3>{block.title || "Make your business easier to trust."}</h3>
+                                                <p>
+                                                    {block.text ||
+                                                        "Send a website request and I’ll help shape the next step."}
+                                                </p>
+                                                <Link to="/request-website">
+                                                    Request a Website →
+                                                </Link>
+                                            </div>
+                                        );
                                     default:
                                         return <p key={index}>{block.text}</p>;
                                 }
@@ -103,15 +100,15 @@ export default function FieldNoteSingle() {
                     </div>
 
                     <section className="article-cta">
-                        <h2>Need a website review?</h2>
+                        <h2>Need a clearer website?</h2>
                         <div>
                             <p>
-                                I can look at your site and send back practical ways to make it clearer,
-                                stronger, and easier to act on.
+                                Send a website request and I’ll help shape the next step for your business,
+                                brand, campaign, or organization.
                             </p>
-                            <a href="/#contact" onClick={goToContact}>
-                                Request a Free Website Review
-                            </a>
+                            <Link to="/request-website">
+                                Request a Website →
+                            </Link>
                         </div>
                     </section>
                 </article>

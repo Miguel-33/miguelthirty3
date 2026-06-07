@@ -9,6 +9,7 @@ import "./App.css";
 import { HelmetProvider } from "react-helmet-async";
 import RequestWebsite from "./pages/RequestWebsite";
 import NotFound from "./pages/NotFound";
+import RequestFlyer from "./pages/RequestFlyer";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/field-notes" element={<FieldNotes />} />
           <Route path="/field-notes/:slug" element={<FieldNoteSingle />} />
           <Route path="/request-website" element={<RequestWebsite />} />
+          <Route path="/request-flyer" element={<RequestFlyer />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

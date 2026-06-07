@@ -64,6 +64,11 @@ export const fieldNotes = [
                 text: "Then I check speed. A slow website quietly kills interest. People may like your business, but they will not wait forever for your homepage to load.",
             },
             {
+                type: "websiteCta",
+                title: "Need a website that feels clearer?",
+                text: "Send a website request and I’ll help shape the next step for your business, brand, campaign, or organization.",
+            },
+            {
                 type: "paragraph",
                 text: "Finally, I check the call-to-action. Every business website needs a clear next step. Book now. Request a quote. Call today. View services. Send a message.",
             },

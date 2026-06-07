@@ -54,6 +54,7 @@ const PROJECTS = [
     type: "Website",
     name: "Isabella Transport",
     desc: "A business website built to make services, credibility, and contact steps easy to understand.",
+    result: "Clarified services and made it easy for customers to get in touch.",
     tag: "Transportation",
     wide: true,
     url: "https://isabellatransport.com",
@@ -164,39 +165,40 @@ export default function MiguelThirty3() {
   const location = useLocation();
 
   useEffect(() => {
-  const targetId = location.state?.scrollTo;
+    const targetId = location.state?.scrollTo;
 
-  if (!targetId) return;
+    if (!targetId) return;
 
-  const scrollTimer = setTimeout(() => {
-    document.getElementById(targetId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    const scrollTimer = setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
 
-    window.history.replaceState({}, document.title);
-  }, 150);
+      window.history.replaceState({}, document.title);
+    }, 150);
 
-  return () => clearTimeout(scrollTimer);
-}, [location.state]);
+    return () => clearTimeout(scrollTimer);
+  }, [location.state]);
 
   return (
     <main className="home-shell">
+
       <Header scrolled={scrolled} onStart={() => scrollTo("project-picker")} />
 
       <section className="home-hero" aria-label="Thirty3 Digital Designs homepage">
         <div className="hero-copy">
           <p className="eyebrow">
-  Bold. Creative. Strategic.
-</p>
+            Bold. Creative. Strategic.
+          </p>
 
-<h1>
-  Small business websites that look good and get found.
-</h1>
+          <h1>
+            Small business websites that look good and get found.
+          </h1>
 
-<p className="hero-lede">
-  Websites, flyers, logos, and marketing materials designed to help your business stand out, build trust, and attract more customers.
-</p>
+          <p className="hero-lede">
+            Websites, flyers, logos, and marketing materials designed to help your business stand out, build trust, and attract more customers.
+          </p>
 
           <div className="hero-actions">
             <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
@@ -206,10 +208,23 @@ export default function MiguelThirty3() {
               Need a Website?
             </a>
           </div>
+          <div className="hero-trust-strip" aria-label="Trust points">
+            <span>Clarksville, TN</span>
+            <span>Small business websites</span>
+            <span>Flyers + logos + QR signs</span>
+            <span>Simple request process</span>
+          </div>
         </div>
 
         <HeroVisual />
       </section>
+
+      <SectionDivider
+        tone="light section-divider-action"
+        number="01"
+        label="Start here"
+        text="Pick what you need"
+      />
 
       <section
         id="project-picker"
@@ -253,6 +268,13 @@ export default function MiguelThirty3() {
         </section>
       )}
 
+      <SectionDivider
+        tone="soft"
+        number="02"
+        label="Simple process"
+        text="Less guessing, more direction"
+      />
+
       <section className="why-section section-fade" aria-label="Why work with Miguel">
         <div className="why-main">
           <p className="eyebrow eyebrow-dark">Simple process</p>
@@ -274,6 +296,13 @@ export default function MiguelThirty3() {
         </div>
       </section>
 
+      <SectionDivider
+        tone="light"
+        number="03"
+        label="Proof"
+        text="Recent work"
+      />
+
       <section id="work" className="work-section section-fade" aria-label="Recent projects">
         <div className="work-heading">
           <div>
@@ -292,6 +321,13 @@ export default function MiguelThirty3() {
         </div>
       </section>
 
+      <SectionDivider
+        tone="dark"
+        number="04"
+        label="Field notes"
+        text="Helpful website strategy"
+      />
+
       <section className="field-preview section-fade" aria-label="Field Notes preview">
         <div className="field-preview-head">
           <p className="eyebrow">Field Notes</p>
@@ -309,6 +345,45 @@ export default function MiguelThirty3() {
         </div>
       </section>
 
+      <SectionDivider
+  tone="light"
+  number="05"
+  label="Trust"
+  text="What to expect"
+/>
+
+<section className="expect-section section-fade" aria-label="What to expect when starting a project">
+  <div className="expect-heading">
+    <p className="eyebrow eyebrow-dark">What to expect</p>
+    <h2>No confusing process. No guessing game.</h2>
+    <p>
+      Send the request and I’ll help turn the idea into the right next step.
+    </p>
+  </div>
+
+  <div className="expect-grid">
+    {[
+      ["Clear next step", "You will know what I need from you and what happens after you send the request."],
+      ["Designed around your goal", "The project starts with what you need people to understand, trust, or do."],
+      ["Local and personal", "You are not sending a form into the void. I review each request myself."],
+      ["Built to be useful", "The goal is not just to make something look good. It needs to help people act."],
+    ].map(([title, text]) => (
+      <article className="expect-card" key={title}>
+        <span>✓</span>
+        <h3>{title}</h3>
+        <p>{text}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<SectionDivider
+  tone="light"
+  number="06"
+  label="Request"
+  text="Send the next step"
+/>
+
       <section id="contact" className="contact-section section-fade" aria-label="Contact form">
         <ContactSection disc={disc} />
       </section>
@@ -316,6 +391,20 @@ export default function MiguelThirty3() {
       <Footer />
 
     </main>
+  );
+}
+
+function SectionDivider({ tone = "light", number, label, text }) {
+  return (
+    <div className={`section-divider section-divider-${tone}`} aria-hidden="true">
+      <div className="section-divider-inner">
+        <span>{number}</span>
+        <strong>{label}</strong>
+        <i />
+        <small>{text}</small>
+        <b>THIRTY3</b>
+      </div>
+    </div>
   );
 }
 
@@ -467,6 +556,7 @@ function ProjectCard({ project }) {
       <div>
         <h3>{project.name}</h3>
         <p>{project.desc}</p>
+        {project.result && <em>{project.result}</em>}
       </div>
 
       <b>{isExternal ? "View project" : "Ask for something similar"} →</b>
