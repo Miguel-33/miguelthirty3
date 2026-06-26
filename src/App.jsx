@@ -13,6 +13,14 @@ const TILES = [
   { id: "other", label: "Something Else", sub: "Not sure where it fits? Start here.", icon: "?" },
 ];
 
+const TRUSTED_WORK = [
+  "Isabella Transport",
+  "Gregory S. Chatman",
+  "Joseph P. Day",
+  "Blayne’s Family Research",
+  "Thirty3 Digital Designs",
+];
+
 const FLOW = {
   website: {
     q1: { label: "What kind of website?", opts: ["Business", "Campaign", "Portfolio", "Personal Brand", "Nonprofit", "Church", "School", "Other"] },
@@ -106,6 +114,22 @@ const FIELD_NOTES = [
 
 const initDisc = { tile: null, step: 0, a1: "", a2: "" };
 
+function TrustedWorkStrip() {
+  return (
+    <section className="trusted-strip section-fade" aria-label="Trusted work and projects">
+      <div className="trusted-strip-inner">
+        <p>Work created for</p>
+
+        <div className="trusted-list">
+          {TRUSTED_WORK.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function discReducer(state, action) {
   switch (action.type) {
     case "SELECT_TILE":
@@ -186,38 +210,41 @@ export default function MiguelThirty3() {
 
       <Header scrolled={scrolled} onStart={() => scrollTo("project-picker")} />
 
-      <section className="home-hero" aria-label="Thirty3 Digital Designs homepage">
-        <div className="hero-copy">
-          <p className="eyebrow">
-            Bold. Creative. Strategic.
-          </p>
+<section className="home-hero-poster" aria-label="Thirty3 Digital Designs homepage">
+  <div className="hero-poster-inner">
+    <p className="hero-service-pill">
+      Websites, Flyers, Logos & Digital Design
+    </p>
 
-          <h1>
-            Small business websites that look good and get found.
-          </h1>
+    <div className="hero-sticker hero-sticker-one">Clarksville, TN</div>
+    <div className="hero-sticker hero-sticker-two">Small Business Ready</div>
 
-          <p className="hero-lede">
-            Websites, flyers, logos, and marketing materials designed to help your business stand out, build trust, and attract more customers.
-          </p>
+    <h1 className="hero-poster-title">
+      <span className="hero-title-top">Make your business</span>
+      <strong>Look Ready</strong>
+      <span className="hero-title-bottom">before they call</span>
+    </h1>
 
-          <div className="hero-actions">
-            <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
-              Start My Project
-            </button>
-            <a className="btn-ghost" href="/request-website">
-              Need a Website?
-            </a>
-          </div>
-          <div className="hero-trust-strip" aria-label="Trust points">
-            <span>Clarksville, TN</span>
-            <span>Small business websites</span>
-            <span>Flyers + logos + QR signs</span>
-            <span>Simple request process</span>
-          </div>
-        </div>
+    <div className="hero-proof-row" aria-label="Proof and rating">
+      <span>★★★★★</span>
+      <strong>5.0 Google rating</strong>
+      <b>Local design help without the confusing process.</b>
+    </div>
 
-        <HeroVisual />
-      </section>
+    <div className="hero-actions hero-poster-actions">
+      <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
+        Start My Project
+      </button>
+      <a className="btn-ghost btn-ghost-dark" href="#work">
+        See the Work
+      </a>
+    </div>
+
+    <p className="hero-lede hero-poster-lede">
+      Websites, flyers, logos, QR signs, and marketing materials for small businesses that need to look clear, trusted, and easy to contact.
+    </p>
+  </div>
+</section>
 
       <SectionDivider
         tone="light section-divider-action"
@@ -226,6 +253,8 @@ export default function MiguelThirty3() {
         text="Pick what you need"
       />
 
+      <TrustedWorkStrip />
+      
       <section
         id="project-picker"
         ref={pickerRef}
@@ -241,20 +270,22 @@ export default function MiguelThirty3() {
         </div>
 
         <div className="tile-grid">
-          {TILES.map((tile) => (
-            <button
-              key={tile.id}
-              type="button"
-              className={`tile-btn${disc.tile?.id === tile.id ? " is-selected" : ""}`}
-              onClick={() => selectTile(tile)}
-              aria-label={`${tile.label}: ${tile.sub}`}
-            >
-              <span className="tile-icon">{tile.icon}</span>
-              <strong>{tile.label}</strong>
-              <small>{tile.sub}</small>
-              {disc.tile?.id === tile.id && (<span className="tile-selected-badge">Selected</span>)}
-            </button>
-          ))}
+          {TILES.map((tile, index) => (
+  <button
+    key={tile.id}
+    type="button"
+    className={`tile-btn${disc.tile?.id === tile.id ? " is-selected" : ""}`}
+    onClick={() => selectTile(tile)}
+    aria-label={`${tile.label}: ${tile.sub}`}
+  >
+    <span className="tile-count">{String(index + 1).padStart(2, "0")}</span>
+    <span className="tile-icon">{tile.icon}</span>
+    <strong>{tile.label}</strong>
+    <small>{tile.sub}</small>
+    <b className="tile-arrow">Pick this →</b>
+    {disc.tile?.id === tile.id && (<span className="tile-selected-badge">Selected</span>)}
+  </button>
+))}
         </div>
       </section>
 
@@ -346,43 +377,43 @@ export default function MiguelThirty3() {
       </section>
 
       <SectionDivider
-  tone="light"
-  number="05"
-  label="Trust"
-  text="What to expect"
-/>
+        tone="light"
+        number="05"
+        label="Trust"
+        text="What to expect"
+      />
 
-<section className="expect-section section-fade" aria-label="What to expect when starting a project">
-  <div className="expect-heading">
-    <p className="eyebrow eyebrow-dark">What to expect</p>
-    <h2>No confusing process. No guessing game.</h2>
-    <p>
-      Send the request and I’ll help turn the idea into the right next step.
-    </p>
-  </div>
+      <section className="expect-section section-fade" aria-label="What to expect when starting a project">
+        <div className="expect-heading">
+          <p className="eyebrow eyebrow-dark">What to expect</p>
+          <h2>No confusing process. No guessing game.</h2>
+          <p>
+            Send the request and I’ll help turn the idea into the right next step.
+          </p>
+        </div>
 
-  <div className="expect-grid">
-    {[
-      ["Clear next step", "You will know what I need from you and what happens after you send the request."],
-      ["Designed around your goal", "The project starts with what you need people to understand, trust, or do."],
-      ["Local and personal", "You are not sending a form into the void. I review each request myself."],
-      ["Built to be useful", "The goal is not just to make something look good. It needs to help people act."],
-    ].map(([title, text]) => (
-      <article className="expect-card" key={title}>
-        <span>✓</span>
-        <h3>{title}</h3>
-        <p>{text}</p>
-      </article>
-    ))}
-  </div>
-</section>
+        <div className="expect-grid">
+          {[
+            ["Clear next step", "You will know what I need from you and what happens after you send the request."],
+            ["Designed around your goal", "The project starts with what you need people to understand, trust, or do."],
+            ["Local and personal", "You are not sending a form into the void. I review each request myself."],
+            ["Built to be useful", "The goal is not just to make something look good. It needs to help people act."],
+          ].map(([title, text]) => (
+            <article className="expect-card" key={title}>
+              <span>✓</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-<SectionDivider
-  tone="light"
-  number="06"
-  label="Request"
-  text="Send the next step"
-/>
+      <SectionDivider
+        tone="light"
+        number="06"
+        label="Request"
+        text="Send the next step"
+      />
 
       <section id="contact" className="contact-section section-fade" aria-label="Contact form">
         <ContactSection disc={disc} />
@@ -418,7 +449,7 @@ function Header({ scrolled, onStart }) {
 
       <div className="site-nav-links">
         <a href="#work">Work</a>
-        <a href="/request-website">Website Request</a>
+        <a href="/request-website">Websites</a>
         <a href="/field-notes">Notes</a>
         <button type="button" onClick={onStart}>Start a Project</button>
       </div>
@@ -633,6 +664,9 @@ function ContactSection({ disc }) {
       <h2>Tell me what you need designed.</h2>
 
       <p>{headline}</p>
+      <p className="contact-reassurance">
+        I personally review each request and reply with the next step.
+      </p>
       {disc.step === 3 && (
         <div className="prefill-note">
           Project added from your selection.
