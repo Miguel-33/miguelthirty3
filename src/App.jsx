@@ -65,7 +65,7 @@ const PROJECTS = [
     result: "Clarified services and made it easy for customers to get in touch.",
     tag: "Transportation",
     wide: true,
-    url: "https://isabellatransport.com",
+    url: "/proof-of-work/isabella-transport",
     tone: "isabella",
   },
   {
@@ -74,7 +74,7 @@ const PROJECTS = [
     name: "Gregory S. Chatman",
     desc: "A personal brand website with sermons, videos, and a focused spiritual message.",
     tag: "Personal Brand",
-    url: "https://gregoryschatman.com",
+    url: "/proof-of-work/gregory-chatman",
     tone: "wine",
   },
   {
@@ -83,7 +83,7 @@ const PROJECTS = [
     name: "Joseph P. Day",
     desc: "A campaign website with biography, accomplishments, endorsements, and voter-focused messaging.",
     tag: "Campaign",
-    url: "https://josephpday.com",
+    url: "/proof-of-work/joseph-p-day",
     tone: "blue",
   },
   {
@@ -92,7 +92,7 @@ const PROJECTS = [
     name: "Blayne's Family Research",
     desc: "A research-focused website designed to present services, trust, and inquiry paths clearly.",
     tag: "Genealogy",
-    url: "https://blaynesfamilyresearch.com",
+    url: "/proof-of-work/blaynes-family-research",
     tone: "sage",
   },
 ];
@@ -207,44 +207,43 @@ export default function MiguelThirty3() {
 
   return (
     <main className="home-shell">
-
       <Header scrolled={scrolled} onStart={() => scrollTo("project-picker")} />
 
-<section className="home-hero-poster" aria-label="Thirty3 Digital Designs homepage">
-  <div className="hero-poster-inner">
-    <p className="hero-service-pill">
-      Websites, Flyers, Logos & Digital Design
-    </p>
+      <section className="home-hero-poster" aria-label="Thirty3 Digital Designs homepage">
+        <div className="hero-poster-inner">
+          <p className="hero-service-pill">
+            Websites, Flyers, Logos & Digital Design
+          </p>
 
-    <div className="hero-sticker hero-sticker-one">Clarksville, TN</div>
-    <div className="hero-sticker hero-sticker-two">Small Business Ready</div>
+          <div className="hero-sticker hero-sticker-one">Clarksville, TN</div>
+          <div className="hero-sticker hero-sticker-two">Small Business Ready</div>
 
-    <h1 className="hero-poster-title">
-      <span className="hero-title-top">Make your business</span>
-      <strong>Look Ready</strong>
-      <span className="hero-title-bottom">before they call</span>
-    </h1>
+          <h1 className="hero-poster-title">
+            <span className="hero-title-top">Make your business</span>
+            <strong>Look Ready</strong>
+            <span className="hero-title-bottom">before they call</span>
+          </h1>
 
-    <div className="hero-proof-row" aria-label="Proof and rating">
-      <span>★★★★★</span>
-      <strong>5.0 Google rating</strong>
-      <b>Local design help without the confusing process.</b>
-    </div>
+          <div className="hero-proof-row" aria-label="Proof and rating">
+            <span>★★★★★</span>
+            <strong>5.0 Google rating</strong>
+            <b>Local design help without the confusing process.</b>
+          </div>
 
-    <div className="hero-actions hero-poster-actions">
-      <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
-        Start My Project
-      </button>
-      <a className="btn-ghost btn-ghost-dark" href="#work">
-        See the Work
-      </a>
-    </div>
+          <div className="hero-actions hero-poster-actions">
+            <button type="button" className="btn-primary" onClick={() => scrollTo("project-picker")}>
+              Start My Project
+            </button>
+            <a className="btn-ghost btn-ghost-dark" href="#work">
+              See the Work
+            </a>
+          </div>
 
-    <p className="hero-lede hero-poster-lede">
-      Websites, flyers, logos, QR signs, and marketing materials for small businesses that need to look clear, trusted, and easy to contact.
-    </p>
-  </div>
-</section>
+          <p className="hero-lede hero-poster-lede">
+            Websites, flyers, logos, QR signs, and marketing materials for small businesses that need to look clear, trusted, and easy to contact.
+          </p>
+        </div>
+      </section>
 
       <SectionDivider
         tone="light section-divider-action"
@@ -254,7 +253,7 @@ export default function MiguelThirty3() {
       />
 
       <TrustedWorkStrip />
-      
+
       <section
         id="project-picker"
         ref={pickerRef}
@@ -271,21 +270,21 @@ export default function MiguelThirty3() {
 
         <div className="tile-grid">
           {TILES.map((tile, index) => (
-  <button
-    key={tile.id}
-    type="button"
-    className={`tile-btn${disc.tile?.id === tile.id ? " is-selected" : ""}`}
-    onClick={() => selectTile(tile)}
-    aria-label={`${tile.label}: ${tile.sub}`}
-  >
-    <span className="tile-count">{String(index + 1).padStart(2, "0")}</span>
-    <span className="tile-icon">{tile.icon}</span>
-    <strong>{tile.label}</strong>
-    <small>{tile.sub}</small>
-    <b className="tile-arrow">Pick this →</b>
-    {disc.tile?.id === tile.id && (<span className="tile-selected-badge">Selected</span>)}
-  </button>
-))}
+            <button
+              key={tile.id}
+              type="button"
+              className={`tile-btn${disc.tile?.id === tile.id ? " is-selected" : ""}`}
+              onClick={() => selectTile(tile)}
+              aria-label={`${tile.label}: ${tile.sub}`}
+            >
+              <span className="tile-count">{String(index + 1).padStart(2, "0")}</span>
+              <span className="tile-icon">{tile.icon}</span>
+              <strong>{tile.label}</strong>
+              <small>{tile.sub}</small>
+              <b className="tile-arrow">Pick this →</b>
+              {disc.tile?.id === tile.id && (<span className="tile-selected-badge">Selected</span>)}
+            </button>
+          ))}
         </div>
       </section>
 
@@ -420,7 +419,6 @@ export default function MiguelThirty3() {
       </section>
 
       <Footer />
-
     </main>
   );
 }
@@ -449,6 +447,7 @@ function Header({ scrolled, onStart }) {
 
       <div className="site-nav-links">
         <a href="#work">Work</a>
+        <a href="/proof-of-work">Proof</a>
         <a href="/request-website">Websites</a>
         <a href="/field-notes">Notes</a>
         <button type="button" onClick={onStart}>Start a Project</button>
@@ -488,7 +487,6 @@ function HeroVisual() {
     </div>
   );
 }
-
 
 function DiscoveryStep1({ disc, dispatch }) {
   const flow = FLOW[disc.tile.id];
@@ -590,7 +588,7 @@ function ProjectCard({ project }) {
         {project.result && <em>{project.result}</em>}
       </div>
 
-      <b>{isExternal ? "View project" : "Ask for something similar"} →</b>
+      <b>{isExternal ? "View project" : "View case study"} →</b>
     </a>
   );
 }

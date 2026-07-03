@@ -2564,3 +2564,203 @@ textarea.field-input {
     display: none;
   }
 }
+
+/* ============================================
+   HOMEPAGE CONTACT FORM RESTORE
+   Scoped so Proof of Work / Project pages stay clean
+   ============================================ */
+
+.home-shell .contact-section {
+  background: #f6f4ee;
+  color: #232528;
+  padding: clamp(72px, 9vw, 130px) 20px;
+}
+
+.home-shell .contact-wrap {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid rgba(35, 37, 40, 0.12);
+  box-shadow: 0 28px 80px rgba(35, 37, 40, 0.08);
+  padding: clamp(30px, 5vw, 64px);
+}
+
+.home-shell .contact-wrap > .eyebrow {
+  width: fit-content;
+  margin: 0 auto 22px;
+  background: #f4d40a;
+  color: #232528;
+  padding: 10px 16px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.home-shell .contact-wrap h2 {
+  margin: 0 auto;
+  max-width: 860px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(4rem, 9vw, 4.6rem);
+  line-height: 0.82;
+  letter-spacing: -0.065em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.home-shell .contact-wrap > p {
+  max-width: 720px;
+  margin: 26px auto 0;
+  color: #62645f;
+  font-size: clamp(1.05rem, 2vw, 0.35rem);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.home-shell .contact-reassurance {
+  width: fit-content;
+  max-width: 100%;
+  margin: 34px auto 0 !important;
+  background: rgba(244, 212, 10, 0.16);
+  border: 1px solid rgba(244, 212, 10, 0.34);
+  color: #555853 !important;
+  padding: 14px 20px;
+  border-radius: 999px;
+}
+
+.home-shell .prefill-note {
+  width: fit-content;
+  margin: 22px auto 0;
+  background: #232528;
+  color: #ffffff;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.home-shell .contact-form {
+  margin-top: 54px;
+  display: grid;
+  gap: 24px;
+}
+
+.home-shell .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.home-shell .field-group {
+  display: grid;
+  gap: 10px;
+}
+
+.home-shell .field-group span {
+  color: #6f746f;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-shell .field-input {
+  width: 100%;
+  min-height: 56px;
+  background: #faf9f5 !important;
+  border: 1px solid rgba(35, 37, 40, 0.16) !important;
+  border-radius: 0;
+  color: #232528 !important;
+  padding: 15px 16px;
+  font: inherit;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: none !important;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.home-shell textarea.field-input {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.home-shell .field-input::placeholder {
+  color: rgba(35, 37, 40, 0.42);
+}
+
+.home-shell .field-input:focus {
+  background: #ffffff !important;
+  border-color: #232528 !important;
+  box-shadow: 0 0 0 4px rgba(244, 212, 10, 0.22) !important;
+}
+
+.home-shell .contact-form .btn-primary {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 8px;
+  background: #f4d40a !important;
+  border: 1px solid #d7bb00 !important;
+  border-radius: 999px;
+  color: #232528 !important;
+  font-size: 1rem;
+  font-weight: 900;
+  box-shadow: 0 18px 45px rgba(244, 212, 10, 0.28);
+}
+
+.home-shell .contact-form .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 55px rgba(244, 212, 10, 0.34);
+}
+
+.home-shell .contact-form .btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.home-shell .sent-card {
+  margin-top: 44px;
+  background: #232528;
+  color: #ffffff;
+  padding: 28px;
+  text-align: center;
+}
+
+.home-shell .sent-card strong {
+  display: block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 3rem;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.home-shell .sent-card p {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 760px) {
+  .home-shell .contact-section {
+    padding: 64px 14px;
+  }
+
+  .home-shell .contact-wrap {
+    padding: 28px 18px;
+  }
+
+  .home-shell .contact-wrap h2 {
+    font-size: clamp(3.7rem, 18vw, 6rem);
+  }
+
+  .home-shell .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-shell .contact-reassurance {
+    border-radius: 18px;
+    text-align: center;
+  }
+}

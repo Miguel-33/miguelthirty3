@@ -1,0 +1,64 @@
+.pageChromeHeader.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(246, 244, 238, 0.92);
+  border-bottom: 1px solid rgba(35, 37, 40, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.pageChromeHeader .site-logo,
+.pageChromeHeader .site-nav-links a {
+  color: #232528;
+}
+
+.pageChromeHeader .site-logo small {
+  color: rgba(35, 37, 40, 0.62);
+}
+
+.pageChromeHeader .site-nav-links .site-nav-cta {
+  background: #232528;
+  color: #ffffff;
+  border: 1px solid #232528;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+.pageChromeHeader .site-nav-links .site-nav-cta:hover {
+  background: #f4d40a;
+  border-color: #f4d40a;
+  color: #232528;
+}
+
+.pageChromeFooter.site-footer {
+  margin-top: 0;
+}
+
+.pageChromeHeader .site-nav-links .site-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 142px;
+  height: 44px;
+  padding: 0 18px;
+  background: #232528;
+  border: 1px solid #232528;
+  color: #ffffff !important;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pageChromeHeader .site-nav-links .site-nav-cta::before,
+.pageChromeHeader .site-nav-links .site-nav-cta::after {
+  display: none !important;
+  content: none !important;
+}
+
+.pageChromeHeader .site-nav-links .site-nav-cta:hover {
+  background: #f4d40a;
+  border-color: #f4d40a;
+  color: #232528 !important;
+}
