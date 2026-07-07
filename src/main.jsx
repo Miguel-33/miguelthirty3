@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import App from "./App.jsx";
+import ClarksvilleWebDesign from "./ClarksvilleWebDesign";
 import FieldNotes from "./pages/FieldNotes.jsx";
 import FieldNoteSingle from "./pages/FieldNoteSingle.jsx";
 import RequestWebsite from "./pages/RequestWebsite";
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/clarksville-web-design" element={<ClarksvilleWebDesign />} />
           <Route path="/field-notes" element={<FieldNotes />} />
           <Route path="/field-notes/:slug" element={<FieldNoteSingle />} />
           <Route path="/request-website" element={<RequestWebsite />} />

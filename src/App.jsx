@@ -3,14 +3,57 @@ import "./App.css";
 import { useLocation } from "react-router-dom";
 
 const TILES = [
-  { id: "website", label: "Website", sub: "Business sites, landing pages, portfolios, campaign sites.", icon: "⌁" },
-  { id: "flyer", label: "Flyer / Promo", sub: "Events, promos, announcements, specials, and launches.", icon: "✦" },
-  { id: "logo", label: "Logo / Brand", sub: "Logo concepts, colors, fonts, and visual direction.", icon: "△" },
-  { id: "card", label: "Business Card", sub: "Clean, bold cards that feel ready to hand out.", icon: "▣" },
-  { id: "social", label: "Social Graphic", sub: "Graphics for Instagram, Facebook, ads, and updates.", icon: "◉" },
-  { id: "qr", label: "QR Sign", sub: "Menus, reviews, forms, links, and table signs.", icon: "▦" },
-  { id: "event", label: "Event Design", sub: "Programs, banners, tickets, flyers, and promo kits.", icon: "◇" },
-  { id: "other", label: "Something Else", sub: "Not sure where it fits? Start here.", icon: "?" },
+  {
+    id: "website",
+    label: "Website",
+    sub: "Business websites, landing pages, portfolio sites, and campaign sites.",
+    icon: "⌁",
+    featured: true,
+  },
+  {
+    id: "websiteRefresh",
+    label: "Website Refresh",
+    sub: "Already have a site? Improve the structure, message, and visual trust.",
+    icon: "↻",
+    featured: true,
+  },
+  {
+    id: "landing",
+    label: "Landing Page",
+    sub: "A focused page for one offer, campaign, event, or service.",
+    icon: "▣",
+    featured: true,
+  },
+  {
+    id: "brandSupport",
+    label: "Brand Support",
+    sub: "Logo direction, colors, fonts, and matching visual assets.",
+    icon: "△",
+  },
+  {
+    id: "flyer",
+    label: "Flyer / Promo",
+    sub: "Events, promos, announcements, specials, and launches.",
+    icon: "✦",
+  },
+  {
+    id: "social",
+    label: "Social Graphic",
+    sub: "Graphics for Instagram, Facebook, ads, and updates.",
+    icon: "◉",
+  },
+  {
+    id: "qr",
+    label: "QR Sign",
+    sub: "Menus, reviews, forms, links, and table signs.",
+    icon: "▦",
+  },
+  {
+    id: "other",
+    label: "Something Else",
+    sub: "Not sure where it fits? Start here.",
+    icon: "?",
+  },
 ];
 
 const TRUSTED_WORK = [
@@ -25,6 +68,86 @@ const FLOW = {
   website: {
     q1: { label: "What kind of website?", opts: ["Business", "Campaign", "Portfolio", "Personal Brand", "Nonprofit", "Church", "School", "Other"] },
     q2: { label: "What should it help you do?", opts: ["Get more customers", "Look more professional", "Explain services", "Collect leads", "Promote something", "Share information", "Other"] },
+  },
+  websiteRefresh: {
+    q1: {
+      label: "What needs the most help?",
+      opts: [
+        "Homepage message",
+        "Mobile layout",
+        "Outdated design",
+        "Better calls to action",
+        "SEO structure",
+        "Overall trust",
+        "Not sure yet",
+      ],
+    },
+    q2: {
+      label: "What should the refresh help you do?",
+      opts: [
+        "Get more inquiries",
+        "Look more professional",
+        "Explain services better",
+        "Improve local trust",
+        "Make the site easier to use",
+        "Prepare for advertising",
+        "Other",
+      ],
+    },
+  },
+
+  landing: {
+    q1: {
+      label: "What is the page for?",
+      opts: [
+        "Service",
+        "Event",
+        "Campaign",
+        "Product",
+        "Lead capture",
+        "Announcement",
+        "Other",
+      ],
+    },
+    q2: {
+      label: "What should people do on the page?",
+      opts: [
+        "Call",
+        "Book",
+        "Fill out a form",
+        "Buy",
+        "Learn more",
+        "Sign up",
+        "Other",
+      ],
+    },
+  },
+
+  brandSupport: {
+    q1: {
+      label: "What kind of brand help do you need?",
+      opts: [
+        "Logo direction",
+        "Colors and fonts",
+        "Social look",
+        "Print materials",
+        "Website visuals",
+        "Full visual refresh",
+        "Not sure yet",
+      ],
+    },
+    q2: {
+      label: "Where will this be used most?",
+      opts: [
+        "Website",
+        "Social media",
+        "Business cards",
+        "Flyers",
+        "Signs",
+        "All of the above",
+        "Other",
+      ],
+    },
   },
   flyer: {
     q1: { label: "What is the flyer for?", opts: ["Event", "Business Promo", "Sale or Special", "Church Service", "School Announcement", "Community Notice", "Other"] },
@@ -212,7 +335,7 @@ export default function MiguelThirty3() {
       <section className="home-hero-poster" aria-label="Thirty3 Digital Designs homepage">
         <div className="hero-poster-inner">
           <p className="hero-service-pill">
-            Websites, Flyers, Logos & Digital Design
+            CLARKSVILLE WEB DESIGN
           </p>
 
           <div className="hero-sticker hero-sticker-one">Clarksville, TN</div>
@@ -227,7 +350,8 @@ export default function MiguelThirty3() {
           <div className="hero-proof-row" aria-label="Proof and rating">
             <span>★★★★★</span>
             <strong>5.0 Google rating</strong>
-            <b>Local design help without the confusing process.</b>
+            <b>Clarksville, TN</b>
+            <b>Direct access to your designer</b>
           </div>
 
           <div className="hero-actions hero-poster-actions">
@@ -240,7 +364,7 @@ export default function MiguelThirty3() {
           </div>
 
           <p className="hero-lede hero-poster-lede">
-            Websites, flyers, logos, QR signs, and marketing materials for small businesses that need to look clear, trusted, and easy to contact.
+            Custom websites for small businesses that want to look professional, build trust, and get chosen.
           </p>
         </div>
       </section>
@@ -262,9 +386,9 @@ export default function MiguelThirty3() {
       >
         <div className="picker-heading">
           <p className="eyebrow eyebrow-dark">Start here</p>
-          <h2>Start with what you need.</h2>
+          <h2>Need a website or something to support it?</h2>
           <p>
-            Pick one. Answer two quick questions. Send the request.
+            Start with the website path if your business needs a stronger online presence. Need a flyer, graphic, QR sign, or brand support? Those fit here too.
           </p>
         </div>
 
@@ -273,7 +397,7 @@ export default function MiguelThirty3() {
             <button
               key={tile.id}
               type="button"
-              className={`tile-btn${disc.tile?.id === tile.id ? " is-selected" : ""}`}
+              className={`tile-btn${tile.featured ? " tile-featured" : ""}${disc.tile?.id === tile.id ? " is-selected" : ""}`}
               onClick={() => selectTile(tile)}
               aria-label={`${tile.label}: ${tile.sub}`}
             >
@@ -313,16 +437,28 @@ export default function MiguelThirty3() {
 
         <div className="why-grid">
           {[
-            ["01", "Pick the project", "Website, flyer, logo, card, QR sign, social post, or something custom."],
-            ["02", "Answer two questions", "A quick filter helps me understand what you are trying to build."],
-            ["03", "Get next steps", "I follow up with the right questions, direction, and a clear path forward."],
-          ].map(([num, title, text]) => (
-            <article className="why-card" key={title}>
-              <span>{num}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
+  [
+    "01",
+    "Start with the goal",
+    "Website, refresh, landing page, or supporting design. We begin with what your business needs people to understand or do.",
+  ],
+  [
+    "02",
+    "Answer two questions",
+    "A quick filter helps me understand the project type, priority, and the next best step.",
+  ],
+  [
+    "03",
+    "Get clear direction",
+    "I follow up with the right questions, recommended path, and what we need to move forward.",
+  ],
+].map(([num, title, text]) => (
+  <article className="why-card" key={title}>
+    <span>{num}</span>
+    <h3>{title}</h3>
+    <p>{text}</p>
+  </article>
+))}
         </div>
       </section>
 
@@ -376,28 +512,40 @@ export default function MiguelThirty3() {
       </section>
 
       <SectionDivider
-        tone="light"
-        number="05"
-        label="Trust"
-        text="What to expect"
-      />
+  tone="light"
+  number="05"
+  label="Why Thirty3"
+  text="Direct, local, practical"
+/>
 
       <section className="expect-section section-fade" aria-label="What to expect when starting a project">
         <div className="expect-heading">
-          <p className="eyebrow eyebrow-dark">What to expect</p>
-          <h2>No confusing process. No guessing game.</h2>
-          <p>
-            Send the request and I’ll help turn the idea into the right next step.
-          </p>
+          <p className="eyebrow eyebrow-dark">Why Thirty3</p>
+<h2>Direct design help without the agency runaround.</h2>
+<p>
+  You work directly with the designer, not a sales funnel, mystery team, or template machine.
+</p>
         </div>
 
         <div className="expect-grid">
           {[
-            ["Clear next step", "You will know what I need from you and what happens after you send the request."],
-            ["Designed around your goal", "The project starts with what you need people to understand, trust, or do."],
-            ["Local and personal", "You are not sending a form into the void. I review each request myself."],
-            ["Built to be useful", "The goal is not just to make something look good. It needs to help people act."],
-          ].map(([title, text]) => (
+  [
+    "Direct access",
+    "You work with me directly, from the first request to the final launch or design handoff.",
+  ],
+  [
+    "Website-first thinking",
+    "Even supporting materials are designed to strengthen how your business shows up online.",
+  ],
+  [
+    "Local perspective",
+    "Built for small businesses in Clarksville, Nashville, and Middle Tennessee that need to look ready.",
+  ],
+  [
+    "Useful, not just pretty",
+    "The goal is clarity, trust, and action. Good design should help people know what to do next.",
+  ],
+].map(([title, text]) => (
             <article className="expect-card" key={title}>
               <span>✓</span>
               <h3>{title}</h3>
@@ -442,14 +590,14 @@ function Header({ scrolled, onStart }) {
     <nav className={`site-header${scrolled ? " is-scrolled" : ""}`} aria-label="Main navigation">
       <a className="site-logo" href="/" aria-label="MiguelThirty3 homepage">
         <span>MIGUEL<b>THIRTY3</b></span>
-        <small>Websites, Flyers, Logos & Digital Design</small>
+        <small>Websites for Small Businesses</small>
       </a>
 
       <div className="site-nav-links">
         <a href="#work">Work</a>
-        <a href="/proof-of-work">Proof</a>
-        <a href="/request-website">Websites</a>
-        <a href="/field-notes">Notes</a>
+<a href="#project-picker">Start</a>
+<a href="/request-website">Websites</a>
+<a href="/field-notes">Notes</a>
         <button type="button" onClick={onStart}>Start a Project</button>
       </div>
     </nav>
@@ -761,11 +909,12 @@ function Footer() {
       <div>
         <strong>MIGUEL<span>THIRTY3</span>.COM</strong>
         <p>
-          Websites, flyers, logos, branding, and digital design for small businesses.
+          Custom websites for small businesses, with supporting design materials when the project needs them.
         </p>
       </div>
 
       <div>
+        <a href="/clarksville-web-design">Clarksville Web Design →</a>
         <a href="#project-picker">Start a project →</a>
         <a href="#work">See the work →</a>
         <a href="https://www.instagram.com/thirty3digitaldesigns/" target="_blank" rel="noopener noreferrer">
