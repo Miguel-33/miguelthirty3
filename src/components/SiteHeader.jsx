@@ -5,6 +5,7 @@ import "../styles/site-chrome.css";
 export default function SiteHeader() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const isHome = location.pathname === "/";
 
@@ -15,7 +16,21 @@ export default function SiteHeader() {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     document.body.classList.toggle("pageChromeMenuOpen", menuOpen);
@@ -25,19 +40,25 @@ export default function SiteHeader() {
     };
   }, [menuOpen]);
 
-  return (
-    <header className="pageChromeHeaderWrap">
+ return (
+  <>
+    <header className={`pageChromeHeaderWrap${scrolled ? " is-scrolled" : ""}`}>
       <nav
-        className={`site-header pageChromeHeader is-scrolled${
+        className={`pageChromeHeader${scrolled ? " is-scrolled" : ""}${
           menuOpen ? " menu-is-open" : ""
         }`}
         aria-label="Main navigation"
       >
-        <Link className="site-logo" to="/" aria-label="MiguelThirty3 homepage" onClick={closeMenu}>
+        <Link
+          className="pageChromeLogo"
+          to="/"
+          aria-label="MiguelThirty3 homepage"
+          onClick={closeMenu}
+        >
           <span>
             MIGUEL<b>THIRTY3</b>
           </span>
-          <small>Websites, Flyers, Logos & Digital Design</small>
+          <small>Websites & Design for Small Businesses</small>
         </Link>
 
         <button
@@ -54,7 +75,7 @@ export default function SiteHeader() {
 
         <div
           id="pageChromeNav"
-          className="site-nav-links pageChromeNav"
+          className="pageChromeNav"
           data-open={menuOpen ? "true" : "false"}
         >
           <a href={workHref} onClick={closeMenu}>
@@ -73,11 +94,14 @@ export default function SiteHeader() {
             Notes
           </Link>
 
-          <a className="site-nav-cta" href={startHref} onClick={closeMenu}>
+          <a className="pageChromeCta" href={startHref} onClick={closeMenu}>
             Start a Project
           </a>
         </div>
       </nav>
     </header>
-  );
+
+    <div className="pageChromeSpacer" aria-hidden="true" />
+  </>
+);
 }

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import SiteHeader from "../components/SiteHeader.jsx";
 import "../styles/not-found.css";
 
 export default function NotFound() {
@@ -22,22 +23,9 @@ export default function NotFound() {
         <meta name="robots" content="noindex" />
       </Helmet>
 
+      <SiteHeader />
+
       <main className="notFound">
-        <nav className="notFound__nav" aria-label="404 navigation">
-          <Link className="notFound__logo" to="/">
-            MIGUEL<span>33</span>
-          </Link>
-
-          <div>
-            <Link to="/">Home</Link>
-            <Link to="/request-website">Request Website</Link>
-            <Link to="/field-notes">Notes</Link>
-            <button type="button" onClick={goToProjectPicker}>
-              Start a Project
-            </button>
-          </div>
-        </nav>
-
         <section className="notFound__hero">
           <div className="notFound__copy">
             <p className="notFound__eyebrow">404 • Page Not Found</p>
@@ -53,6 +41,7 @@ export default function NotFound() {
               <button type="button" onClick={goToProjectPicker}>
                 Start a Project
               </button>
+
               <Link to="/request-website">Request Website</Link>
               <Link to="/field-notes">Read Field Notes</Link>
             </div>

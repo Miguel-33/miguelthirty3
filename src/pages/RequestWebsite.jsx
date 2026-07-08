@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "../styles/request-website.css";
+import SiteHeader from "../components/SiteHeader.jsx";
 
 const WEBSITE_TYPES = [
     "Small Business",
@@ -137,22 +138,7 @@ export default function RequestWebsite() {
                 <meta property="og:type" content="website" />
             </Helmet>
 
-            <nav className="requestWebsite__nav" aria-label="Website request navigation">
-                <Link className="requestWebsite__logo" to="/">
-                    MIGUEL<span>THIRTY3</span>
-                </Link>
-
-                <div>
-                    <Link to="/">Home</Link>
-                    <Link to="/field-notes">Notes</Link>
-                    <button type="button" className="requestWebsite__navTextBtn" onClick={goToHomepagePicker}>
-                        Other Projects
-                    </button>
-                    <button type="button" onClick={scrollToForm}>
-                        Request Website
-                    </button>
-                </div>
-            </nav>
+            <SiteHeader />
 
             <section className="requestWebsite__hero">
                 <div className="requestWebsite__heroCopy">

@@ -1,0 +1,285 @@
+/* ============================================
+   SITE-WIDE MOTION SYSTEM
+   Subtle reveal + premium interaction layer
+   ============================================ */
+
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fast: 180ms;
+  --motion-medium: 520ms;
+  --motion-slow: 760ms;
+}
+
+/* Prevent animation flash before JS initializes */
+.motion-ready :where(
+  .section-fade,
+  .picker-heading,
+  .tile-btn,
+  .why-card,
+  .proj-card,
+  .expect-card,
+  .field-list a,
+  .powHero,
+  .powCard,
+  .projectHero,
+  .projectImageShowcase,
+  .projectStory,
+  .projectServices,
+  .projectResults,
+  .projectQuote,
+  .projectNext,
+  .pageCta,
+  .requestWebsite__heroCopy,
+  .requestWebsite__visual,
+  .requestWebsite__focus article,
+  .requestWebsite__process article,
+  .requestWebsite__formIntro,
+  .requestWebsite__form,
+  .notFound__copy,
+  .notFound__visual
+) {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--motion-medium) var(--motion-ease),
+    transform var(--motion-medium) var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-ready :where(
+  .section-fade,
+  .picker-heading,
+  .tile-btn,
+  .why-card,
+  .proj-card,
+  .expect-card,
+  .field-list a,
+  .powHero,
+  .powCard,
+  .projectHero,
+  .projectImageShowcase,
+  .projectStory,
+  .projectServices,
+  .projectResults,
+  .projectQuote,
+  .projectNext,
+  .pageCta,
+  .requestWebsite__heroCopy,
+  .requestWebsite__visual,
+  .requestWebsite__focus article,
+  .requestWebsite__process article,
+  .requestWebsite__formIntro,
+  .requestWebsite__form,
+  .notFound__copy,
+  .notFound__visual
+).is-revealed,
+.motion-ready :where(.section-fade).visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   HERO LOAD ANIMATION
+   ============================================ */
+
+.motion-ready .home-hero-poster :where(
+  .hero-service-pill,
+  .hero-sticker,
+  .hero-poster-title,
+  .hero-proof-row,
+  .hero-poster-actions,
+  .hero-poster-lede
+) {
+  animation: heroRise var(--motion-slow) var(--motion-ease) both;
+}
+
+.motion-ready .home-hero-poster .hero-service-pill {
+  animation-delay: 60ms;
+}
+
+.motion-ready .home-hero-poster .hero-sticker-one {
+  animation-delay: 120ms;
+}
+
+.motion-ready .home-hero-poster .hero-sticker-two {
+  animation-delay: 180ms;
+}
+
+.motion-ready .home-hero-poster .hero-poster-title {
+  animation-delay: 120ms;
+}
+
+.motion-ready .home-hero-poster .hero-proof-row {
+  animation-delay: 220ms;
+}
+
+.motion-ready .home-hero-poster .hero-poster-actions {
+  animation-delay: 300ms;
+}
+
+.motion-ready .home-hero-poster .hero-poster-lede {
+  animation-delay: 360ms;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   INTERACTION POLISH
+   ============================================ */
+
+:where(
+  .tile-btn,
+  .why-card,
+  .proj-card,
+  .expect-card,
+  .powCard,
+  .requestWebsite__focus article,
+  .requestWebsite__process article,
+  .field-list a
+) {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease),
+    background var(--motion-fast) var(--motion-ease);
+}
+
+@media (hover: hover) {
+  :where(
+    .tile-btn,
+    .why-card,
+    .proj-card,
+    .expect-card,
+    .powCard,
+    .requestWebsite__focus article,
+    .requestWebsite__process article,
+    .field-list a
+  ):hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Buttons feel sharper */
+:where(
+  .btn-primary,
+  .btn-dark,
+  .btn-ghost,
+  .pageCta__actions a,
+  .requestWebsite__actions a,
+  .requestWebsite__actions button,
+  .requestWebsite__form button,
+  .requestWebsite__finalCta button,
+  .requestWebsite__sticky,
+  .notFound__actions a,
+  .notFound__actions button
+) {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-fast) var(--motion-ease),
+    background var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease);
+}
+
+@media (hover: hover) {
+  :where(
+    .btn-primary,
+    .btn-dark,
+    .btn-ghost,
+    .pageCta__actions a,
+    .requestWebsite__actions a,
+    .requestWebsite__actions button,
+    .requestWebsite__form button,
+    .requestWebsite__finalCta button,
+    .requestWebsite__sticky,
+    .notFound__actions a,
+    .notFound__actions button
+  ):hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Press state */
+:where(
+  button,
+  a
+):active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* ============================================
+   FIELD NOTES / LINK POLISH
+   ============================================ */
+
+.field-list a b,
+.proj-card b,
+.powCard__link,
+.pageCta__actions a {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease);
+}
+
+@media (hover: hover) {
+  .field-list a:hover b,
+  .proj-card:hover b,
+  .powCard:hover .powCard__link {
+    transform: translateX(4px);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+.motion-reduced *,
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.motion-reduced :where(
+  .section-fade,
+  .picker-heading,
+  .tile-btn,
+  .why-card,
+  .proj-card,
+  .expect-card,
+  .field-list a,
+  .powHero,
+  .powCard,
+  .projectHero,
+  .projectImageShowcase,
+  .projectStory,
+  .projectServices,
+  .projectResults,
+  .projectQuote,
+  .projectNext,
+  .pageCta,
+  .requestWebsite__heroCopy,
+  .requestWebsite__visual,
+  .requestWebsite__focus article,
+  .requestWebsite__process article,
+  .requestWebsite__formIntro,
+  .requestWebsite__form,
+  .notFound__copy,
+  .notFound__visual
+) {
+  opacity: 1 !important;
+  transform: none !important;
+}

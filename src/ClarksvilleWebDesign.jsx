@@ -39,6 +39,10 @@ const FAQS = [
     q: "Do you also design logos, flyers, or social graphics?",
     a: "Yes. Websites are the main focus, but supporting design materials can be created when the project needs them.",
   },
+  {
+  q: "Are you a local web designer near Clarksville, TN?",
+  a: "Yes. Thirty3 Digital Designs is based around Clarksville and Middle Tennessee, helping small businesses create custom websites, landing pages, and supporting design materials.",
+},
 ];
 
 function upsertMeta(name, content) {
@@ -72,7 +76,7 @@ export default function ClarksvilleWebDesign() {
       "description",
       "Custom Clarksville web design for small businesses that need to look professional, build trust, and get chosen before customers call."
     );
-    upsertCanonical("https://www.miguelthirty3.com/clarksville-web-design");
+    upsertCanonical("https://miguelthirty3.com/clarksville-web-design");
   }, []);
 
   return (

@@ -4018,7 +4018,6 @@ textarea.field-input {
 }
 
 .local-problem {
-  grid-template-columns: minmax(360px, 0.85fr) minmax(0, 1fr);
   align-items: start;
 }
 

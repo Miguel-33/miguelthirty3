@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import App from "./App.jsx";
+import SiteMotion from "./components/SiteMotion.jsx";
 import ClarksvilleWebDesign from "./ClarksvilleWebDesign";
 import FieldNotes from "./pages/FieldNotes.jsx";
 import FieldNoteSingle from "./pages/FieldNoteSingle.jsx";
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <SiteMotion />
 
         <Routes>
           <Route path="/" element={<App />} />

@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import "./App.css";
 import { useLocation } from "react-router-dom";
+import SiteHeader from "./components/SiteHeader.jsx";
 
 const TILES = [
   {
@@ -270,35 +271,10 @@ function discReducer(state, action) {
   }
 }
 
-function useFadeIn() {
-  useEffect(() => {
-    const els = document.querySelectorAll(".section-fade");
-    const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        }),
-      { threshold: 0.08 }
-    );
-
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-}
-
 export default function MiguelThirty3() {
-  const [scrolled, setScrolled] = useState(false);
   const [disc, dispatch] = useReducer(discReducer, initDisc);
   const discRef = useRef(null);
   const pickerRef = useRef(null);
-
-  useFadeIn();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -330,7 +306,7 @@ export default function MiguelThirty3() {
 
   return (
     <main className="home-shell">
-      <Header scrolled={scrolled} onStart={() => scrollTo("project-picker")} />
+      <SiteHeader />
 
       <section className="home-hero-poster" aria-label="Thirty3 Digital Designs homepage">
         <div className="hero-poster-inner">
@@ -582,25 +558,6 @@ function SectionDivider({ tone = "light", number, label, text }) {
         <b>THIRTY3</b>
       </div>
     </div>
-  );
-}
-
-function Header({ scrolled, onStart }) {
-  return (
-    <nav className={`site-header${scrolled ? " is-scrolled" : ""}`} aria-label="Main navigation">
-      <a className="site-logo" href="/" aria-label="MiguelThirty3 homepage">
-        <span>MIGUEL<b>THIRTY3</b></span>
-        <small>Websites for Small Businesses</small>
-      </a>
-
-      <div className="site-nav-links">
-        <a href="#work">Work</a>
-<a href="#project-picker">Start</a>
-<a href="/request-website">Websites</a>
-<a href="/field-notes">Notes</a>
-        <button type="button" onClick={onStart}>Start a Project</button>
-      </div>
-    </nav>
   );
 }
 

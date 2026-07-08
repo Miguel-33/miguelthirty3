@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/page-cta.css";
 
 export default function PageCTA({
@@ -6,6 +6,25 @@ export default function PageCTA({
   title = "Need your business to look ready before they call?",
   text = "Send a quick request and I’ll help shape the next step.",
 }) {
+  const location = useLocation();
+  const isProofPage = location.pathname === "/proof-of-work";
+
+  const handleProofClick = (event) => {
+    if (!isProofPage) return;
+
+    event.preventDefault();
+
+    const proofTop =
+      document.getElementById("proof-of-work") ||
+      document.querySelector(".powHero") ||
+      document.body;
+
+    proofTop.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <section className="pageCta" aria-label="Start a project">
       <div className="pageCta__inner">
@@ -19,7 +38,10 @@ export default function PageCTA({
 
           <div className="pageCta__actions">
             <Link to="/request-website">Request a Website</Link>
-            <Link to="/proof-of-work">See Proof of Work</Link>
+
+            <Link to="/proof-of-work" onClick={handleProofClick}>
+              {isProofPage ? "Back to Proof" : "See Proof of Work"}
+            </Link>
           </div>
         </div>
       </div>
