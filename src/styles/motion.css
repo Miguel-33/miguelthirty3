@@ -243,14 +243,11 @@
    REDUCED MOTION
    ============================================ */
 
-.motion-reduced *,
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 1ms !important;
-    animation-delay: 0ms !important;
-    transition-duration: 1ms !important;
-    scroll-behavior: auto !important;
-  }
+.motion-reduced * {
+  animation-duration: 1ms !important;
+  animation-delay: 0ms !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
 }
 
 .motion-reduced :where(
@@ -282,4 +279,44 @@
 ) {
   opacity: 1 !important;
   transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  :where(
+    .section-fade,
+    .picker-heading,
+    .tile-btn,
+    .why-card,
+    .proj-card,
+    .expect-card,
+    .field-list a,
+    .powHero,
+    .powCard,
+    .projectHero,
+    .projectImageShowcase,
+    .projectStory,
+    .projectServices,
+    .projectResults,
+    .projectQuote,
+    .projectNext,
+    .pageCta,
+    .requestWebsite__heroCopy,
+    .requestWebsite__visual,
+    .requestWebsite__focus article,
+    .requestWebsite__process article,
+    .requestWebsite__formIntro,
+    .requestWebsite__form,
+    .notFound__copy,
+    .notFound__visual
+  ) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
