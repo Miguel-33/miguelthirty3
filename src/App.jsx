@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import "./App.css";
 import "./HomeFlow.css";
@@ -96,6 +97,380 @@ function ArrowIcon() {
     <svg viewBox="0 0 18 18" aria-hidden="true">
       <path d="M4 14 14 4M7 4h7v7" />
     </svg>
+  );
+}
+
+const PROJECT_FORM_ENDPOINT =
+  "https://formspree.io/f/xvzybvrd";
+
+const INITIAL_PROJECT_FORM = {
+  name: "",
+  email: "",
+  business: "",
+  projectType: "",
+  details: "",
+  budget: "",
+};
+
+function ProjectInquiryModal({
+  open,
+  onClose,
+  returnFocusRef,
+}) {
+  const dialogRef = useRef(null);
+  const firstFieldRef = useRef(null);
+  const [form, setForm] = useState(INITIAL_PROJECT_FORM);
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    window.requestAnimationFrame(() => {
+      firstFieldRef.current?.focus();
+    });
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll(
+          [
+            "a[href]",
+            "button:not([disabled])",
+            "input:not([disabled])",
+            "select:not([disabled])",
+            "textarea:not([disabled])",
+          ].join(","),
+        ) ?? [],
+      );
+
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (
+        event.shiftKey &&
+        document.activeElement === first
+      ) {
+        event.preventDefault();
+        last.focus();
+      }
+
+      if (
+        !event.shiftKey &&
+        document.activeElement === last
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown,
+      );
+
+      window.requestAnimationFrame(() => {
+        returnFocusRef.current?.focus();
+      });
+    };
+  }, [open, onClose, returnFocusRef]);
+
+  useEffect(() => {
+    if (open) return;
+
+    const timer = window.setTimeout(() => {
+      setForm(INITIAL_PROJECT_FORM);
+      setStatus("idle");
+      setMessage("");
+    }, 250);
+
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setStatus("submitting");
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        PROJECT_FORM_ENDPOINT,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            ...form,
+            _subject: `New Thirty3 project inquiry from ${form.name}`,
+            source: "Thirty3 homepage popup",
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Unable to submit project inquiry.");
+      }
+
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setMessage(
+        "Something did not go through. Please try again or use the full project request page.",
+      );
+    }
+  };
+
+  if (!open) return null;
+
+  return createPortal(
+    <div className="showcase-home project-modal-host">
+      <div
+        className="project-modal"
+        role="presentation"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) {
+            onClose();
+          }
+        }}
+      >
+        <div
+          ref={dialogRef}
+          className="project-modal__dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
+          aria-describedby="project-modal-description"
+        >
+          <button
+            type="button"
+            className="project-modal__close"
+            onClick={onClose}
+            aria-label="Close project inquiry form"
+          >
+            <span />
+            <span />
+          </button>
+
+          {status === "success" ? (
+            <div
+              className="project-modal__success"
+              role="status"
+            >
+              <p className="showcase-kicker">
+                Message received
+              </p>
+
+              <h2>Good start.</h2>
+
+              <p>
+                Your project details are on their way to
+                Thirty3. Miguel will review them and follow
+                up directly.
+              </p>
+
+              <button
+                type="button"
+                className="showcase-button showcase-button--primary"
+                onClick={onClose}
+              >
+                Back to the work
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="project-modal__intro">
+                <p className="showcase-kicker">
+                  Start a project
+                </p>
+
+                <h2 id="project-modal-title">
+                  Tell me what needs to move forward.
+                </h2>
+
+                <p id="project-modal-description">
+                  A few details are enough to begin. We can
+                  work through the rest together.
+                </p>
+              </div>
+
+              <form
+                className="project-modal__form"
+                onSubmit={handleSubmit}
+              >
+                <div className="project-modal__grid">
+                  <label>
+                    <span>Name</span>
+                    <input
+                      ref={firstFieldRef}
+                      type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      autoComplete="name"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    <span>Email</span>
+                    <input
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    <span>Business name</span>
+                    <input
+                      type="text"
+                      name="business"
+                      value={form.business}
+                      onChange={handleChange}
+                      autoComplete="organization"
+                    />
+                  </label>
+
+                  <label>
+                    <span>What do you need?</span>
+                    <select
+                      name="projectType"
+                      value={form.projectType}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">
+                        Choose a project
+                      </option>
+                      <option value="Website">
+                        Website
+                      </option>
+                      <option value="Website redesign">
+                        Website redesign
+                      </option>
+                      <option value="Brand and identity">
+                        Brand and identity
+                      </option>
+                      <option value="Flyer or campaign">
+                        Flyer or campaign
+                      </option>
+                      <option value="Design support">
+                        Ongoing design support
+                      </option>
+                      <option value="Not sure">
+                        Not sure yet
+                      </option>
+                    </select>
+                  </label>
+                </div>
+
+                <label>
+                  <span>What should I know?</span>
+                  <textarea
+                    name="details"
+                    value={form.details}
+                    onChange={handleChange}
+                    rows="4"
+                    placeholder="What is not working now, and what would a better result look like?"
+                    required
+                  />
+                </label>
+
+                <label>
+                  <span>Estimated investment</span>
+                  <select
+                    name="budget"
+                    value={form.budget}
+                    onChange={handleChange}
+                  >
+                    <option value="">
+                      Select a range
+                    </option>
+                    <option value="Under $1,000">
+                      Under $1,000
+                    </option>
+                    <option value="$1,000–$2,500">
+                      $1,000–$2,500
+                    </option>
+                    <option value="$2,500–$5,000">
+                      $2,500–$5,000
+                    </option>
+                    <option value="$5,000+">
+                      $5,000+
+                    </option>
+                    <option value="Not sure">
+                      Not sure yet
+                    </option>
+                  </select>
+                </label>
+
+                {message && (
+                  <p
+                    className="project-modal__error"
+                    role="alert"
+                  >
+                    {message}
+                  </p>
+                )}
+
+                <div className="project-modal__actions">
+                  <button
+                    type="submit"
+                    className="showcase-button showcase-button--primary"
+                    disabled={status === "submitting"}
+                  >
+                    {status === "submitting"
+                      ? "Sending..."
+                      : "Send project details"}
+
+                    <ArrowIcon />
+                  </button>
+
+                  <Link
+                    className="project-modal__full-link"
+                    to="/request-website#website-request-form"
+                    onClick={onClose}
+                  >
+                    Prefer the full request form?
+                  </Link>
+                </div>
+              </form>
+            </>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -626,6 +1001,20 @@ function ProjectScene({ project }) {
 export default function MiguelThirty3() {
   const location = useLocation();
 
+  const [projectModalOpen, setProjectModalOpen] =
+    useState(false);
+
+  const modalTriggerRef = useRef(null);
+
+  const openProjectModal = (event) => {
+    modalTriggerRef.current = event.currentTarget;
+    setProjectModalOpen(true);
+  };
+
+  const closeProjectModal = () => {
+    setProjectModalOpen(false);
+  };
+
   useEffect(() => {
     const targetId = location.state?.scrollTo;
 
@@ -685,7 +1074,7 @@ export default function MiguelThirty3() {
 
   return (
     <div className="home-shell showcase-home">
-      <SiteHeader />
+      <SiteHeader onStartProject={openProjectModal} />
 
       <main>
         <section
@@ -711,13 +1100,14 @@ export default function MiguelThirty3() {
               </p>
 
               <div className="showcase-actions">
-                <Link
+                <button
+                  type="button"
                   className="showcase-button showcase-button--primary"
-                  to="/request-website"
+                  onClick={openProjectModal}
                 >
                   Start a project
                   <ArrowIcon />
-                </Link>
+                </button>
 
                 <a
                   className="showcase-button showcase-button--secondary"
@@ -907,13 +1297,14 @@ export default function MiguelThirty3() {
             </p>
 
             <div className="showcase-actions showcase-actions--centered">
-              <Link
+              <button
+                type="button"
                 className="showcase-button showcase-button--primary"
-                to="/request-website"
+                onClick={openProjectModal}
               >
                 Start a project
                 <ArrowIcon />
-              </Link>
+              </button>
 
               <Link
                 className="showcase-button showcase-button--secondary"
@@ -934,6 +1325,12 @@ export default function MiguelThirty3() {
           </div>
         </section>
       </main>
+
+      <ProjectInquiryModal
+        open={projectModalOpen}
+        onClose={closeProjectModal}
+        returnFocusRef={modalTriggerRef}
+      />
     </div>
   );
 }

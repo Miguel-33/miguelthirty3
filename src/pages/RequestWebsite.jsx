@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "../styles/request-website.css";
 import SiteHeader from "../components/SiteHeader.jsx";
@@ -59,6 +62,27 @@ export default function RequestWebsite() {
     });
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+useEffect(() => {
+  if (
+    location.hash !== "#website-request-form"
+  ) {
+    return undefined;
+  }
+
+  const timer = window.setTimeout(() => {
+    document
+      .getElementById("website-request-form")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  }, 150);
+
+  return () => window.clearTimeout(timer);
+}, [location.hash]);
 
     const goToHomepagePicker = () => {
         navigate("/", {

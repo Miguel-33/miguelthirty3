@@ -17,7 +17,7 @@ function ArrowIcon() {
   );
 }
 
-export default function SiteHeader() {
+export default function SiteHeader({ onStartProject }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -237,14 +237,28 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            <Link
-              className="pageChromeCta"
-              to="/request-website"
-              onClick={closeMenu}
-            >
-              <span>Start a Project</span>
-              <ArrowIcon />
-            </Link>
+            {isHome && onStartProject ? (
+              <button
+                type="button"
+                className="pageChromeCta"
+                onClick={(event) => {
+                  closeMenu();
+                  onStartProject(event);
+                }}
+              >
+                <span>Start a Project</span>
+                <ArrowIcon />
+              </button>
+            ) : (
+              <Link
+                className="pageChromeCta"
+                to="/request-website"
+                onClick={closeMenu}
+              >
+                <span>Start a Project</span>
+                <ArrowIcon />
+              </Link>
+            )}
 
             <div className="pageChromeMenuFooter">
               <span>Clarksville / Nashville</span>
