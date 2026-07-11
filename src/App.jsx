@@ -1134,26 +1134,26 @@ export default function MiguelThirty3() {
               </div>
 
               <a
-  className="showcase-hero__browser"
-  href="https://isabellatransport.com/"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Visit the live Isabella Transport website"
->
-  <div className="showcase-browser-bar" aria-hidden="true">
-    <span />
-    <span />
-    <span />
-    <b>isabellatransport.com</b>
-  </div>
+                className="showcase-hero__browser"
+                href="https://isabellatransport.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit the live Isabella Transport website"
+              >
+                <div className="showcase-browser-bar" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <b>isabellatransport.com</b>
+                </div>
 
-  <img
-    src="/isabellaTransportHero.png"
-    alt="Isabella Transport website homepage designed by Thirty3 Digital Designs"
-    fetchPriority="high"
-    decoding="async"
-  />
-</a>
+                <img
+                  src="/isabellaTransportHero.png"
+                  alt="Isabella Transport website homepage designed by Thirty3 Digital Designs"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </a>
 
               <div className="showcase-hero__crop" aria-hidden="true">
                 <img
@@ -1164,17 +1164,17 @@ export default function MiguelThirty3() {
               </div>
 
               <a
-  className="showcase-hero__caption"
-  href="https://isabellatransport.com/"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Visit Isabella Transport"
->
-  <span>Isabella Transport</span>
-  <strong>
-    Clearer services. Stronger first impression.
-  </strong>
-</a>
+                className="showcase-hero__caption"
+                href="https://isabellatransport.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Isabella Transport"
+              >
+                <span>Isabella Transport</span>
+                <strong>
+                  Clearer services. Stronger first impression.
+                </strong>
+              </a>
             </div>
           </div>
 
@@ -1287,6 +1287,46 @@ export default function MiguelThirty3() {
               <li>Clarksville and Nashville focused</li>
               <li>Bilingual support when it matters</li>
             </ul>
+          </div>
+        </section>
+
+        <section
+          className="showcase-freebie"
+          aria-labelledby="showcase-freebie-title"
+        >
+          <div className="showcase-freebie__inner" data-reveal>
+            <div className="showcase-freebie__copy">
+              <p className="showcase-kicker">
+                Free business resource
+              </p>
+
+              <h2 id="showcase-freebie-title">
+                Does your business
+                <span>look ready?</span>
+              </h2>
+
+              <p>
+                Use this quick first-impression scorecard to see
+                where your website, brand, and customer experience
+                may be making trust work harder than it should.
+              </p>
+            </div>
+
+            <div className="showcase-freebie__action">
+              <a
+                className="showcase-button showcase-button--primary"
+                href="/downloads/does-your-business-look-ready.pdf?utm_source=website&utm_medium=homepage&utm_campaign=free_scorecard"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get the free scorecard
+                <ArrowIcon />
+              </a>
+
+              <span>
+                Interactive PDF · About 2 minutes
+              </span>
+            </div>
           </div>
         </section>
 

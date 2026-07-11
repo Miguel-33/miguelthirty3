@@ -2790,3 +2790,132 @@
 .showcase-hero__caption:focus-visible {
   text-decoration: none;
 }
+
+/* ============================================
+   FREE SCORECARD
+   ============================================ */
+
+.showcase-freebie {
+  position: relative;
+  padding:
+    clamp(90px, 12vw, 170px)
+    clamp(20px, 5vw, 72px);
+  overflow: hidden;
+  border-top: 1px solid var(--showcase-line);
+  background: #f1f1ef;
+  color: #111214;
+}
+
+.showcase-freebie::before {
+  position: absolute;
+  top: -180px;
+  right: -120px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: var(--showcase-yellow);
+  content: "";
+}
+
+.showcase-freebie__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(260px, 0.6fr);
+  gap: clamp(50px, 8vw, 120px);
+  align-items: end;
+  width: min(100%, 1320px);
+  margin: 0 auto;
+}
+
+.showcase-freebie .showcase-kicker {
+  color: rgba(17, 18, 20, 0.58);
+}
+
+.showcase-freebie__copy {
+  max-width: 850px;
+}
+
+.showcase-freebie__copy h2 {
+  margin: 22px 0 0;
+  font-family: var(--showcase-head);
+  font-size: clamp(4.2rem, 9vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.showcase-freebie__copy h2 span {
+  display: block;
+  color: #111214;
+}
+
+.showcase-freebie__copy > p:last-child {
+  max-width: 680px;
+  margin: 30px 0 0;
+  color: rgba(17, 18, 20, 0.7);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.showcase-freebie__action {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.showcase-freebie__action
+  .showcase-button--primary {
+  background: #111214;
+  color: #f1f1ef;
+}
+
+.showcase-freebie__action
+  .showcase-button--primary:hover {
+  background: var(--showcase-yellow);
+  color: #111214;
+}
+
+.showcase-freebie__action > span {
+  color: rgba(17, 18, 20, 0.54);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .showcase-freebie {
+    padding:
+      90px
+      20px;
+  }
+
+  .showcase-freebie::before {
+    top: -115px;
+    right: -145px;
+    width: 300px;
+    height: 300px;
+  }
+
+  .showcase-freebie__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .showcase-freebie__copy h2 {
+    font-size: clamp(3.8rem, 16vw, 6.5rem);
+  }
+
+  .showcase-freebie__action {
+    justify-items: stretch;
+  }
+
+  .showcase-freebie__action
+    .showcase-button {
+    width: 100%;
+  }
+}
