@@ -499,3 +499,47 @@ body.pageChromeMenuOpen {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-width: 700px) {
+  .pageChromeNavLinks {
+    gap: 0;
+  }
+
+  .pageChromeNavLinks a {
+    min-height: 88px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(241, 241, 239, 0.14);
+  }
+
+  .pageChromeNavLinks a:last-child {
+    border-bottom: 1px solid rgba(241, 241, 239, 0.14);
+  }
+
+  .pageChromeNavLinks a > span:last-child {
+    font-size: clamp(3rem, 12vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.12em;
+    text-shadow: none;
+    transform: none;
+    filter: none;
+  }
+
+  .pageChromeNavLinks a::before,
+  .pageChromeNavLinks a::after {
+    display: none;
+  }
+
+  .pageChromeNavNumber {
+    width: 42px;
+    flex: 0 0 42px;
+    font-size: 0.7rem;
+  }
+
+  .pageChromeNavLinks a.is-active > span:last-child {
+    color: #f1f1ef;
+  }
+
+  .pageChromeNavLinks a:not(.is-active) > span:last-child {
+    color: rgba(241, 241, 239, 0.58);
+  }
+}

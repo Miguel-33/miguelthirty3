@@ -1133,21 +1133,27 @@ export default function MiguelThirty3() {
                 <span>Transportation website</span>
               </div>
 
-              <div className="showcase-hero__browser">
-                <div className="showcase-browser-bar" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                  <b>isabellatransport.com</b>
-                </div>
+              <a
+  className="showcase-hero__browser"
+  href="https://isabellatransport.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Visit the live Isabella Transport website"
+>
+  <div className="showcase-browser-bar" aria-hidden="true">
+    <span />
+    <span />
+    <span />
+    <b>isabellatransport.com</b>
+  </div>
 
-                <img
-                  src="/isabellaTransportHero.png"
-                  alt="Isabella Transport website homepage designed by Thirty3 Digital Designs"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </div>
+  <img
+    src="/isabellaTransportHero.png"
+    alt="Isabella Transport website homepage designed by Thirty3 Digital Designs"
+    fetchPriority="high"
+    decoding="async"
+  />
+</a>
 
               <div className="showcase-hero__crop" aria-hidden="true">
                 <img
@@ -1157,12 +1163,18 @@ export default function MiguelThirty3() {
                 />
               </div>
 
-              <div className="showcase-hero__caption">
-                <span>Isabella Transport</span>
-                <strong>
-                  Clearer services. Stronger first impression.
-                </strong>
-              </div>
+              <a
+  className="showcase-hero__caption"
+  href="https://isabellatransport.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Visit Isabella Transport"
+>
+  <span>Isabella Transport</span>
+  <strong>
+    Clearer services. Stronger first impression.
+  </strong>
+</a>
             </div>
           </div>
 
