@@ -10,6 +10,11 @@ const projectScreenshots = {
     src: "/isabellaTransportHero.png",
     alt: "Isabella Transport website homepage screenshot",
   },
+  "joseph-p-day": {
+    src: "/josephPDayHero.png",
+    alt:
+      "Joseph P. Day campaign website homepage presenting campaign priorities, accomplishments, and voter information",
+  },
   "gregory-chatman": {
     src: "/gregorySChatmanHero.png",
     alt: "Gregory S. Chatman website homepage screenshot",
@@ -87,11 +92,25 @@ export default function ProjectSingle() {
 
         {screenshot ? (
           <section
-            className="projectImageShowcase"
-            aria-label={`${project.title} website screenshot`}
-          >
-            <img src={screenshot.src} alt={screenshot.alt} />
-          </section>
+  className="projectImageShowcase"
+  aria-label={`${project.title} website screenshot`}
+>
+  <a
+    href={project.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Visit the live ${project.title} website`}
+  >
+    <img
+      src={screenshot.src}
+      alt={screenshot.alt}
+    />
+
+    <span className="projectImageShowcase__link">
+      Visit live website ↗
+    </span>
+  </a>
+</section>
         ) : (
           <section className="projectImagePlaceholder">
             <div>

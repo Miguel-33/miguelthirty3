@@ -83,4 +83,41 @@ export const projects = [
     quote: "",
     next: "Future content and service expansion",
   },
+  {
+  slug: "joseph-p-day",
+  eyebrow: "Campaign Website / Public Service",
+  title: "Joseph P. Day",
+  headline:
+    "A campaign website built to present public service with clarity, confidence, and credibility.",
+  excerpt:
+    "Joseph P. Day needed a modern campaign platform that could communicate accomplishments, priorities, endorsements, events, and voter information without feeling cluttered or overly political.",
+  industry: "Political Campaign / Public Service",
+  platform: "WordPress",
+  focus: "Credibility, accomplishments, and voter information",
+  status: "Live",
+  challenge:
+    "The campaign needed one clear digital home for a growing amount of information. Accomplishments, endorsements, priorities, events, donation opportunities, and voter resources all mattered, but presenting everything with equal weight would make the site difficult to navigate. The website also needed to feel current and campaign-ready while maintaining the professionalism expected of a sitting public official.",
+  solution:
+    "Thirty3 created a structured campaign website that gives each message a clear role. The homepage establishes Joseph P. Day immediately, introduces the campaign’s central priorities, and guides visitors toward the information most relevant to them. Accomplishments and endorsements support credibility, while events, campaign updates, and voter-focused calls to action create a direct path toward participation.",
+  services: [
+    "Website strategy",
+    "Campaign website design",
+    "WordPress development",
+    "Content hierarchy",
+    "Responsive mobile design",
+    "Campaign event publishing",
+    "Donation and engagement pathways",
+    "Ongoing website support",
+  ],
+  results: [
+    "A clearer public-facing campaign platform",
+    "Stronger presentation of accomplishments and priorities",
+    "One organized home for endorsements and campaign updates",
+    "Simpler access to events, voter information, and campaign actions",
+  ],
+  quote: "",
+  next:
+    "Build a campaign website that makes the record, the message, and the next action easy to understand.",
+  url: "https://josephpday.com/",
+},
 ];
