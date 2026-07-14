@@ -33,7 +33,7 @@ const PROJECTS = [
   },
   {
     number: "03",
-    name: "Gregory Chatman",
+    name: "Gregory S. Chatman",
     summary:
       "An editorial home for sermons, videos, and a focused message with room for the work to keep growing.",
     result: "A more intentional stage for the message.",
