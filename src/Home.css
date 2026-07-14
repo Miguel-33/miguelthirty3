@@ -443,14 +443,20 @@
 
 .homeProjectStage__presentation {
   min-width: 0;
+  min-height: 0;
+  height: 100%;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) minmax(132px, auto);
   padding: clamp(22px, 2.7vw, 42px);
+  overflow: hidden;
 }
 
 .homeProjectStage__media {
   position: relative;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
+  height: 100%;
   display: block;
   overflow: hidden;
   background: #d2d7d9;
@@ -1657,4 +1663,24 @@
   .thirty3-home .pageChromeHeaderWrap.is-paper.menu-is-open .pageChromeLogo {
     color: var(--chrome-paper);
   }
+}
+
+@media (min-width: 981px) {
+  .homeProjectStage {
+    height: clamp(620px, 51vw, 780px);
+    min-height: 0;
+  }
+}
+
+.homeProjectStage__caption {
+  min-height: 132px;
+  align-items: start;
+}
+
+.homeProjectStage__caption h2 {
+  min-height: 1.92em;
+}
+
+.homeProjectStage__caption > div:last-child > p {
+  min-height: 2.8em;
 }
