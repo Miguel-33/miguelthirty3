@@ -155,7 +155,7 @@
 .showcase-hero h1 {
   max-width: 690px;
   margin-top: 20px;
-  font-size: clamp(5.2rem, 8.5vw, 10.8rem);
+  font-size: clamp(5.2rem, 7.5vw, 10.8rem);
   line-height: 0.78;
 }
 
@@ -168,7 +168,7 @@
   max-width: 590px;
   margin: 32px 0 0;
   color: var(--showcase-muted);
-  font-size: clamp(1rem, 1.3vw, 1.24rem);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
   font-weight: 560;
   line-height: 1.65;
 }

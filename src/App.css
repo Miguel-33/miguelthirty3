@@ -4531,3 +4531,21 @@ textarea.field-input {
     margin-top: 4px;
   }
 }
+
+.local-work-grid a {
+  display: grid;
+  overflow: hidden;
+}
+
+.local-work-grid a img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border-bottom: 1px solid rgba(17, 18, 20, 0.14);
+}
+
+.local-work-grid a > div {
+  padding: clamp(22px, 3vw, 34px);
+}

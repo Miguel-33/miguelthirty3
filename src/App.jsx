@@ -1,96 +1,113 @@
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import "./App.css";
-import "./HomeFlow.css";
+import "./Home.css";
+import ProjectInquiryModal from "./components/ProjectInquiryModal.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 
 const PROJECTS = [
   {
     number: "01",
     name: "Isabella Transport",
-    type: "Transportation Website",
+    type: "Transportation website",
+    summary:
+      "A clearer digital presence built to explain the service, strengthen trust, and make the next step obvious.",
+    result: "Clearer services. Easier contact.",
+    href: "/proof-of-work/isabella-transport",
     image: "/isabellaTransportHero.png",
     mobileImage: "/isabellaTransportHeroMobile.png",
-    alt: "Isabella Transport website homepage with airport transportation services and a prominent booking call to action",
-    description:
-      "A clearer online experience built to make services easier to understand and contact easier to find.",
-    result: "Clearer services. Faster contact. Stronger credibility.",
-    href: "/proof-of-work/isabella-transport",
-    tone: "isabella",
-    layout: "sweep",
-    note: "Clarksville to BNA",
+    alt: "Isabella Transport website designed by Thirty3 Digital Designs",
+    accent: "#ee7c36",
+    layout: "feature",
   },
   {
     number: "02",
     name: "Joseph P. Day",
-    type: "Campaign Website",
-    image: "/josephPDayHero.png",
-    mobileImage: "/josephPDayHeroMobile.png",
-    alt: "Joseph P. Day campaign website homepage presenting campaign priorities, accomplishments, and voter information",
-    description:
-      "A modern public-facing campaign platform designed around credibility, accomplishments, endorsements, and voter-focused information.",
-    result: "A more focused platform for a public-facing campaign.",
+    type: "Public service and campaign website",
+    summary:
+      "A modern public-facing platform organized around credibility, accomplishments, and voter-focused information.",
+    result: "A stronger digital campaign presence.",
     href: "/proof-of-work/joseph-p-day",
-    tone: "day",
-    layout: "panorama",
-    motion: "expand",
-    note: "Public service, clearly presented",
+    image: "/josephPDayHero.png",
+    alt: "Joseph P. Day campaign website designed by Thirty3 Digital Designs",
+    accent: "#c9a862",
+    layout: "wide",
   },
   {
     number: "03",
     name: "Gregory S. Chatman",
-    type: "Personal Brand Website",
-    image: "/gregorySChatmanHero.png",
-    mobileImage: "/gregorySChatmanHeroMobile.png",
-    alt: "Gregory S. Chatman personal brand website featuring his message, sermons, and video content",
-    description:
-      "An intentional digital stage for sermons, videos, writing, and a focused spiritual message.",
-    result: "One clear home for the message and the work.",
+    type: "Author and speaker website",
+    summary:
+      "An editorial home for sermons, videos, and a focused message with room for the work to keep growing.",
+    result: "A more intentional stage for the message.",
     href: "/proof-of-work/gregory-chatman",
-    tone: "chatman",
-    layout: "editorial",
-    motion: "editorial-reveal",
-    note: "From religion to sincerity",
+    image: "/gregorySChatmanHero.png",
+    alt: "Gregory S. Chatman website designed by Thirty3 Digital Designs",
+    accent: "#770000",
+    layout: "tall",
   },
   {
     number: "04",
     name: "Blayne’s Family Research",
-    type: "Genealogy and Research Website",
-    image: "/blaynesFamilyResearchHero.png",
-    mobileImage: "/blaynesFamilyResearchHeroMobile.png",
-    alt: "Blayne’s Family Research website homepage presenting genealogy and family research services",
-    description:
-      "A trustworthy research website designed to present services clearly and create a more confident inquiry path.",
-    result: "A more credible, personal path from curiosity to inquiry.",
+    type: "Genealogy research website",
+    summary:
+      "A welcoming website that makes professional family-history research feel accessible, organized, and trustworthy.",
+    result: "Research organized. Next steps clarified.",
     href: "/proof-of-work/blaynes-family-research",
-    tone: "blayne",
-    layout: "archive",
-    motion: "archive-lift",
-    note: "Research with a human touch",
+    image: "/blaynesFamilyResearchHero.png",
+    alt: "Blayne’s Family Research website designed by Thirty3 Digital Designs",
+    accent: "#3d6770",
+    layout: "offset",
   },
 ];
 
-const CAPABILITIES = [
+const PROOF_ITEMS = [
+  { value: "10+", label: "websites completed" },
+  { value: "Direct", label: "access to the designer" },
+  { value: "Together", label: "strategy, design, and build" },
+  { value: "Bilingual", label: "English and Spanish support" },
+];
+
+const SERVICES = [
   {
     number: "01",
     title: "Websites",
-    text: "Strategic websites designed to make the business easier to understand, trust, and contact.",
-    label: "Discuss a website",
+    projectType: "Website",
+    className: "homeService--primary",
+    text: "Custom websites and redesigns that make the business easier to understand, trust, and contact.",
+    details: [
+      "Strategy and content structure",
+      "Responsive design and development",
+      "WordPress or custom front end",
+      "Launch guidance and ongoing support",
+    ],
+    cta: "Discuss a website",
   },
   {
     number: "02",
-    title: "Brand and Identity",
-    text: "Visual direction that helps the business feel recognizable, established, and consistent.",
-    label: "Discuss your brand",
+    title: "Brand and identity",
+    projectType: "Brand and identity",
+    className: "homeService--secondary",
+    text: "Visual direction that helps the business feel recognizable, established, and consistent across every touchpoint.",
+    details: ["Logos and identity systems", "Color and typography direction", "Practical brand applications"],
+    cta: "Discuss your brand",
   },
   {
     number: "03",
-    title: "Design Support",
-    text: "Campaigns, flyers, social graphics, and digital materials built around the brand.",
-    label: "Discuss design support",
+    title: "Design support",
+    projectType: "Design support",
+    className: "homeService--tertiary",
+    text: "Campaigns, flyers, social graphics, and digital materials designed to feel connected to the larger business.",
+    details: ["Flyers and event materials", "Campaign graphics", "Social and digital assets"],
+    cta: "Discuss design support",
   },
 ];
+
+const HOME_TITLE = "Thirty3 Digital Designs | Websites, Branding & Digital Design";
+const HOME_DESCRIPTION =
+  "Thirty3 designs websites, identities, and digital materials for businesses in Clarksville, Nashville, and Middle Tennessee. Work directly with Miguel.";
+const HOME_URL = "https://miguelthirty3.com/";
+const HOME_OG_IMAGE = "https://miguelthirty3.com/thirty3-og-2026.png";
 
 function ArrowIcon() {
   return (
@@ -100,914 +117,184 @@ function ArrowIcon() {
   );
 }
 
-const PROJECT_FORM_ENDPOINT =
-  "https://formspree.io/f/xvzybvrd";
+function upsertMeta(selector, attributes) {
+  let element = document.head.querySelector(selector);
+  const created = !element;
 
-const INITIAL_PROJECT_FORM = {
-  name: "",
-  email: "",
-  business: "",
-  projectType: "",
-  details: "",
-  budget: "",
-};
+  if (!element) {
+    element = document.createElement("meta");
+    document.head.appendChild(element);
+  }
 
-function ProjectInquiryModal({
-  open,
-  onClose,
-  returnFocusRef,
-}) {
-  const dialogRef = useRef(null);
-  const firstFieldRef = useRef(null);
-  const [form, setForm] = useState(INITIAL_PROJECT_FORM);
-  const [status, setStatus] = useState("idle");
-  const [message, setMessage] = useState("");
+  const previous = Object.fromEntries(
+    Object.keys(attributes).map((key) => [key, element.getAttribute(key)]),
+  );
 
-  useEffect(() => {
-    if (!open) return undefined;
+  Object.entries(attributes).forEach(([key, value]) => {
+    element.setAttribute(key, value);
+  });
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    window.requestAnimationFrame(() => {
-      firstFieldRef.current?.focus();
-    });
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        onClose();
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-
-      const focusable = Array.from(
-        dialogRef.current?.querySelectorAll(
-          [
-            "a[href]",
-            "button:not([disabled])",
-            "input:not([disabled])",
-            "select:not([disabled])",
-            "textarea:not([disabled])",
-          ].join(","),
-        ) ?? [],
-      );
-
-      if (!focusable.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (
-        event.shiftKey &&
-        document.activeElement === first
-      ) {
-        event.preventDefault();
-        last.focus();
-      }
-
-      if (
-        !event.shiftKey &&
-        document.activeElement === last
-      ) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown,
-      );
-
-      window.requestAnimationFrame(() => {
-        returnFocusRef.current?.focus();
-      });
-    };
-  }, [open, onClose, returnFocusRef]);
-
-  useEffect(() => {
-    if (open) return;
-
-    const timer = window.setTimeout(() => {
-      setForm(INITIAL_PROJECT_FORM);
-      setStatus("idle");
-      setMessage("");
-    }, 250);
-
-    return () => window.clearTimeout(timer);
-  }, [open]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setForm((current) => ({
-      ...current,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setStatus("submitting");
-    setMessage("");
-
-    try {
-      const response = await fetch(
-        PROJECT_FORM_ENDPOINT,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            ...form,
-            _subject: `New Thirty3 project inquiry from ${form.name}`,
-            source: "Thirty3 homepage popup",
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Unable to submit project inquiry.");
-      }
-
-      setStatus("success");
-    } catch {
-      setStatus("error");
-      setMessage(
-        "Something did not go through. Please try again or use the full project request page.",
-      );
+  return () => {
+    if (created) {
+      element.remove();
+      return;
     }
+
+    Object.entries(previous).forEach(([key, value]) => {
+      if (value === null) element.removeAttribute(key);
+      else element.setAttribute(key, value);
+    });
   };
+}
 
-  if (!open) return null;
+function upsertCanonical(url) {
+  let canonical = document.head.querySelector('link[rel="canonical"]');
+  const created = !canonical;
+  const previousHref = canonical?.getAttribute("href") ?? null;
 
-  return createPortal(
-    <div className="showcase-home project-modal-host">
-      <div
-        className="project-modal"
-        role="presentation"
-        onMouseDown={(event) => {
-          if (event.target === event.currentTarget) {
-            onClose();
-          }
-        }}
-      >
-        <div
-          ref={dialogRef}
-          className="project-modal__dialog"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="project-modal-title"
-          aria-describedby="project-modal-description"
-        >
-          <button
-            type="button"
-            className="project-modal__close"
-            onClick={onClose}
-            aria-label="Close project inquiry form"
-          >
-            <span />
-            <span />
-          </button>
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
 
-          {status === "success" ? (
-            <div
-              className="project-modal__success"
-              role="status"
-            >
-              <p className="showcase-kicker">
-                Message received
-              </p>
+  canonical.href = url;
 
-              <h2>Good start.</h2>
+  return () => {
+    if (created) canonical.remove();
+    else if (previousHref === null) canonical.removeAttribute("href");
+    else canonical.setAttribute("href", previousHref);
+  };
+}
 
-              <p>
-                Your project details are on their way to
-                Thirty3. Miguel will review them and follow
-                up directly.
-              </p>
+function HeroProjectStage({ activeProject, activeIndex, onSelect }) {
+  return (
+    <div
+      className="homeProjectStage"
+      style={{ "--home-project-accent": activeProject.accent }}
+      data-reveal
+    >
+      <div className="homeProjectStage__selector" aria-label="Featured website projects">
+        <p>Selected work</p>
 
+        <div className="homeProjectStage__buttons">
+          {PROJECTS.map((project, index) => {
+            const active = index === activeIndex;
+
+            return (
               <button
                 type="button"
-                className="showcase-button showcase-button--primary"
-                onClick={onClose}
+                className={active ? "is-active" : ""}
+                aria-pressed={active}
+                onClick={() => onSelect(index)}
+                onMouseEnter={() => onSelect(index)}
+                onFocus={() => onSelect(index)}
+                key={project.name}
               >
-                Back to the work
+                <span>{project.number}</span>
+                <strong>{project.name}</strong>
+                <small>{project.type}</small>
               </button>
-            </div>
-          ) : (
-            <>
-              <div className="project-modal__intro">
-                <p className="showcase-kicker">
-                  Start a project
-                </p>
-
-                <h2 id="project-modal-title">
-                  Tell me what needs to move forward.
-                </h2>
-
-                <p id="project-modal-description">
-                  A few details are enough to begin. We can
-                  work through the rest together.
-                </p>
-              </div>
-
-              <form
-                className="project-modal__form"
-                onSubmit={handleSubmit}
-              >
-                <div className="project-modal__grid">
-                  <label>
-                    <span>Name</span>
-                    <input
-                      ref={firstFieldRef}
-                      type="text"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      autoComplete="name"
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    <span>Email</span>
-                    <input
-                      type="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    <span>Business name</span>
-                    <input
-                      type="text"
-                      name="business"
-                      value={form.business}
-                      onChange={handleChange}
-                      autoComplete="organization"
-                    />
-                  </label>
-
-                  <label>
-                    <span>What do you need?</span>
-                    <select
-                      name="projectType"
-                      value={form.projectType}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">
-                        Choose a project
-                      </option>
-                      <option value="Website">
-                        Website
-                      </option>
-                      <option value="Website redesign">
-                        Website redesign
-                      </option>
-                      <option value="Brand and identity">
-                        Brand and identity
-                      </option>
-                      <option value="Flyer or campaign">
-                        Flyer or campaign
-                      </option>
-                      <option value="Design support">
-                        Ongoing design support
-                      </option>
-                      <option value="Not sure">
-                        Not sure yet
-                      </option>
-                    </select>
-                  </label>
-                </div>
-
-                <label>
-                  <span>What should I know?</span>
-                  <textarea
-                    name="details"
-                    value={form.details}
-                    onChange={handleChange}
-                    rows="4"
-                    placeholder="What is not working now, and what would a better result look like?"
-                    required
-                  />
-                </label>
-
-                <label>
-                  <span>Estimated investment</span>
-                  <select
-                    name="budget"
-                    value={form.budget}
-                    onChange={handleChange}
-                  >
-                    <option value="">
-                      Select a range
-                    </option>
-                    <option value="Under $1,000">
-                      Under $1,000
-                    </option>
-                    <option value="$1,000–$2,500">
-                      $1,000–$2,500
-                    </option>
-                    <option value="$2,500–$5,000">
-                      $2,500–$5,000
-                    </option>
-                    <option value="$5,000+">
-                      $5,000+
-                    </option>
-                    <option value="Not sure">
-                      Not sure yet
-                    </option>
-                  </select>
-                </label>
-
-                {message && (
-                  <p
-                    className="project-modal__error"
-                    role="alert"
-                  >
-                    {message}
-                  </p>
-                )}
-
-                <div className="project-modal__actions">
-                  <button
-                    type="submit"
-                    className="showcase-button showcase-button--primary"
-                    disabled={status === "submitting"}
-                  >
-                    {status === "submitting"
-                      ? "Sending..."
-                      : "Send project details"}
-
-                    <ArrowIcon />
-                  </button>
-
-                  <Link
-                    className="project-modal__full-link"
-                    to="/request-website#website-request-form"
-                    onClick={onClose}
-                  >
-                    Prefer the full request form?
-                  </Link>
-                </div>
-              </form>
-            </>
-          )}
+            );
+          })}
         </div>
       </div>
-    </div>,
-    document.body,
+
+      <div className="homeProjectStage__presentation">
+        <Link
+          className="homeProjectStage__media"
+          to={activeProject.href}
+          aria-label={`View the ${activeProject.name} case study`}
+        >
+          <picture key={activeProject.name}>
+            {activeProject.mobileImage && (
+              <source media="(max-width: 700px)" srcSet={activeProject.mobileImage} />
+            )}
+            <img
+              className="homeProjectStage__mediaImage"
+              src={activeProject.image}
+              alt={activeProject.alt}
+              fetchPriority={activeIndex === 0 ? "high" : "auto"}
+              decoding="async"
+            />
+          </picture>
+
+          <span className="homeProjectStage__caseLink" aria-hidden="true">
+            View case study <ArrowIcon />
+          </span>
+        </Link>
+
+        <div className="homeProjectStage__caption">
+          <div>
+            <p>{activeProject.type}</p>
+            <h2>{activeProject.name}</h2>
+          </div>
+          <div>
+            <p>{activeProject.summary}</p>
+            <strong>{activeProject.result}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
-function ScrollLetterText({ text }) {
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    const element = textRef.current;
-
-    if (!element) return undefined;
-
-    const letters = Array.from(
-      element.querySelectorAll("[data-scroll-letter]"),
-    );
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
-
-    if (reducedMotion.matches) {
-      letters.forEach((letter) => {
-        letter.classList.add("is-lit");
-      });
-
-      return undefined;
-    }
-
-    let frameId = 0;
-    let active = false;
-
-    const update = () => {
-      frameId = 0;
-
-      if (!active) return;
-
-      const rect = element.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || 1;
-
-      const startPoint = viewportHeight * 0.9;
-      const endPoint = viewportHeight * 0.08;
-
-      const progress = Math.min(
-        1,
-        Math.max(
-          0,
-          (startPoint - rect.top) /
-          (startPoint - endPoint),
-        ),
-      );
-
-      const litCount = Math.round(
-        progress * letters.length,
-      );
-
-      letters.forEach((letter, index) => {
-        letter.classList.toggle(
-          "is-lit",
-          index < litCount,
-        );
-      });
-    };
-
-    const queueUpdate = () => {
-      if (frameId) return;
-
-      frameId = window.requestAnimationFrame(update);
-    };
-
-    const activate = () => {
-      if (active) return;
-
-      active = true;
-
-      window.addEventListener("scroll", queueUpdate, {
-        passive: true,
-      });
-
-      window.addEventListener("resize", queueUpdate);
-
-      queueUpdate();
-    };
-
-    const deactivate = () => {
-      if (!active) return;
-
-      active = false;
-
-      window.removeEventListener(
-        "scroll",
-        queueUpdate,
-      );
-
-      window.removeEventListener(
-        "resize",
-        queueUpdate,
-      );
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          activate();
-        } else {
-          deactivate();
-        }
-      },
-      {
-        rootMargin: "25% 0px 25% 0px",
-        threshold: 0,
-      },
-    );
-
-    observer.observe(element);
-
-    return () => {
-      deactivate();
-      observer.disconnect();
-
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-    };
-  }, [text]);
-
+function ProjectCard({ project }) {
   return (
-    <span
-      ref={textRef}
-      className="showcase-scroll-letters"
-      aria-label={text}
+    <article
+      className={`homeWorkCard homeWorkCard--${project.layout}`}
+      style={{ "--home-project-accent": project.accent }}
+      data-reveal
     >
-      <span
-        className="showcase-scroll-letters__visual"
-        aria-hidden="true"
+      <Link
+        className="homeWorkCard__media"
+        to={project.href}
+        aria-label={`View the ${project.name} case study`}
       >
-        {text.split(" ").map((word, wordIndex) => (
-          <b
-            className="showcase-scroll-word"
-            key={`${word}-${wordIndex}`}
-          >
-            {Array.from(word).map((letter, letterIndex) => (
-              <i
-                key={`${letter}-${letterIndex}`}
-                className="showcase-scroll-letter"
-                data-scroll-letter
-              >
-                {letter}
-              </i>
-            ))}
-          </b>
-        ))}
-      </span>
-    </span>
-  );
-}
-
-function useProjectMotion(motion) {
-  const sceneRef = useRef(null);
-
-  useEffect(() => {
-    const scene = sceneRef.current;
-
-    if (!scene || !motion) return undefined;
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
-
-    const mobileLayout = window.matchMedia(
-      "(max-width: 700px)",
-    );
-
-    let frameId = 0;
-    let active = false;
-
-    const applyFinalState = () => {
-      scene.style.setProperty("--scene-progress", "1");
-      scene.style.setProperty("--scene-scale", "1");
-      scene.style.setProperty("--scene-y", "0px");
-      scene.style.setProperty("--scene-x", "0px");
-      scene.style.setProperty("--scene-opacity", "1");
-      scene.style.setProperty("--scene-inset", "0%");
-      scene.style.setProperty("--scene-clip", "0%");
-      scene.style.setProperty("--scene-radius", "0px");
-      scene.style.setProperty("--scene-tilt", "0deg");
-      scene.style.setProperty("--archive-x", "0px");
-      scene.style.setProperty("--archive-y", "0px");
-      scene.style.setProperty("--archive-scale", "1");
-      scene.style.setProperty("--archive-tilt", "0deg");
-      scene.style.setProperty("--archive-back-x", "18px");
-      scene.style.setProperty("--archive-back-y", "18px");
-      scene.style.setProperty("--archive-back-tilt", "-0.6deg");
-    };
-
-    const update = () => {
-      frameId = 0;
-
-      if (!active) return;
-
-      if (
-        reducedMotion.matches ||
-        mobileLayout.matches
-      ) {
-        applyFinalState();
-        return;
-      }
-
-      const rect = scene.getBoundingClientRect();
-      const viewportHeight =
-        window.innerHeight || 1;
-
-      const motionSettings =
-        {
-          expand: {
-            start: 0.76,
-            distance: 1.2,
-            easing: 2,
-          },
-          "editorial-reveal": {
-            start: 0.92,
-            distance: 1,
-            easing: 1.25,
-          },
-          "archive-lift": {
-            start: 0.9,
-            distance: 1.15,
-            easing: 1.6,
-          },
-        }[motion] ?? {
-          start: 0.8,
-          distance: 1.1,
-          easing: 1.5,
-        };
-
-      const startPoint =
-        viewportHeight * motionSettings.start;
-
-      const travelDistance =
-        viewportHeight * motionSettings.distance;
-
-      const rawProgress =
-        (startPoint - rect.top) / travelDistance;
-
-      const progress = Math.min(
-        1,
-        Math.max(0, rawProgress),
-      );
-
-      const eased =
-        1 -
-        Math.pow(
-          1 - progress,
-          motionSettings.easing,
-        );
-
-      scene.style.setProperty(
-        "--scene-progress",
-        eased.toFixed(4),
-      );
-
-      if (motion === "expand") {
-        const scale = 0.66 + eased * 0.34;
-        const y = 64 * (1 - eased);
-        const opacity = 0.72 + eased * 0.28;
-        const inset = 6 * (1 - eased);
-        const radius = 18 * (1 - eased);
-
-        scene.style.setProperty(
-          "--scene-scale",
-          scale.toFixed(4),
-        );
-
-        scene.style.setProperty(
-          "--scene-y",
-          `${y.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--scene-opacity",
-          opacity.toFixed(4),
-        );
-
-        scene.style.setProperty(
-          "--scene-inset",
-          `${inset.toFixed(2)}%`,
-        );
-
-        scene.style.setProperty(
-          "--scene-radius",
-          `${radius.toFixed(2)}px`,
-        );
-      }
-
-      if (motion === "editorial-reveal") {
-        const x = -120 * (1 - eased);
-        const clip = 42 * (1 - eased);
-        const tilt = -2.5 * (1 - eased);
-        const opacity = 0.42 + eased * 0.58;
-
-        scene.style.setProperty(
-          "--scene-x",
-          `${x.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--scene-clip",
-          `${clip.toFixed(2)}%`,
-        );
-
-        scene.style.setProperty(
-          "--scene-tilt",
-          `${tilt.toFixed(3)}deg`,
-        );
-
-        scene.style.setProperty(
-          "--scene-opacity",
-          opacity.toFixed(4),
-        );
-      }
-      if (motion === "archive-lift") {
-        const x = 30 * (1 - eased);
-        const y = 82 * (1 - eased);
-        const scale = 0.91 + eased * 0.09;
-        const tilt = 2.2 * (1 - eased);
-        const opacity = 0.58 + eased * 0.42;
-
-        const backX = 48 - eased * 30;
-        const backY = 42 - eased * 24;
-        const backTilt = -2.4 + eased * 1.8;
-
-        scene.style.setProperty(
-          "--archive-x",
-          `${x.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--archive-y",
-          `${y.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--archive-scale",
-          scale.toFixed(4),
-        );
-
-        scene.style.setProperty(
-          "--archive-tilt",
-          `${tilt.toFixed(3)}deg`,
-        );
-
-        scene.style.setProperty(
-          "--archive-back-x",
-          `${backX.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--archive-back-y",
-          `${backY.toFixed(2)}px`,
-        );
-
-        scene.style.setProperty(
-          "--archive-back-tilt",
-          `${backTilt.toFixed(3)}deg`,
-        );
-
-        scene.style.setProperty(
-          "--scene-opacity",
-          opacity.toFixed(4),
-        );
-      }
-    };
-
-    const queueUpdate = () => {
-      if (frameId) return;
-
-      frameId = window.requestAnimationFrame(update);
-    };
-
-    const activate = () => {
-      if (active) return;
-
-      active = true;
-
-      window.addEventListener(
-        "scroll",
-        queueUpdate,
-        { passive: true },
-      );
-
-      window.addEventListener(
-        "resize",
-        queueUpdate,
-      );
-
-      queueUpdate();
-    };
-
-    const deactivate = () => {
-      if (!active) return;
-
-      active = false;
-
-      window.removeEventListener(
-        "scroll",
-        queueUpdate,
-      );
-
-      window.removeEventListener(
-        "resize",
-        queueUpdate,
-      );
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          activate();
-        } else {
-          deactivate();
-        }
-      },
-      {
-        rootMargin: "30% 0px 30% 0px",
-        threshold: 0,
-      },
-    );
-
-    observer.observe(scene);
-
-    if (
-      reducedMotion.matches ||
-      mobileLayout.matches
-    ) {
-      applyFinalState();
-    }
-
-    return () => {
-      deactivate();
-      observer.disconnect();
-
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-    };
-  }, [motion]);
-
-  return sceneRef;
-}
-
-function ProjectScene({ project }) {
-  const sceneRef = useProjectMotion(project.motion);
-  return (
-    <section
-      ref={sceneRef}
-      className={[
-        "showcase-project",
-        `showcase-project--${project.tone}`,
-        `showcase-project--${project.layout}`,
-        project.motion
-          ? `showcase-project--motion-${project.motion}`
-          : "",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      aria-labelledby={`project-${project.tone}-title`}
-    >
-      <div className="showcase-project__ambient" aria-hidden="true" />
-
-      <div className="showcase-project__inner">
-        <div className="showcase-project__copy" data-reveal>
-          <div className="showcase-project__eyebrow">
-            <span>{project.number}</span>
-            <span>{project.type}</span>
-          </div>
-
-          <h2 id={`project-${project.tone}-title`}>{project.name}</h2>
-
-          <p className="showcase-project__description">
-            {project.description}
-          </p>
-
-          <p className="showcase-project__result">{project.result}</p>
-
-          <Link className="showcase-text-link" to={project.href}>
-            View case study
-            <ArrowIcon />
-          </Link>
-        </div>
-
-        <div className="showcase-project__visual" data-reveal>
-          <div className="showcase-project__rail" aria-hidden="true">
-            <span>{project.number}</span>
-            <span>{project.note}</span>
-          </div>
-          <Link className="showcase-project__link" to={project.href} aria-label={`View case study for ${project.name}`}>
-            <figure className="showcase-project__frame">
-              <div className="showcase-browser-bar" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-                <b>thirty3 / selected work</b>
-              </div>
-
-              <picture>
-                {project.mobileImage && (
-                  <source
-                    media="(max-width: 700px)"
-                    srcSet={project.mobileImage}
-                  />
-                )}
-
-                <img
-                  src={project.image}
-                  alt={project.alt}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-
-              <figcaption>{project.note}</figcaption>
-            </figure>
-          </Link>
+        <picture>
+          {project.mobileImage && (
+            <source media="(max-width: 700px)" srcSet={project.mobileImage} />
+          )}
+          <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
+        </picture>
+        <span aria-hidden="true">
+          View project <ArrowIcon />
+        </span>
+      </Link>
+
+      <div className="homeWorkCard__meta">
+        <span>{project.number}</span>
+        <div>
+          <p>{project.type}</p>
+          <h3>
+            <Link to={project.href}>{project.name}</Link>
+          </h3>
+          <strong>{project.result}</strong>
         </div>
       </div>
-    </section>
+    </article>
   );
 }
 
 export default function MiguelThirty3() {
   const location = useLocation();
-
-  const [projectModalOpen, setProjectModalOpen] =
-    useState(false);
-
+  const pageRef = useRef(null);
   const modalTriggerRef = useRef(null);
+  const [activeHeroProject, setActiveHeroProject] = useState(0);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [modalProjectType, setModalProjectType] = useState("");
+  const [modalSource, setModalSource] = useState("Thirty3 homepage");
+  const [modalInstance, setModalInstance] = useState(0);
 
-  const openProjectModal = (event) => {
+  const openProjectModal = (
+    event,
+    projectType = "",
+    source = "Thirty3 homepage",
+  ) => {
     modalTriggerRef.current = event.currentTarget;
+    setModalProjectType(projectType);
+    setModalSource(source);
+    setModalInstance((current) => current + 1);
     setProjectModalOpen(true);
   };
 
@@ -1016,8 +303,108 @@ export default function MiguelThirty3() {
   };
 
   useEffect(() => {
-    const targetId = location.state?.scrollTo;
+    const previousTitle = document.title;
+    document.title = HOME_TITLE;
 
+    const restoreMetadata = [
+      upsertMeta('meta[name="description"]', {
+        name: "description",
+        content: HOME_DESCRIPTION,
+      }),
+      upsertMeta('meta[name="robots"]', {
+        name: "robots",
+        content: "index, follow, max-image-preview:large",
+      }),
+      upsertMeta('meta[property="og:type"]', {
+        property: "og:type",
+        content: "website",
+      }),
+      upsertMeta('meta[property="og:site_name"]', {
+        property: "og:site_name",
+        content: "Thirty3 Digital Designs",
+      }),
+      upsertMeta('meta[property="og:title"]', {
+        property: "og:title",
+        content: HOME_TITLE,
+      }),
+      upsertMeta('meta[property="og:description"]', {
+        property: "og:description",
+        content: HOME_DESCRIPTION,
+      }),
+      upsertMeta('meta[property="og:url"]', {
+        property: "og:url",
+        content: HOME_URL,
+      }),
+      upsertMeta('meta[property="og:image"]', {
+        property: "og:image",
+        content: HOME_OG_IMAGE,
+      }),
+      upsertMeta('meta[property="og:image:alt"]', {
+        property: "og:image:alt",
+        content: "Thirty3 Digital Designs selected website work",
+      }),
+      upsertMeta('meta[name="twitter:card"]', {
+        name: "twitter:card",
+        content: "summary_large_image",
+      }),
+      upsertMeta('meta[name="twitter:title"]', {
+        name: "twitter:title",
+        content: HOME_TITLE,
+      }),
+      upsertMeta('meta[name="twitter:description"]', {
+        name: "twitter:description",
+        content: HOME_DESCRIPTION,
+      }),
+      upsertMeta('meta[name="twitter:image"]', {
+        name: "twitter:image",
+        content: HOME_OG_IMAGE,
+      }),
+      upsertCanonical(HOME_URL),
+    ];
+
+    const schema = document.createElement("script");
+    schema.id = "thirty3-home-schema";
+    schema.type = "application/ld+json";
+    schema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "@id": `${HOME_URL}#business`,
+          name: "Thirty3 Digital Designs",
+          url: HOME_URL,
+          description: HOME_DESCRIPTION,
+          founder: {
+            "@type": "Person",
+            name: "Miguel De Jesus",
+          },
+          areaServed: [
+            "Clarksville, Tennessee",
+            "Nashville, Tennessee",
+            "Middle Tennessee",
+          ],
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${HOME_URL}#website`,
+          url: HOME_URL,
+          name: "Thirty3 Digital Designs",
+          publisher: { "@id": `${HOME_URL}#business` },
+        },
+      ],
+    });
+    document.getElementById(schema.id)?.remove();
+    document.head.appendChild(schema);
+
+    return () => {
+      document.title = previousTitle;
+      restoreMetadata.reverse().forEach((restore) => restore());
+      document.getElementById("thirty3-home-schema")?.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const targetId = location.state?.scrollTo;
     if (!targetId) return undefined;
 
     const timer = window.setTimeout(() => {
@@ -1025,7 +412,6 @@ export default function MiguelThirty3() {
         behavior: "smooth",
         block: "start",
       });
-
       window.history.replaceState({}, document.title);
     }, 120);
 
@@ -1033,20 +419,15 @@ export default function MiguelThirty3() {
   }, [location.state]);
 
   useEffect(() => {
-    const root = document.querySelector(".showcase-home");
-
+    const root = pageRef.current;
     if (!root) return undefined;
 
+    root.classList.add("has-reveal");
     const elements = root.querySelectorAll("[data-reveal]");
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (reduceMotion) {
-      elements.forEach((element) => {
-        element.classList.add("is-visible");
-      });
-
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-visible"));
       return undefined;
     }
 
@@ -1054,334 +435,287 @@ export default function MiguelThirty3() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
         });
       },
       {
-        rootMargin: "0px 0px -10%",
+        rootMargin: "0px 0px -7%",
         threshold: 0.12,
       },
     );
 
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
-
+    elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
 
+  const activeProject = PROJECTS[activeHeroProject];
+
   return (
-    <div className="home-shell showcase-home">
-      <SiteHeader onStartProject={openProjectModal} />
+    <div className="thirty3-home" ref={pageRef}>
+      <a className="homeSkipLink" href="#main-content">
+        Skip to main content
+      </a>
 
-      <main>
-        <section
-          className="showcase-hero"
-          aria-labelledby="showcase-hero-title"
-        >
-          <div className="showcase-hero__grid" aria-hidden="true" />
+      <SiteHeader
+        variant="paper"
+        ctaLabel="Start a Project"
+        onStartProject={(event) =>
+          openProjectModal(event, "", "Thirty3 homepage header")
+        }
+      />
 
-          <div className="showcase-hero__inner">
-            <div className="showcase-hero__copy" data-reveal>
-              <p className="showcase-kicker">
-                Thirty3 Digital Designs / Clarksville, Tennessee
+      <main id="main-content">
+        <section className="homeHero" aria-labelledby="home-hero-title">
+          <div className="homeShell homeHero__intro">
+            <p className="homeEyebrow" data-reveal>
+              Independent design studio · Clarksville, Tennessee
+            </p>
+
+            <h1 id="home-hero-title" data-reveal>
+              <span>Look ready</span>
+              <span className="homeHero__titleShift">before you say</span>
+              <span className="homeHero__titleAccent">a word.</span>
+            </h1>
+
+            <div className="homeHero__lead" data-reveal>
+              <p>
+                Thirty3 designs and builds websites, identities, and digital pieces that help
+                good businesses make a stronger first impression, explain the work clearly,
+                and give people a confident next step.
               </p>
 
-              <h1 id="showcase-hero-title">
-                Make your business
-                <span>look ready.</span>
-              </h1>
-
-              <p className="showcase-hero__lede">
-                Strategic websites and visual design for businesses ready to
-                look established and get chosen.
-              </p>
-
-              <div className="showcase-actions">
+              <div className="homeHero__actions">
                 <button
                   type="button"
-                  className="showcase-button showcase-button--primary"
-                  onClick={openProjectModal}
+                  className="homeButton homeButton--primary"
+                  onClick={(event) =>
+                    openProjectModal(event, "", "Thirty3 homepage hero")
+                  }
                 >
-                  Start a project
-                  <ArrowIcon />
+                  Start a Project <ArrowIcon />
                 </button>
 
-                <a
-                  className="showcase-button showcase-button--secondary"
-                  href="#work"
-                >
-                  View selected work
+                <a className="homeTextLink" href="#work">
+                  View Selected Work <ArrowIcon />
                 </a>
               </div>
 
-              <ul
-                className="showcase-proof"
-                aria-label="Studio highlights"
-              >
-                <li>Clarksville, Tennessee</li>
-                <li>Direct collaboration</li>
-                <li>Custom-built websites</li>
-              </ul>
-            </div>
-
-            <div className="showcase-hero__visual" data-reveal>
-              <div className="showcase-hero__index" aria-hidden="true">
-                <span>Featured / 01</span>
-                <span>Transportation website</span>
-              </div>
-
-              <a
-                className="showcase-hero__browser"
-                href="https://isabellatransport.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit the live Isabella Transport website"
-              >
-                <div className="showcase-browser-bar" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                  <b>isabellatransport.com</b>
-                </div>
-
-                <img
-                  src="/isabellaTransportHero.png"
-                  alt="Isabella Transport website homepage designed by Thirty3 Digital Designs"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </a>
-
-              <div className="showcase-hero__crop" aria-hidden="true">
-                <img
-                  src="/isabellaTransportHeroMobile.png"
-                  alt=""
-                  decoding="async"
-                />
-              </div>
-
-              <a
-                className="showcase-hero__caption"
-                href="https://isabellatransport.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Isabella Transport"
-              >
-                <span>Isabella Transport</span>
-                <strong>
-                  Clearer services. Stronger first impression.
-                </strong>
-              </a>
+              <p className="homeHero__note">
+                Bring the rough idea, the old website, or the project still sitting in your notes.
+              </p>
             </div>
           </div>
 
-          <a
-            className="showcase-scroll-cue"
-            href="#work"
-            aria-label="Scroll to selected work"
-          >
-            <span>Selected work</span>
-            <i aria-hidden="true" />
-          </a>
-        </section>
+          <div className="homeShell homeHero__stageWrap">
+            <HeroProjectStage
+              activeProject={activeProject}
+              activeIndex={activeHeroProject}
+              onSelect={setActiveHeroProject}
+            />
+          </div>
 
-        <section
-          id="work"
-          className="showcase-work-intro"
-          aria-labelledby="showcase-work-title"
-        >
-          <div className="showcase-work-intro__inner" data-reveal>
-            <p className="showcase-kicker">Selected work / 2026</p>
-
-            <h2 id="showcase-work-title">
-              Work for businesses
-              <ScrollLetterText text="Ready to be taken seriously." />
-            </h2>
-
-            <p>
-              Different businesses should not leave with the same website.
-              Each project gets its own voice, pace, and visual logic.
-            </p>
+          <div className="homeShell homeProof" aria-label="Thirty3 studio proof" data-reveal>
+            {PROOF_ITEMS.map((item) => (
+              <div key={item.label}>
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
           </div>
         </section>
 
-        <div className="showcase-projects">
-          {PROJECTS.map((project) => (
-            <ProjectScene project={project} key={project.name} />
-          ))}
-        </div>
-
-        <section
-          id="services"
-          className="showcase-capabilities"
-          aria-labelledby="showcase-capabilities-title"
-        >
-          <div className="showcase-capabilities__head" data-reveal>
-            <p className="showcase-kicker">
-              Focused creative support
-            </p>
-
-            <h2 id="showcase-capabilities-title">
-              Three ways to
-              <ScrollLetterText text="move the business forward." />
-            </h2>
+        <section className="homeWork" id="work" aria-labelledby="home-work-title">
+          <div className="homeShell homeSectionHeading" data-reveal>
+            <div>
+              <span>01</span>
+              <p>Selected work</p>
+            </div>
+            <div>
+              <h2 id="home-work-title">Different businesses should not look interchangeable.</h2>
+              <p>
+                Each project gets its own voice, pace, and visual logic. The goal is not to
+                decorate a template. It is to make the business easier to recognize and trust.
+              </p>
+              <Link className="homeTextLink" to="/proof-of-work">
+                Explore all work <ArrowIcon />
+              </Link>
+            </div>
           </div>
 
-          <div className="showcase-capabilities__list">
-            {CAPABILITIES.map((capability) => (
-              <article
-                className="showcase-capability"
-                key={capability.number}
-                data-reveal
-              >
-                <span className="showcase-capability__number">
-                  {capability.number}
-                </span>
+          <div className="homeShell homeWork__grid">
+            {PROJECTS.map((project) => (
+              <ProjectCard project={project} key={project.name} />
+            ))}
+          </div>
+        </section>
 
-                <h3>{capability.title}</h3>
+        <section className="homePositioning" aria-labelledby="home-positioning-title">
+          <div className="homeShell homePositioning__inner">
+            <p className="homeEyebrow homeEyebrow--light" data-reveal>
+              Design changes perception
+            </p>
+            <h2 id="home-positioning-title" data-reveal>
+              A stronger design changes how the whole business is perceived.
+            </h2>
+            <div className="homePositioning__footer" data-reveal>
+              <p>
+                Before someone calls, visits, books, or buys, they are already deciding what
+                kind of business they believe they are looking at.
+              </p>
+              <span aria-hidden="true">33</span>
+            </div>
+          </div>
+        </section>
 
-                <p>{capability.text}</p>
+        <section className="homeServices" id="services" aria-labelledby="home-services-title">
+          <div className="homeShell homeSectionHeading" data-reveal>
+            <div>
+              <span>02</span>
+              <p>Ways to work together</p>
+            </div>
+            <div>
+              <h2 id="home-services-title">One studio. Three practical ways to move forward.</h2>
+              <p>
+                Websites lead the work, with identity and design support available when the
+                larger business presence needs to move with them.
+              </p>
+            </div>
+          </div>
 
-                <Link
-                  to="/request-website"
-                  aria-label={capability.label}
+          <div className="homeShell homeServices__grid">
+            {SERVICES.map((service) => (
+              <article className={`homeService ${service.className}`} key={service.number} data-reveal>
+                <span className="homeService__number">{service.number}</span>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+                <ul>
+                  {service.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={(event) =>
+                    openProjectModal(
+                      event,
+                      service.projectType,
+                      `Thirty3 homepage ${service.title} service`,
+                    )
+                  }
                 >
-                  <ArrowIcon />
-                </Link>
+                  {service.cta} <ArrowIcon />
+                </button>
               </article>
             ))}
           </div>
         </section>
 
-        <section
-          id="studio"
-          className="showcase-studio"
-          aria-labelledby="showcase-studio-title"
-        >
-          <div className="showcase-studio__mark" aria-hidden="true">
-            <span>THIR</span>
-            <span>TY3</span>
-          </div>
+        <section className="homeStudio" id="studio" aria-labelledby="home-studio-title">
+          <div className="homeShell homeStudio__grid">
+            <div className="homeStudio__mark" aria-hidden="true" data-reveal>
+              <span>THIR</span>
+              <span>TY3</span>
+            </div>
 
-          <div className="showcase-studio__copy" data-reveal>
-            <p className="showcase-kicker">The studio</p>
+            <div className="homeStudio__copy" data-reveal>
+              <p className="homeEyebrow homeEyebrow--light">The studio</p>
+              <h2 id="home-studio-title">You work with the person doing the work.</h2>
+              <p className="homeStudio__lead">
+                Thirty3 is led by Miguel. Strategy, writing direction, visual design, and
+                development stay connected instead of bouncing between departments.
+              </p>
 
-            <h2 id="showcase-studio-title">
-              Small studio.
-              <span>Serious attention.</span>
-            </h2>
+              <div className="homeStudio__principles">
+                <div>
+                  <span>01</span>
+                  <p>Direct communication from the first conversation through launch.</p>
+                </div>
+                <div>
+                  <span>02</span>
+                  <p>Decisions explained clearly, without burying the project in jargon.</p>
+                </div>
+                <div>
+                  <span>03</span>
+                  <p>Custom work shaped around the business instead of a template swap.</p>
+                </div>
+              </div>
 
-            <p>
-              Thirty3 is led by Miguel. Every project gets direct
-              collaboration, thoughtful strategy, and design shaped around
-              the business behind it.
-            </p>
-
-            <ul>
-              <li>No mystery team</li>
-              <li>Strategy before decoration</li>
-              <li>Custom work, not a template swap</li>
-              <li>Clarksville and Nashville focused</li>
-              <li>Bilingual support when it matters</li>
-            </ul>
+              <Link className="homeTextLink homeTextLink--light" to="/field-notes">
+                Read Field Notes <ArrowIcon />
+              </Link>
+            </div>
           </div>
         </section>
 
-        <section
-          className="showcase-freebie"
-          aria-labelledby="showcase-freebie-title"
-        >
-          <div className="showcase-freebie__inner" data-reveal>
-            <div className="showcase-freebie__copy">
-              <p className="showcase-kicker">
-                Free business resource
-              </p>
-
-              <h2 id="showcase-freebie-title">
-                Does your business
-                <span>look ready?</span>
-              </h2>
-
+        <section className="homeResource" aria-labelledby="home-resource-title">
+          <div className="homeShell homeResource__inner" data-reveal>
+            <div>
+              <p className="homeEyebrow">Free first-impression scorecard</p>
+              <h2 id="home-resource-title">Does your business look ready?</h2>
               <p>
-                Use this quick first-impression scorecard to see
-                where your website, brand, and customer experience
-                may be making trust work harder than it should.
+                Take two minutes to see where your website, brand, or customer experience may
+                be making trust work harder than it should.
               </p>
             </div>
 
-            <div className="showcase-freebie__action">
+            <div className="homeResource__action">
               <a
-                className="showcase-button showcase-button--primary"
+                className="homeButton homeButton--dark"
                 href="/downloads/does-your-business-look-ready.pdf?utm_source=website&utm_medium=homepage&utm_campaign=free_scorecard"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Get the free scorecard
-                <ArrowIcon />
+                Get the Scorecard <ArrowIcon />
               </a>
-
-              <span>
-                Interactive PDF · About 2 minutes
-              </span>
+              <span>Interactive PDF · About 2 minutes</span>
             </div>
           </div>
         </section>
 
-        <section
-          id="contact"
-          className="showcase-cta"
-          aria-labelledby="showcase-cta-title"
-        >
-          <div className="showcase-cta__inner" data-reveal>
-            <p className="showcase-kicker">The next impression</p>
-
-            <h2 id="showcase-cta-title">
+        <section className="homeContact" id="contact" aria-labelledby="home-contact-title">
+          <div className="homeShell homeContact__inner" data-reveal>
+            <p className="homeEyebrow">The next impression</p>
+            <h2 id="home-contact-title">
               Bring the business.
-              <ScrollLetterText text="Let’s shape how people see it." />
+              <span>Let’s shape how people see it.</span>
             </h2>
-
             <p>
-              Bring the rough idea, outdated website, or project sitting in
-              your notes. We will shape the right next move.
+              A few project details are enough to begin. You do not need a polished brief or
+              every answer figured out before reaching out.
             </p>
 
-            <div className="showcase-actions showcase-actions--centered">
+            <div className="homeContact__actions">
               <button
                 type="button"
-                className="showcase-button showcase-button--primary"
-                onClick={openProjectModal}
+                className="homeButton homeButton--dark"
+                onClick={(event) =>
+                  openProjectModal(event, "", "Thirty3 homepage final CTA")
+                }
               >
-                Start a project
-                <ArrowIcon />
+                Start a Project <ArrowIcon />
               </button>
-
-              <Link
-                className="showcase-button showcase-button--secondary"
-                to="/proof-of-work"
-              >
-                View all work
+              <Link className="homeTextLink" to="/proof-of-work">
+                View All Work <ArrowIcon />
               </Link>
             </div>
           </div>
 
-          <div
-            className="showcase-cta__footer"
-            aria-label="Thirty3 studio details"
-          >
+          <footer className="homeShell homeFooter" aria-label="Thirty3 studio details">
             <span>Thirty3 Digital Designs</span>
-            <span>Clarksville / Nashville</span>
-            <span>Websites / Identity / Design</span>
-          </div>
+            <span>Clarksville · Nashville · Middle Tennessee</span>
+            <span>Websites · Identity · Digital Design</span>
+          </footer>
         </section>
       </main>
 
       <ProjectInquiryModal
+        key={modalInstance}
         open={projectModalOpen}
         onClose={closeProjectModal}
         returnFocusRef={modalTriggerRef}
+        source={modalSource}
+        initialProjectType={modalProjectType}
       />
     </div>
   );
