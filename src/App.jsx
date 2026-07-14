@@ -9,7 +9,6 @@ const PROJECTS = [
   {
     number: "01",
     name: "Isabella Transport",
-    type: "Transportation website",
     summary:
       "A clearer digital presence built to explain the service, strengthen trust, and make the next step obvious.",
     result: "Clearer services. Easier contact.",
@@ -23,7 +22,6 @@ const PROJECTS = [
   {
     number: "02",
     name: "Joseph P. Day",
-    type: "Public service and campaign website",
     summary:
       "A modern public-facing platform organized around credibility, accomplishments, and voter-focused information.",
     result: "A stronger digital campaign presence.",
@@ -35,8 +33,7 @@ const PROJECTS = [
   },
   {
     number: "03",
-    name: "Gregory S. Chatman",
-    type: "Author and speaker website",
+    name: "Gregory Chatman",
     summary:
       "An editorial home for sermons, videos, and a focused message with room for the work to keep growing.",
     result: "A more intentional stage for the message.",
@@ -49,7 +46,6 @@ const PROJECTS = [
   {
     number: "04",
     name: "Blayne’s Family Research",
-    type: "Genealogy research website",
     summary:
       "A welcoming website that makes professional family-history research feel accessible, organized, and trustworthy.",
     result: "Research organized. Next steps clarified.",
