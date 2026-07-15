@@ -27,6 +27,7 @@ const PROJECTS = [
     result: "A stronger digital campaign presence.",
     href: "/proof-of-work/joseph-p-day",
     image: "/josephPDayHero.png",
+    mobileImage: "/josephPDayHeroMobile.png",
     alt: "Joseph P. Day campaign website designed by Thirty3 Digital Designs",
     accent: "#c9a862",
     layout: "wide",
@@ -34,11 +35,13 @@ const PROJECTS = [
   {
     number: "03",
     name: "Gregory S. Chatman",
+    type: "Ministry website",
     summary:
       "An editorial home for sermons, videos, and a focused message with room for the work to keep growing.",
     result: "A more intentional stage for the message.",
     href: "/proof-of-work/gregory-chatman",
     image: "/gregorySChatmanHero.png",
+    mobileImage: "/gregorySChatmanHeroMobile.png",
     alt: "Gregory S. Chatman website designed by Thirty3 Digital Designs",
     accent: "#770000",
     layout: "tall",
@@ -51,6 +54,7 @@ const PROJECTS = [
     result: "Research organized. Next steps clarified.",
     href: "/proof-of-work/blaynes-family-research",
     image: "/blaynesFamilyResearchHero.png",
+    mobileImage: "/blaynesFamilyResearchHeroMobile.png",
     alt: "Blayne’s Family Research website designed by Thirty3 Digital Designs",
     accent: "#3d6770",
     layout: "offset",
@@ -163,14 +167,48 @@ function upsertCanonical(url) {
   };
 }
 
-function HeroProjectStage({ activeProject, activeIndex, onSelect }) {
+function HeroProjectStage({
+  activeProject,
+  activeIndex,
+  onSelect,
+}) {
+  const hoverTimerRef = useRef(null);
+
+  const clearHoverTimer = () => {
+    if (!hoverTimerRef.current) return;
+
+    window.clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = null;
+  };
+
+  const scheduleSelection = (index) => {
+    clearHoverTimer();
+
+    hoverTimerRef.current = window.setTimeout(() => {
+      onSelect(index);
+      hoverTimerRef.current = null;
+    }, 90);
+  };
+
+  const selectImmediately = (index) => {
+    clearHoverTimer();
+    onSelect(index);
+  };
+
+  useEffect(() => clearHoverTimer, []);
+
   return (
     <div
       className="homeProjectStage"
-      style={{ "--home-project-accent": activeProject.accent }}
+      style={{
+        "--home-project-accent": activeProject.accent,
+      }}
       data-reveal
     >
-      <div className="homeProjectStage__selector" aria-label="Featured website projects">
+      <div
+        className="homeProjectStage__selector"
+        aria-label="Featured website projects"
+      >
         <p>Selected work</p>
 
         <div className="homeProjectStage__buttons">
@@ -182,9 +220,17 @@ function HeroProjectStage({ activeProject, activeIndex, onSelect }) {
                 type="button"
                 className={active ? "is-active" : ""}
                 aria-pressed={active}
-                onClick={() => onSelect(index)}
-                onMouseEnter={() => onSelect(index)}
-                onFocus={() => onSelect(index)}
+                onClick={() => selectImmediately(index)}
+                onFocus={() => selectImmediately(index)}
+                onPointerEnter={(event) => {
+                  if (
+                    event.pointerType === "mouse" ||
+                    event.pointerType === "pen"
+                  ) {
+                    scheduleSelection(index);
+                  }
+                }}
+                onPointerLeave={clearHoverTimer}
                 key={project.name}
               >
                 <span>{project.number}</span>
@@ -202,20 +248,42 @@ function HeroProjectStage({ activeProject, activeIndex, onSelect }) {
           to={activeProject.href}
           aria-label={`View the ${activeProject.name} case study`}
         >
-          <picture key={activeProject.name}>
-            {activeProject.mobileImage && (
-              <source media="(max-width: 700px)" srcSet={activeProject.mobileImage} />
-            )}
-            <img
-              className="homeProjectStage__mediaImage"
-              src={activeProject.image}
-              alt={activeProject.alt}
-              fetchPriority={activeIndex === 0 ? "high" : "auto"}
-              decoding="async"
-            />
-          </picture>
+          <div className="homeProjectStage__imageStack">
+            {PROJECTS.map((project, index) => (
+              <picture
+                className={[
+                  "homeProjectStage__picture",
+                  index === activeIndex ? "is-active" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-hidden={index !== activeIndex}
+                key={project.name}
+              >
+                {project.mobileImage && (
+                  <source
+                    media="(max-width: 760px)"
+                    srcSet={project.mobileImage}
+                  />
+                )}
 
-          <span className="homeProjectStage__caseLink" aria-hidden="true">
+                <img
+                  src={project.image}
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority={
+                    index === 0 ? "high" : "low"
+                  }
+                />
+              </picture>
+            ))}
+          </div>
+
+          <span
+            className="homeProjectStage__caseLink"
+            aria-hidden="true"
+          >
             View case study <ArrowIcon />
           </span>
         </Link>
@@ -225,6 +293,7 @@ function HeroProjectStage({ activeProject, activeIndex, onSelect }) {
             <p>{activeProject.type}</p>
             <h2>{activeProject.name}</h2>
           </div>
+
           <div>
             <p>{activeProject.summary}</p>
             <strong>{activeProject.result}</strong>
@@ -357,7 +426,7 @@ export default function MiguelThirty3() {
       }),
       upsertCanonical(HOME_URL),
     ];
-
+    
     const schema = document.createElement("script");
     schema.id = "thirty3-home-schema";
     schema.type = "application/ld+json";
@@ -446,6 +515,17 @@ export default function MiguelThirty3() {
   }, []);
 
   const activeProject = PROJECTS[activeHeroProject];
+
+  useEffect(() => {
+  PROJECTS.forEach((project) => {
+    [project.image, project.mobileImage]
+      .filter(Boolean)
+      .forEach((src) => {
+        const image = new Image();
+        image.src = src;
+      });
+  });
+}, []);
 
   return (
     <div className="thirty3-home" ref={pageRef}>
