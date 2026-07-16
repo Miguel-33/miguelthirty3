@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import "./Home.css";
 import ProjectInquiryModal from "./components/ProjectInquiryModal.jsx";
@@ -18,7 +18,6 @@ const PROJECTS = [
     mobileImage: "/isabellaTransportHeroMobile.png",
     alt: "Isabella Transport website designed by Thirty3 Digital Designs",
     accent: "#ee7c36",
-    layout: "feature",
   },
   {
     number: "02",
@@ -32,7 +31,6 @@ const PROJECTS = [
     mobileImage: "/josephPDayHeroMobile.png",
     alt: "Joseph P. Day campaign website designed by Thirty3 Digital Designs",
     accent: "#c9a862",
-    layout: "wide",
   },
   {
     number: "03",
@@ -46,7 +44,6 @@ const PROJECTS = [
     mobileImage: "/gregorySChatmanHeroMobile.png",
     alt: "Gregory S. Chatman website designed by Thirty3 Digital Designs",
     accent: "#770000",
-    layout: "tall",
   },
   {
     number: "04",
@@ -60,57 +57,67 @@ const PROJECTS = [
     mobileImage: "/blaynesFamilyResearchHeroMobile.png",
     alt: "Blayne’s Family Research website designed by Thirty3 Digital Designs",
     accent: "#3d6770",
-    layout: "offset",
   },
 ];
 
 const PROOF_ITEMS = [
   { value: "10+", label: "websites completed" },
-  { value: "Direct", label: "access to the designer" },
-  { value: "Together", label: "strategy, design, and build" },
+  { value: "1:1", label: "direct access to the designer" },
+  { value: "One studio", label: "strategy, design, and development" },
   { value: "Bilingual", label: "English and Spanish support" },
 ];
 
 const SERVICES = [
   {
     number: "01",
+    label: "Flagship service",
     title: "Websites",
+    headline: "Turn the first impression into a clear next step.",
     projectType: "Website",
     className: "homeService--primary",
-    text: "Custom websites and redesigns that make the business easier to understand, trust, and contact.",
+    text: "Custom websites and strategic redesigns for businesses that have outgrown a page that merely exists.",
     details: [
-      "Strategy and content structure",
+      "Strategy and content direction",
       "Responsive design and development",
       "WordPress or custom front end",
-      "Launch guidance and ongoing support",
+      "Launch guidance and support",
     ],
-    cta: "Discuss a website",
+    cta: "Start a Website",
   },
   {
     number: "02",
-    title: "Brand and identity",
+    label: "Identity systems",
+    title: "Brand identity",
+    headline: "Look recognizable wherever the business shows up.",
     projectType: "Brand and identity",
     className: "homeService--secondary",
-    text: "Visual direction that helps the business feel recognizable, established, and consistent across every touchpoint.",
-    details: ["Logos and identity systems", "Color and typography direction", "Practical brand applications"],
-    cta: "Discuss your brand",
+    text: "A practical visual system for businesses that need more consistency, confidence, and recognition.",
+    details: ["Logo and identity direction", "Color, type, and applications"],
+    cta: "Build the Brand",
   },
   {
     number: "03",
+    label: "Ongoing creative",
     title: "Design support",
+    headline: "Keep every campaign from looking like a different company.",
     projectType: "Design support",
     className: "homeService--tertiary",
-    text: "Campaigns, flyers, social graphics, and digital materials designed to feel connected to the larger business.",
-    details: ["Flyers and event materials", "Campaign graphics", "Social and digital assets"],
-    cta: "Discuss design support",
+    text: "Focused creative support for launches, events, campaigns, and the materials the business needs next.",
+    details: ["Flyers and campaign graphics", "Social and digital assets"],
+    cta: "Get Design Support",
   },
 ];
 
-const HOME_TITLE = "Thirty3 Digital Designs | Websites, Branding & Digital Design";
+const HOME_TITLE =
+  "Web Design in Clarksville, TN | Thirty3 Digital Designs";
+
 const HOME_DESCRIPTION =
-  "Thirty3 designs websites, identities, and digital materials for businesses in Clarksville, Nashville, and Middle Tennessee. Work directly with Miguel.";
-const HOME_URL = "https://miguelthirty3.com/";
-const HOME_OG_IMAGE = "https://miguelthirty3.com/thirty3-og-2026.png";
+  "Custom websites and visual design for small businesses in Clarksville and Nashville. Thirty3 helps businesses look established, build credibility, and get chosen.";
+
+const HOME_URL = "https://www.miguelthirty3.com/";
+
+const HOME_OG_IMAGE =
+  "https://www.miguelthirty3.com/thirty3-og-2026.png";
 
 function ArrowIcon() {
   return (
@@ -210,6 +217,7 @@ function HeroProjectStage({
     >
       <div
         className="homeProjectStage__selector"
+        role="group"
         aria-label="Featured website projects"
       >
         <p>Selected work</p>
@@ -273,11 +281,9 @@ function HeroProjectStage({
                 <img
                   src={project.image}
                   alt=""
-                  loading="eager"
+                  loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
-                  fetchPriority={
-                    index === 0 ? "high" : "low"
-                  }
+                  fetchPriority={index === 0 ? "high" : "low"}
                 />
               </picture>
             ))}
@@ -291,7 +297,11 @@ function HeroProjectStage({
           </span>
         </Link>
 
-        <div className="homeProjectStage__caption">
+        <div
+          className="homeProjectStage__caption"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <div>
             <p>{activeProject.type}</p>
             <h2>{activeProject.name}</h2>
@@ -307,45 +317,235 @@ function HeroProjectStage({
   );
 }
 
-function ProjectCard({ project }) {
-  return (
-    <article
-      className={`homeWorkCard homeWorkCard--${project.layout}`}
-      style={{ "--home-project-accent": project.accent }}
-      data-reveal
-    >
-      <Link
-        className="homeWorkCard__media"
-        to={project.href}
-        aria-label={`View the ${project.name} case study`}
-      >
-        <picture>
-          {project.mobileImage && (
-            <source media="(max-width: 700px)" srcSet={project.mobileImage} />
-          )}
-          <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
-        </picture>
-        <span aria-hidden="true">
-          View project <ArrowIcon />
-        </span>
-      </Link>
+function FeaturedCaseStories() {
+  const isabellaExpansionRef = useRef(null);
 
-      <div className="homeWorkCard__meta">
-        <span>{project.number}</span>
-        <div>
-          <p>{project.type}</p>
-          <h3>
-            <Link to={project.href}>{project.name}</Link>
-          </h3>
-          <strong>{project.result}</strong>
+  useEffect(() => {
+    const expansion = isabellaExpansionRef.current;
+    if (!expansion) return undefined;
+
+    const motionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce), (max-width: 760px)",
+    );
+
+    if (motionQuery.matches) {
+      expansion.style.setProperty("--case-scale", "1");
+      expansion.style.setProperty("--case-lift", "0px");
+      expansion.style.setProperty("--case-radius", "0px");
+      return undefined;
+    }
+
+    let frameId = null;
+
+    const updateExpansion = () => {
+      frameId = null;
+
+      const rect = expansion.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const start = viewportHeight * 0.86;
+      const travel = Math.max(rect.height * 0.62, viewportHeight * 0.72);
+      const progress = Math.min(
+        1,
+        Math.max(0, (start - rect.top) / travel),
+      );
+
+      expansion.style.setProperty(
+        "--case-scale",
+        (0.84 + progress * 0.16).toFixed(4),
+      );
+      expansion.style.setProperty(
+        "--case-lift",
+        `${Math.round((1 - progress) * 28)}px`,
+      );
+      expansion.style.setProperty(
+        "--case-radius",
+        `${Math.round((1 - progress) * 24)}px`,
+      );
+    };
+
+    const requestUpdate = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(updateExpansion);
+    };
+
+    updateExpansion();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
+  const isabella = PROJECTS[0];
+  const joseph = PROJECTS[1];
+
+  return (
+    <div className="homeCaseStories">
+      <article
+        className="homeCase homeCase--isabella"
+        style={{ "--home-project-accent": isabella.accent }}
+      >
+        <div className="homeShell homeCase__meta" data-reveal>
+          <span>{isabella.number}</span>
+          <p>{isabella.type}</p>
+          <strong>{isabella.name}</strong>
         </div>
-      </div>
-    </article>
+
+        <div
+          className="homeCase__expansion"
+          ref={isabellaExpansionRef}
+          style={{
+            "--case-scale": "0.84",
+            "--case-lift": "28px",
+            "--case-radius": "24px",
+          }}
+        >
+          <div className="homeCase__expansionSticky">
+            <Link
+              className="homeCase__expansionMedia"
+              to={isabella.href}
+              aria-label={`View the ${isabella.name} case study`}
+            >
+              <picture>
+                {isabella.mobileImage && (
+                  <source
+                    media="(max-width: 760px)"
+                    srcSet={isabella.mobileImage}
+                  />
+                )}
+                <img
+                  src={isabella.image}
+                  alt={isabella.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+
+              <span className="homeCase__visualLabel" aria-hidden="true">
+                Built for clarity <ArrowIcon />
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="homeShell homeCase__story" data-reveal>
+          <div className="homeCase__storyLead">
+            <p className="homeEyebrow">The assignment</p>
+            <h3>Make the service feel as dependable as the people behind it.</h3>
+            <Link className="homeTextLink" to={isabella.href}>
+              View Isabella Transport <ArrowIcon />
+            </Link>
+          </div>
+
+          <div className="homeCase__storyDetails">
+            <div>
+              <span>Challenge</span>
+              <p>
+                The business needed visitors to understand the transportation service quickly,
+                feel reassured, and know exactly how to begin a conversation.
+              </p>
+            </div>
+            <div>
+              <span>Design response</span>
+              <p>
+                A sharper service hierarchy, trust-forward messaging, and a direct contact path
+                turned the website into a guided decision instead of a digital brochure.
+              </p>
+            </div>
+            <div>
+              <span>Result</span>
+              <p>
+                A clearer, more established presence that explains the work without flattening
+                the company’s personality.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article
+        className="homeShell homeCase homeCase--joseph"
+        style={{ "--home-project-accent": joseph.accent }}
+      >
+        <div className="homeCase__josephCopy" data-reveal>
+          <div className="homeCase__meta homeCase__meta--compact">
+            <span>{joseph.number}</span>
+            <p>{joseph.type}</p>
+            <strong>{joseph.name}</strong>
+          </div>
+
+          <p className="homeEyebrow">Public trust, organized</p>
+          <h3>Give the campaign story a structure people can believe.</h3>
+          <p className="homeCase__josephIntro">
+            The site needed to balance personality, public service, accomplishments, and campaign
+            information without turning into a wall of political copy.
+          </p>
+
+          <div className="homeCase__josephDetails">
+            <div>
+              <span>01</span>
+              <div>
+                <strong>Lead with credibility</strong>
+                <p>Establish who Joseph is and why the work matters before asking for support.</p>
+              </div>
+            </div>
+            <div>
+              <span>02</span>
+              <div>
+                <strong>Make the record readable</strong>
+                <p>Organize accomplishments and priorities into clear, scannable sections.</p>
+              </div>
+            </div>
+            <div>
+              <span>03</span>
+              <div>
+                <strong>Keep the next step visible</strong>
+                <p>Guide voters toward events, updates, and campaign participation.</p>
+              </div>
+            </div>
+          </div>
+
+          <Link className="homeTextLink" to={joseph.href}>
+            View Joseph P. Day <ArrowIcon />
+          </Link>
+        </div>
+
+        <div className="homeCase__josephVisual" data-reveal>
+          <Link
+            className="homeCase__josephMedia"
+            to={joseph.href}
+            aria-label={`View the ${joseph.name} case study`}
+          >
+            <picture>
+              {joseph.mobileImage && (
+                <source media="(max-width: 760px)" srcSet={joseph.mobileImage} />
+              )}
+              <img
+                src={joseph.image}
+                alt={joseph.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <span aria-hidden="true">Campaign website · 02 / 02</span>
+          </Link>
+
+          <div className="homeCase__josephResult">
+            <span>Outcome</span>
+            <strong>{joseph.result}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
   );
 }
 
 export default function MiguelThirty3() {
   const location = useLocation();
+  const navigate = useNavigate();
   const pageRef = useRef(null);
   const modalTriggerRef = useRef(null);
   const [activeHeroProject, setActiveHeroProject] = useState(0);
@@ -391,6 +591,10 @@ export default function MiguelThirty3() {
         property: "og:site_name",
         content: "Thirty3 Digital Designs",
       }),
+      upsertMeta('meta[property="og:locale"]', {
+        property: "og:locale",
+        content: "en_US",
+      }),
       upsertMeta('meta[property="og:title"]', {
         property: "og:title",
         content: HOME_TITLE,
@@ -427,6 +631,14 @@ export default function MiguelThirty3() {
         name: "twitter:image",
         content: HOME_OG_IMAGE,
       }),
+      upsertMeta('meta[name="twitter:image:alt"]', {
+        name: "twitter:image:alt",
+        content: "Thirty3 Digital Designs selected website work",
+      }),
+      upsertMeta('meta[name="theme-color"]', {
+        name: "theme-color",
+        content: "#d9d5ff",
+      }),
       upsertCanonical(HOME_URL),
     ];
     
@@ -442,6 +654,25 @@ export default function MiguelThirty3() {
           name: "Thirty3 Digital Designs",
           url: HOME_URL,
           description: HOME_DESCRIPTION,
+          image: HOME_OG_IMAGE,
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Design services",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Web design" },
+              },
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Brand identity" },
+              },
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Digital design" },
+              },
+            ],
+          },
           founder: {
             "@type": "Person",
             name: "Miguel De Jesus",
@@ -480,11 +711,18 @@ export default function MiguelThirty3() {
         behavior: "smooth",
         block: "start",
       });
-      window.history.replaceState({}, document.title);
+      navigate(
+        {
+          pathname: location.pathname,
+          search: location.search,
+          hash: location.hash,
+        },
+        { replace: true, state: null },
+      );
     }, 120);
 
     return () => window.clearTimeout(timer);
-  }, [location.state]);
+  }, [location.hash, location.pathname, location.search, location.state, navigate]);
 
   useEffect(() => {
     const root = pageRef.current;
@@ -520,15 +758,30 @@ export default function MiguelThirty3() {
   const activeProject = PROJECTS[activeHeroProject];
 
   useEffect(() => {
-  PROJECTS.forEach((project) => {
-    [project.image, project.mobileImage]
-      .filter(Boolean)
-      .forEach((src) => {
+    const preloadProjects = () => {
+      const useMobileImages = window.matchMedia("(max-width: 760px)").matches;
+
+      PROJECTS.slice(1).forEach((project) => {
         const image = new Image();
-        image.src = src;
+        image.decoding = "async";
+        image.src =
+          useMobileImages && project.mobileImage
+            ? project.mobileImage
+            : project.image;
       });
-  });
-}, []);
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(preloadProjects, {
+        timeout: 1200,
+      });
+
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timer = window.setTimeout(preloadProjects, 450);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <div className="thirty3-home" ref={pageRef}>
@@ -547,42 +800,69 @@ export default function MiguelThirty3() {
       <main id="main-content">
         <section className="homeHero" aria-labelledby="home-hero-title">
           <div className="homeShell homeHero__intro">
-            <p className="homeEyebrow" data-reveal>
-              Independent design studio · Clarksville, Tennessee
-            </p>
+            <div className="homeHero__eyebrowRow" data-reveal>
+              <p className="homeEyebrow">
+                Independent design studio · Clarksville, Tennessee
+              </p>
+              <p className="homeHero__disciplines">
+                Strategy · Design · Development
+              </p>
+            </div>
 
-            <h1 id="home-hero-title" data-reveal>
-              <span>Look ready</span>
-              <span className="homeHero__titleShift">before you say</span>
-              <span className="homeHero__titleAccent">a word.</span>
+            <h1
+              className="homeHero__title"
+              id="home-hero-title"
+              data-reveal
+            >
+              <span className="homeHero__titleLine">
+                <span className="homeHero__titleText">Look ready</span>
+              </span>
+              <span className="homeHero__titleLine homeHero__titleShift">
+                <span className="homeHero__titleText">before you say</span>
+              </span>
+              <span className="homeHero__titleLine homeHero__titleAccent">
+                <span className="homeHero__titleText">
+                  a word<span className="homeHero__period">.</span>
+                </span>
+              </span>
             </h1>
 
-            <div className="homeHero__lead" data-reveal>
-              <p>
-                Thirty3 designs and builds websites, identities, and digital pieces that help
-                good businesses make a stronger first impression, explain the work clearly,
-                and give people a confident next step.
-              </p>
-
-              <div className="homeHero__actions">
-                <button
-                  type="button"
-                  className="homeButton homeButton--primary"
-                  onClick={(event) =>
-                    openProjectModal(event, "", "Thirty3 homepage hero")
-                  }
-                >
-                  Start a Project <ArrowIcon />
-                </button>
-
-                <a className="homeTextLink" href="#work">
-                  View Selected Work <ArrowIcon />
-                </a>
+            <div className="homeHero__support">
+              <div className="homeHero__positioning" data-reveal>
+                <span aria-hidden="true" />
+                <p>Good work should look the part.</p>
               </div>
 
-              <p className="homeHero__note">
-                Bring the rough idea, the old website, or the project still sitting in your notes.
-              </p>
+              <div className="homeHero__lead" data-reveal>
+                <p>
+                  Thirty3 designs custom websites and visual identities that make your business
+                  easier to understand, trust, and choose.
+                </p>
+
+                <div className="homeHero__actions">
+                  <button
+                    type="button"
+                    className="homeButton homeButton--primary"
+                    onClick={(event) =>
+                      openProjectModal(
+                        event,
+                        "Website",
+                        "Thirty3 homepage hero",
+                      )
+                    }
+                  >
+                    Start a Website <ArrowIcon />
+                  </button>
+
+                  <a className="homeTextLink" href="#work">
+                    See the Work <ArrowIcon />
+                  </a>
+                </div>
+
+                <p className="homeHero__note">
+                  Direct with Miguel <span aria-hidden="true">·</span> No polished brief required
+                </p>
+              </div>
             </div>
           </div>
 
@@ -594,9 +874,14 @@ export default function MiguelThirty3() {
             />
           </div>
 
-          <div className="homeShell homeProof" aria-label="Thirty3 studio proof" data-reveal>
+          <div
+            className="homeShell homeProof"
+            role="list"
+            aria-label="Thirty3 studio proof"
+            data-reveal
+          >
             {PROOF_ITEMS.map((item) => (
-              <div key={item.label}>
+              <div role="listitem" key={item.label}>
                 <strong>{item.value}</strong>
                 <span>{item.label}</span>
               </div>
@@ -608,13 +893,13 @@ export default function MiguelThirty3() {
           <div className="homeShell homeSectionHeading" data-reveal>
             <div>
               <span>01</span>
-              <p>Selected work</p>
+              <p>Inside the work</p>
             </div>
             <div>
-              <h2 id="home-work-title">Different businesses should not look interchangeable.</h2>
+              <h2 id="home-work-title">Two businesses. Two different design problems.</h2>
               <p>
-                Each project gets its own voice, pace, and visual logic. The goal is not to
-                decorate a template. It is to make the business easier to recognize and trust.
+                The project stage gives the quick scan. These two stories show what the design
+                was actually asked to solve and why each answer needed to feel different.
               </p>
               <Link className="homeTextLink" to="/proof-of-work">
                 Explore all work <ArrowIcon />
@@ -622,11 +907,7 @@ export default function MiguelThirty3() {
             </div>
           </div>
 
-          <div className="homeShell homeWork__grid">
-            {PROJECTS.map((project) => (
-              <ProjectCard project={project} key={project.name} />
-            ))}
-          </div>
+          <FeaturedCaseStories />
         </section>
 
         <section className="homePositioning" aria-labelledby="home-positioning-title">
@@ -654,37 +935,55 @@ export default function MiguelThirty3() {
               <p>Ways to work together</p>
             </div>
             <div>
-              <h2 id="home-services-title">One studio. Three practical ways to move forward.</h2>
+              <h2 id="home-services-title">Start with what the business needs to change.</h2>
               <p>
-                Websites lead the work, with identity and design support available when the
-                larger business presence needs to move with them.
+                Websites lead the studio. Brand identity and ongoing design support help the
+                rest of the business presence catch up and stay consistent.
               </p>
             </div>
+          </div>
+
+          <div className="homeShell homeServices__bridge" data-reveal>
+            <span>Not sure what you need?</span>
+            <p>
+              Start with the business problem. We’ll shape the right project around it.
+            </p>
           </div>
 
           <div className="homeShell homeServices__grid">
             {SERVICES.map((service) => (
               <article className={`homeService ${service.className}`} key={service.number} data-reveal>
-                <span className="homeService__number">{service.number}</span>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-                <ul>
-                  {service.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  onClick={(event) =>
-                    openProjectModal(
-                      event,
-                      service.projectType,
-                      `Thirty3 homepage ${service.title} service`,
-                    )
-                  }
-                >
-                  {service.cta} <ArrowIcon />
-                </button>
+                <div className="homeService__topline">
+                  <span className="homeService__number">{service.number}</span>
+                  <span className="homeService__label">{service.label}</span>
+                </div>
+
+                <div className="homeService__body">
+                  <h3>{service.title}</h3>
+                  <p className="homeService__headline">{service.headline}</p>
+                  <p className="homeService__description">{service.text}</p>
+                </div>
+
+                <div className="homeService__footer">
+                  <p className="homeService__includes">What the project can include</p>
+                  <ul>
+                    {service.details.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                  <button
+                    type="button"
+                    onClick={(event) =>
+                      openProjectModal(
+                        event,
+                        service.projectType,
+                        `Thirty3 homepage ${service.title} service`,
+                      )
+                    }
+                  >
+                    {service.cta} <ArrowIcon />
+                  </button>
+                </div>
               </article>
             ))}
           </div>
@@ -692,37 +991,67 @@ export default function MiguelThirty3() {
 
         <section className="homeStudio" id="studio" aria-labelledby="home-studio-title">
           <div className="homeShell homeStudio__grid">
-            <div className="homeStudio__mark" aria-hidden="true" data-reveal>
-              <span>THIR</span>
-              <span>TY3</span>
+            <div className="homeStudio__identity" data-reveal>
+              <div className="homeStudio__mark" aria-hidden="true">
+                <span>THIR</span>
+                <span>TY3</span>
+              </div>
+              <p>
+                Independent studio<br />
+                Clarksville, Tennessee
+              </p>
             </div>
 
             <div className="homeStudio__copy" data-reveal>
-              <p className="homeEyebrow homeEyebrow--light">The studio</p>
-              <h2 id="home-studio-title">You work with the person doing the work.</h2>
+              <p className="homeEyebrow homeEyebrow--light">Independent by design</p>
+              <h2 id="home-studio-title">One person sees the whole project through.</h2>
               <p className="homeStudio__lead">
-                Thirty3 is led by Miguel. Strategy, writing direction, visual design, and
-                development stay connected instead of bouncing between departments.
+                You work directly with Miguel from the first conversation through launch.
+                Strategy, message, visual direction, and development stay connected, so the
+                finished work feels like one clear idea instead of pieces passed between teams.
               </p>
 
-              <div className="homeStudio__principles">
-                <div>
+              <div
+                className="homeStudio__method"
+                role="list"
+                aria-label="How Thirty3 approaches a project"
+              >
+                <article role="listitem">
                   <span>01</span>
-                  <p>Direct communication from the first conversation through launch.</p>
-                </div>
-                <div>
+                  <div>
+                    <h3>Find the real problem.</h3>
+                    <p>We look past “make it look better” and define what the business needs people to understand, trust, or do.</p>
+                  </div>
+                </article>
+                <article role="listitem">
                   <span>02</span>
-                  <p>Decisions explained clearly, without burying the project in jargon.</p>
-                </div>
-                <div>
+                  <div>
+                    <h3>Shape the clearest story.</h3>
+                    <p>The structure and message come before decoration, giving every page and visual a reason to exist.</p>
+                  </div>
+                </article>
+                <article role="listitem">
                   <span>03</span>
-                  <p>Custom work shaped around the business instead of a template swap.</p>
-                </div>
+                  <div>
+                    <h3>Design the right system.</h3>
+                    <p>The visual direction is built around the business, not pulled from a one-size-fits-everyone template.</p>
+                  </div>
+                </article>
+                <article role="listitem">
+                  <span>04</span>
+                  <div>
+                    <h3>Build toward the next step.</h3>
+                    <p>The finished experience is responsive, intentional, and ready to help visitors move with confidence.</p>
+                  </div>
+                </article>
               </div>
 
-              <Link className="homeTextLink homeTextLink--light" to="/field-notes">
-                Read Field Notes <ArrowIcon />
-              </Link>
+              <div className="homeStudio__footer">
+                <p>Clear communication. Connected decisions. No black-box process.</p>
+                <Link className="homeTextLink homeTextLink--light" to="/field-notes">
+                  See how I think <ArrowIcon />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -744,40 +1073,50 @@ export default function MiguelThirty3() {
                 href="/downloads/does-your-business-look-ready.pdf?utm_source=website&utm_medium=homepage&utm_campaign=free_scorecard"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Open the free first-impression scorecard PDF in a new tab"
               >
                 Get the Scorecard <ArrowIcon />
               </a>
-              <span>Interactive PDF · About 2 minutes</span>
+              <span>Interactive PDF · About 2 minutes · Opens in a new tab</span>
             </div>
           </div>
         </section>
 
         <section className="homeContact" id="contact" aria-labelledby="home-contact-title">
           <div className="homeShell homeContact__inner" data-reveal>
-            <p className="homeEyebrow">The next impression</p>
-            <h2 id="home-contact-title">
-              Bring the business.
-              <span>Let’s shape how people see it.</span>
-            </h2>
-            <p>
-              A few project details are enough to begin. You do not need a polished brief or
-              every answer figured out before reaching out.
-            </p>
+            <div className="homeContact__message">
+              <p className="homeEyebrow">Ready when you are</p>
+              <h2 id="home-contact-title">
+                Make the business look as good as the work behind it.
+              </h2>
+              <p>
+                Tell me what is changing, what is not working, and what you want people to do
+                next. A rough idea is enough to start the conversation.
+              </p>
+            </div>
 
-            <div className="homeContact__actions">
+            <aside className="homeContact__card" aria-label="Good project starting points">
+              <p className="homeContact__cardLabel">Good starting points</p>
+              <ul>
+                <li>A new website or strategic redesign</li>
+                <li>A brand that needs a clearer visual system</li>
+                <li>Ongoing design that should finally feel connected</li>
+              </ul>
+
               <button
                 type="button"
-                className="homeButton homeButton--dark"
+                className="homeButton homeButton--primary"
                 onClick={(event) =>
                   openProjectModal(event, "", "Thirty3 homepage final CTA")
                 }
               >
-                Start a Project <ArrowIcon />
+                Tell Me About the Project <ArrowIcon />
               </button>
-              <Link className="homeTextLink" to="/proof-of-work">
-                View All Work <ArrowIcon />
+
+              <Link className="homeTextLink homeTextLink--light" to="/proof-of-work">
+                See All Website Work <ArrowIcon />
               </Link>
-            </div>
+            </aside>
           </div>
 
           <footer className="homeShell homeFooter" aria-label="Thirty3 studio details">
