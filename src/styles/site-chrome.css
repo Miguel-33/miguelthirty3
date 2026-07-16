@@ -972,18 +972,18 @@ body.pageChromeMenuOpen {
 @media (max-width: 900px) {
   .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
     .pageChromeLogo {
-    min-width: 96px;
-    min-height: 88px;
-    padding: 10px 14px;
+    min-width: 88px;
+    min-height: 76px;
+    padding: 9px 15px;
   }
 
   .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
     .pageChromeLogoImage {
-    height: 56px;
+    height: 48px;
   }
 
   .pageChromeMenuButton {
     width: 140px;
-    height: 68px;
+    height: 64px;
   }
 }
