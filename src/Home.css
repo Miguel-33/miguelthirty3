@@ -2326,7 +2326,7 @@
 
 @media (max-width: 760px) {
   .homeHero {
-    padding-top: calc(var(--chrome-header-height, 72px) + 12px);
+    padding-top: calc(var(--chrome-header-height, 78px) + 82px);
   }
 
   .homeHero__eyebrowRow {
@@ -2339,8 +2339,7 @@
   }
 
   .homeHero__positioning {
-    order: 2;
-    max-width: none;
+    display: none;
   }
 
   .homeHero__positioning p {
