@@ -2323,3 +2323,49 @@
     color: var(--chrome-paper);
   }
 }
+
+@media (max-width: 760px) {
+  .homeHero {
+    padding-top: calc(var(--chrome-header-height, 72px) + 12px);
+  }
+
+  .homeHero__eyebrowRow {
+    margin-bottom: 22px;
+  }
+
+  .homeHero__support {
+    gap: 22px;
+    padding: 30px 0 52px;
+  }
+
+  .homeHero__positioning {
+    order: 2;
+    max-width: none;
+  }
+
+  .homeHero__positioning p {
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .homeHero__positioning > span {
+    width: 7px;
+    height: 7px;
+  }
+
+  .homeHero__lead {
+    order: 1;
+  }
+
+  .homeHero__actions {
+    margin-top: 26px;
+  }
+
+  .homeHero__note {
+    margin-top: 18px;
+  }
+
+  .homeHero::after {
+    height: 58%;
+  }
+}
