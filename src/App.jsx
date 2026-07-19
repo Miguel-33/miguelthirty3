@@ -47,7 +47,7 @@ const PROJECTS = [
   },
   {
     number: "04",
-    name: "Blayne’s Family Research",
+    name: "Blayneâ€™s Family Research",
     type: "Genealogy website",
     summary:
       "A welcoming website that makes professional family-history research feel accessible, organized, and trustworthy.",
@@ -55,7 +55,7 @@ const PROJECTS = [
     href: "/proof-of-work/blaynes-family-research",
     image: "/blaynesFamilyResearchHero.png",
     mobileImage: "/blaynesFamilyResearchHeroMobile.png",
-    alt: "Blayne’s Family Research website designed by Thirty3 Digital Designs",
+    alt: "Blayneâ€™s Family Research website designed by Thirty3 Digital Designs",
     accent: "#3d6770",
   },
   {
@@ -75,7 +75,7 @@ const PROJECTS = [
 
 const PROOF_ITEMS = [
   { value: "10", label: "websites built for real businesses" },
-  { value: "★ ★ ★ ★ ★", label: "Google reviews from real clients" },
+  { value: "â˜… â˜… â˜… â˜… â˜…", label: "Google reviews from real clients" },
   { value: "1:1", label: "direct access to Miguel" },
   { value: "Local", label: "Clarksville + Nashville" },
 ];
@@ -154,7 +154,7 @@ const REVIEWS = [
     websiteUrl: "https://glampcampnashville.com",
     featured: true,
     quote:
-      "They created a stunning website for my business, Glamp Camp, and I couldn’t be happier. The design was top-notch, they communicated clearly, and everything was done quickly and professionally. Truly a flawless experience from start to finish!",
+      "They created a stunning website for my business, Glamp Camp, and I couldnâ€™t be happier. The design was top-notch, they communicated clearly, and everything was done quickly and professionally. Truly a flawless experience from start to finish!",
   },
   {
     name: "Nick De Leon",
@@ -233,6 +233,23 @@ function upsertCanonical(url) {
     else if (previousHref === null) canonical.removeAttribute("href");
     else canonical.setAttribute("href", previousHref);
   };
+}
+
+function Thirty3Intro() {
+  return (
+    <div className="thirty3Intro" aria-hidden="true">
+      <div className="thirty3Intro__center">
+        <span className="thirty3Intro__digits">33</span>
+
+        <div className="thirty3Intro__wordmark">
+          <strong>Thirty3</strong>
+          <span>Digital Designs</span>
+        </div>
+      </div>
+
+      <span className="thirty3Intro__line" />
+    </div>
+  );
 }
 
 function HeroProjectStage({
@@ -518,7 +535,7 @@ function FeaturedCaseStories() {
               <span>Result</span>
               <p>
                 A clearer, more established presence that explains the work without flattening
-                the company’s personality.
+                the companyâ€™s personality.
               </p>
             </div>
           </div>
@@ -589,7 +606,7 @@ function FeaturedCaseStories() {
                 decoding="async"
               />
             </picture>
-            <span aria-hidden="true">Campaign website · 02 / 02</span>
+            <span aria-hidden="true">Campaign website Â· 02 / 02</span>
           </Link>
 
           <div className="homeCase__josephResult">
@@ -611,6 +628,21 @@ export default function MiguelThirty3() {
   const [modalProjectType, setModalProjectType] = useState("");
   const [modalSource, setModalSource] = useState("Thirty3 homepage");
   const [modalInstance, setModalInstance] = useState(0);
+  const [introPlaying, setIntroPlaying] = useState(() => {
+    if (typeof window === "undefined") return false;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) return false;
+
+    try {
+      return !window.sessionStorage.getItem("thirty3-home-intro-seen");
+    } catch {
+      return true;
+    }
+  });
 
   const openProjectModal = (
     event,
@@ -627,6 +659,26 @@ export default function MiguelThirty3() {
   const closeProjectModal = () => {
     setProjectModalOpen(false);
   };
+
+  useEffect(() => {
+    if (!introPlaying) return undefined;
+
+    try {
+      window.sessionStorage.setItem("thirty3-home-intro-seen", "true");
+    } catch {}
+
+    document.documentElement.classList.add("thirty3-intro-active");
+
+    const timer = window.setTimeout(() => {
+      document.documentElement.classList.remove("thirty3-intro-active");
+      setIntroPlaying(false);
+    }, 2300);
+
+    return () => {
+      window.clearTimeout(timer);
+      document.documentElement.classList.remove("thirty3-intro-active");
+    };
+  }, [introPlaying]);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -804,7 +856,12 @@ export default function MiguelThirty3() {
   }, []);
 
   return (
-    <div className="thirty3-home" ref={pageRef}>
+    <div
+      className={`thirty3-home${introPlaying ? " is-intro-playing" : ""}`}
+      ref={pageRef}
+    >
+      {introPlaying && <Thirty3Intro />}
+
       <a className="homeSkipLink" href="#main-content">
         Skip to main content
       </a>
@@ -822,7 +879,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeHero__intro">
             <div className="homeHero__eyebrowRow" data-reveal>
               <p className="homeEyebrow">
-                Web design + development · Clarksville, Tennessee
+                Web design + development Â· Clarksville, Tennessee
               </p>
               <p className="homeHero__disciplines">
                 Thirty3 Digital Designs
@@ -1010,7 +1067,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeSectionHeading" data-reveal>
             <div><span>03</span><p>The process</p></div>
             <div>
-              <h2 id="home-process-title">You bring the business. I’ll help shape the website.</h2>
+              <h2 id="home-process-title">You bring the business. Iâ€™ll help shape the website.</h2>
               <p>Working directly with Miguel keeps the strategy, design, and development connected.</p>
             </div>
           </div>
@@ -1036,7 +1093,7 @@ export default function MiguelThirty3() {
               <p className="homeEyebrow homeEyebrow--light">The studio</p>
               <h2 id="home-studio-title">You work with the person doing the work.</h2>
               <p className="homeStudio__lead">
-                I’m Miguel De Jesus, a web designer and developer based in Clarksville. I turn
+                Iâ€™m Miguel De Jesus, a web designer and developer based in Clarksville. I turn
                 scattered ideas into clear, credible digital experiences without layers of
                 account managers or mysterious design language.
               </p>
@@ -1086,10 +1143,10 @@ export default function MiguelThirty3() {
                 data-reveal
               >
                 <div className="homeReview__rating" aria-label="5 out of 5 stars">
-                  <span aria-hidden="true">★★★★★</span>
+                  <span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span>
                   <small>Google Review</small>
                 </div>
-                <blockquote>“{review.quote}”</blockquote>
+                <blockquote>â€œ{review.quote}â€</blockquote>
                 <figcaption>
                   <strong>{review.name}</strong>
                   <span>{review.project}</span>
@@ -1124,7 +1181,7 @@ export default function MiguelThirty3() {
               >
                 Get the Scorecard <ArrowIcon />
               </a>
-              <span>Interactive PDF · About 2 minutes</span>
+              <span>Interactive PDF Â· About 2 minutes</span>
             </div>
           </div>
         </section>
@@ -1133,7 +1190,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeContact__inner" data-reveal>
             <p className="homeEyebrow">Your next website</p>
             <h2 id="home-contact-title">
-              Let’s make your business
+              Letâ€™s make your business
               <span>look as ready as it really is.</span>
             </h2>
             <p>
@@ -1159,8 +1216,8 @@ export default function MiguelThirty3() {
 
           <footer className="homeShell homeFooter" aria-label="Thirty3 studio details">
             <span>Thirty3 Digital Designs</span>
-            <span>Clarksville · Nashville · Middle Tennessee</span>
-            <span>Websites · Identity · Digital Design</span>
+            <span>Clarksville Â· Nashville Â· Middle Tennessee</span>
+            <span>Websites Â· Identity Â· Digital Design</span>
           </footer>
         </section>
       </main>

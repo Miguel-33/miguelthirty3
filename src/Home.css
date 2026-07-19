@@ -14,6 +14,126 @@
   --home-condensed: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
 }
 
+html.thirty3-intro-active {
+  overflow: hidden;
+}
+
+.thirty3Intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--home-charcoal);
+  color: var(--home-paper);
+  pointer-events: all;
+  animation: thirty3IntroExit 650ms 1500ms cubic-bezier(0.76, 0, 0.24, 1)
+    both;
+}
+
+.thirty3Intro__center {
+  position: relative;
+  width: min(86vw, 920px);
+  min-height: clamp(110px, 19vw, 230px);
+  display: grid;
+  place-items: center;
+}
+
+.thirty3Intro__digits {
+  position: absolute;
+  color: var(--home-yellow);
+  font-family: var(--home-condensed);
+  font-size: clamp(7rem, 24vw, 20rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 0.72;
+  transform: translateX(-0.04em);
+  animation: thirty3IntroDigits 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.thirty3Intro__wordmark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: thirty3IntroWordmark 700ms 550ms cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.thirty3Intro__wordmark strong {
+  font-family: var(--home-condensed);
+  font-size: clamp(4.4rem, 14vw, 11.5rem);
+  font-weight: 900;
+  letter-spacing: -0.005em;
+  line-height: 0.76;
+  text-transform: uppercase;
+}
+
+.thirty3Intro__wordmark span {
+  margin-top: clamp(15px, 2vw, 24px);
+  color: rgba(246, 247, 244, 0.68);
+  font-size: clamp(0.62rem, 1vw, 0.78rem);
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.thirty3Intro__line {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(7px, 1vw, 14px);
+  background: var(--home-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: thirty3IntroLine 500ms 1050ms cubic-bezier(0.76, 0, 0.24, 1)
+    forwards;
+}
+
+@keyframes thirty3IntroDigits {
+  0% {
+    opacity: 0;
+    transform: translateX(-0.04em) scale(0.82);
+  }
+
+  34%,
+  62% {
+    opacity: 1;
+    transform: translateX(-0.04em) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-0.04em) scale(1.08);
+  }
+}
+
+@keyframes thirty3IntroWordmark {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes thirty3IntroLine {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes thirty3IntroExit {
+  to {
+    visibility: hidden;
+    transform: translateY(-100%);
+  }
+}
+
 /* Homepage conversion pass */
 .homeWaveDivider{position:relative;z-index:2;height:clamp(90px,12vw,180px);margin:-1px 0 -2px;overflow:hidden;background:var(--home-paper)}.homeWaveDivider svg{display:block;width:100%;height:calc(100% + 2px)}.homeWaveDivider__fill{fill:var(--home-charcoal)}.homeWaveDivider__line{fill:none;stroke:var(--home-yellow);stroke-width:5;vector-effect:non-scaling-stroke}
 .homeOutcomes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(50px,7vw,100px);border-top:1px solid rgba(241,241,239,.24)}.homeOutcomes article{min-height:190px;padding:28px 24px 24px 0}.homeOutcomes article+article{padding-left:24px;border-left:1px solid rgba(241,241,239,.24)}.homeOutcomes h3{margin:0 0 24px;color:#f4d40a;font:700 clamp(1.7rem,2.3vw,2.75rem)/.95 "Barlow Condensed",sans-serif;text-transform:uppercase}.homeOutcomes p{max-width:24ch;margin:0;color:rgba(241,241,239,.78)}
@@ -1338,6 +1458,32 @@
   transform: translateY(0);
 }
 
+.thirty3-home.is-intro-playing .homeHero [data-reveal] {
+  opacity: 0 !important;
+  transform: translateY(28px) !important;
+  transition: none !important;
+}
+
+.homeHero__eyebrowRow.is-visible {
+  transition-delay: 20ms !important;
+}
+
+.homeHero h1.is-visible {
+  transition-delay: 90ms !important;
+}
+
+.homeHero__lead.is-visible {
+  transition-delay: 170ms !important;
+}
+
+.homeHero__stageWrap .homeProjectStage.is-visible {
+  transition-delay: 250ms !important;
+}
+
+.homeHero .homeProof.is-visible {
+  transition-delay: 330ms !important;
+}
+
 @media (max-width: 1180px) {
   .homeHero__lead {
     grid-column: 6 / -1;
@@ -1813,6 +1959,10 @@
   .thirty3-home.has-reveal [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  .thirty3Intro {
+    display: none;
   }
 }
 
