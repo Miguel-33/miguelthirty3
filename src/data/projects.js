@@ -120,4 +120,47 @@ export const projects = [
     "Build a campaign website that makes the record, the message, and the next action easy to understand.",
   url: "https://josephpday.com/",
 },
+{
+  slug: "glamp-camp-nashville",
+  title: "Glamp Camp Nashville",
+  eyebrow: "Experience Website / Local Business",
+  headline:
+    "Turning backyard sleepovers into an experience parents can picture, price, and book.",
+  industry: "Luxury Events / Entertainment",
+  platform: "WordPress + Elementor",
+  focus: "Visual storytelling, theme discovery, and booking",
+  url: "https://glampcampnashville.com",
+  status: "Live",
+  excerpt:
+    "A playful, experience-led website for a Nashville glamping company delivering fully styled backyard sleepovers.",
+  services: [
+    "Website Strategy",
+    "Website Redesign",
+    "Custom HTML, CSS & JavaScript",
+    "WordPress & Elementor Development",
+    "Responsive Mobile Design",
+    "Brand Identity Refinement",
+    "Logo Design",
+    "Photo Enhancement",
+    "Interactive Theme Showcase",
+    "Pricing Experience",
+    "WPForms Integration",
+    "Basic SEO Foundation",
+  ],
+  challenge:
+    "Glamp Camp Nashville offered a memorable service, but the website did not fully capture the excitement of the experience. The themes, pricing, photography, and booking information needed a stronger visual hierarchy and a more polished presentation. The site also needed to feel fun for children, trustworthy for parents, and easy to navigate on mobile.",
+  solution:
+    "Thirty3 redesigned the website around the feeling of the experience. A bold editorial hero introduces the brand, real event photography builds credibility, and an interactive theme showcase helps visitors explore available setups without scrolling through repetitive cards. A guest-based pricing tool makes package costs easier to understand, while a WPForms-powered booking popup creates a direct path from interest to availability request.",
+  results: [
+    "A stronger and more memorable brand presentation",
+    "Real photography placed at the center of the experience",
+    "Clearer theme and package discovery",
+    "A more engaging mobile experience",
+    "Simplified path from browsing to booking",
+    "A flexible foundation for new themes and photography",
+  ],
+  quote: "The design was top-notch, they communicated clearly, and everything was done quickly and professionally.",
+  next:
+    "Continue expanding the gallery as new themes and glamping experiences are photographed.",
+},
 ];

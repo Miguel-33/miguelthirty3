@@ -23,6 +23,11 @@ const projectScreenshots = {
     src: "/blaynesFamilyResearchHero.png",
     alt: "Blayne’s Family Research website homepage screenshot",
   },
+  "glamp-camp-nashville": {
+  src: "/glampCampNashvilleHero.png",
+  mobileSrc: "/glampCampNashvilleHeroMobile.png",
+  alt: "Glamp Camp Nashville luxury backyard glamping website designed by Thirty3 Digital Designs",
+},
 };
 
 export default function ProjectSingle() {
@@ -101,10 +106,19 @@ export default function ProjectSingle() {
     rel="noopener noreferrer"
     aria-label={`Visit the live ${project.title} website`}
   >
-    <img
-      src={screenshot.src}
-      alt={screenshot.alt}
+    <picture>
+  {screenshot.mobileSrc && (
+    <source
+      media="(max-width: 700px)"
+      srcSet={screenshot.mobileSrc}
     />
+  )}
+
+  <img
+    src={screenshot.src}
+    alt={screenshot.alt}
+  />
+</picture>
 
     <span className="projectImageShowcase__link">
       Visit live website ↗

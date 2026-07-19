@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./App.css";
 import "./Home.css";
 import ProjectInquiryModal from "./components/ProjectInquiryModal.jsx";
@@ -58,66 +58,124 @@ const PROJECTS = [
     alt: "Blayne’s Family Research website designed by Thirty3 Digital Designs",
     accent: "#3d6770",
   },
+  {
+  number: "05",
+  name: "Glamp Camp Nashville",
+  type: "Luxury glamping website",
+  summary:
+    "A playful, conversion-focused website that turns backyard sleepovers into an experience parents can picture, price, and book.",
+  result: "Backyard magic. Ready to book.",
+  href: "/proof-of-work/glamp-camp-nashville",
+  image: "/glampCampNashvilleHero.png",
+  mobileImage: "/glampCampNashvilleHeroMobile.png",
+  alt: "Glamp Camp Nashville website designed by Thirty3 Digital Designs",
+  accent: "#ff6d5d",
+},
 ];
 
 const PROOF_ITEMS = [
-  { value: "10+", label: "websites completed" },
-  { value: "1:1", label: "direct access to the designer" },
-  { value: "One studio", label: "strategy, design, and development" },
-  { value: "Bilingual", label: "English and Spanish support" },
+  { value: "10", label: "websites built for real businesses" },
+  { value: "★ ★ ★ ★ ★", label: "Google reviews from real clients" },
+  { value: "1:1", label: "direct access to Miguel" },
+  { value: "Local", label: "Clarksville + Nashville" },
 ];
 
 const SERVICES = [
   {
     number: "01",
-    label: "Flagship service",
-    title: "Websites",
-    headline: "Turn the first impression into a clear next step.",
-    projectType: "Website",
+    title: "New website",
+    projectType: "New website",
     className: "homeService--primary",
-    text: "Custom websites and strategic redesigns for businesses that have outgrown a page that merely exists.",
+    text: "For businesses that need a credible online home built from the ground up.",
     details: [
-      "Strategy and content direction",
-      "Responsive design and development",
-      "WordPress or custom front end",
-      "Launch guidance and support",
+      "Strategy and page planning",
+      "Custom responsive design",
+      "Development and launch support",
     ],
-    cta: "Start a Website",
+    cta: "Plan my website",
   },
   {
     number: "02",
-    label: "Identity systems",
-    title: "Brand identity",
-    headline: "Look recognizable wherever the business shows up.",
-    projectType: "Brand and identity",
+    title: "Website redesign",
+    projectType: "Website redesign",
     className: "homeService--secondary",
-    text: "A practical visual system for businesses that need more consistency, confidence, and recognition.",
-    details: ["Logo and identity direction", "Color, type, and applications"],
-    cta: "Build the Brand",
+    text: "For strong businesses behind websites that no longer represent the quality of their work.",
+    details: ["Content and UX audit", "A sharper visual direction", "Mobile and conversion improvements"],
+    cta: "Redesign my website",
   },
   {
     number: "03",
-    label: "Ongoing creative",
-    title: "Design support",
-    headline: "Keep every campaign from looking like a different company.",
-    projectType: "Design support",
+    title: "Landing page",
+    projectType: "Landing page",
     className: "homeService--tertiary",
-    text: "Focused creative support for launches, events, campaigns, and the materials the business needs next.",
-    details: ["Flyers and campaign graphics", "Social and digital assets"],
-    cta: "Get Design Support",
+    text: "For a campaign, service, event, or offer that needs one focused destination.",
+    details: ["One clear conversion goal", "Focused copy and structure", "Fast, responsive build"],
+    cta: "Build my landing page",
   },
 ];
 
-const HOME_TITLE =
-  "Web Design in Clarksville, TN | Thirty3 Digital Designs";
+const OUTCOMES = [
+  { title: "Clear", text: "Visitors understand what you do quickly." },
+  { title: "Credible", text: "Your website matches the quality of your real work." },
+  { title: "Easy", text: "People can find information and take the next step." },
+  { title: "Distinctive", text: "Your business does not disappear into a sea of templates." },
+];
 
+const PROCESS = [
+  { number: "01", title: "Strategy", text: "We identify what visitors need to understand, feel, and do." },
+  { number: "02", title: "Direction", text: "I shape the message, structure, visual concept, and experience." },
+  { number: "03", title: "Design + build", text: "The approved direction becomes a responsive, polished website." },
+  { number: "04", title: "Launch + support", text: "We review, refine, launch, and make sure the next step is clear." },
+];
+
+const CLIENT_TYPES = [
+  "Attorneys and advisors",
+  "Transportation and service companies",
+  "Realtors and property professionals",
+  "Authors, speakers, and personal brands",
+  "Nonprofits and community organizations",
+  "Growing Clarksville businesses",
+];
+
+const REVIEWS = [
+  {
+    name: "Gregory S. Chatman",
+    project: "Website design",
+    website: "gregoryschatman.com",
+    websiteUrl: "https://gregoryschatman.com",
+    featured: true,
+    quote:
+      "Miguel listened thoroughly to what I wanted to obtain from my site: the look, the feel, and the overall flow of information. I really appreciate his attentiveness to detail. The website exceeded my expectations!",
+  },
+  {
+    name: "Kiesha Bass",
+    project: "Glamp Camp website",
+    website: "glampcampnashville.com",
+    websiteUrl: "https://glampcampnashville.com",
+    featured: true,
+    quote:
+      "They created a stunning website for my business, Glamp Camp, and I couldn’t be happier. The design was top-notch, they communicated clearly, and everything was done quickly and professionally. Truly a flawless experience from start to finish!",
+  },
+  {
+    name: "Nick De Leon",
+    project: "Business card design",
+    quote:
+      "Miguel was incredible to work with: professional, responsive, and clearly passionate about his craft. The quality, creativity, and attention to detail were next level.",
+  },
+  {
+    name: "Blayne Clements",
+    project: "Logo design",
+    website: "blaynesfamilyresearch.com",
+    websiteUrl: "https://blaynesfamilyresearch.com",
+    quote: "Miguel did a great job on my logo. Highly recommend!",
+  },
+];
+
+const HOME_TITLE = "Thirty3 Digital Designs | Websites, Branding & Digital Design";
 const HOME_DESCRIPTION =
-  "Custom websites and visual design for small businesses in Clarksville and Nashville. Thirty3 helps businesses look established, build credibility, and get chosen.";
-
-const HOME_URL = "https://www.miguelthirty3.com/";
-
-const HOME_OG_IMAGE =
-  "https://www.miguelthirty3.com/thirty3-og-2026.png";
+  "Thirty3 designs websites, identities, and digital materials for businesses in Clarksville, Nashville, and Middle Tennessee. Work directly with Miguel.";
+const HOME_URL = "https://miguelthirty3.com/";
+const HOME_OG_IMAGE = "https://miguelthirty3.com/thirty3-og-2026.png";
 
 function ArrowIcon() {
   return (
@@ -217,7 +275,6 @@ function HeroProjectStage({
     >
       <div
         className="homeProjectStage__selector"
-        role="group"
         aria-label="Featured website projects"
       >
         <p>Selected work</p>
@@ -281,9 +338,11 @@ function HeroProjectStage({
                 <img
                   src={project.image}
                   alt=""
-                  loading={index === 0 ? "eager" : "lazy"}
+                  loading="eager"
                   decoding="async"
-                  fetchPriority={index === 0 ? "high" : "low"}
+                  fetchPriority={
+                    index === 0 ? "high" : "low"
+                  }
                 />
               </picture>
             ))}
@@ -545,7 +604,6 @@ function FeaturedCaseStories() {
 
 export default function MiguelThirty3() {
   const location = useLocation();
-  const navigate = useNavigate();
   const pageRef = useRef(null);
   const modalTriggerRef = useRef(null);
   const [activeHeroProject, setActiveHeroProject] = useState(0);
@@ -591,10 +649,6 @@ export default function MiguelThirty3() {
         property: "og:site_name",
         content: "Thirty3 Digital Designs",
       }),
-      upsertMeta('meta[property="og:locale"]', {
-        property: "og:locale",
-        content: "en_US",
-      }),
       upsertMeta('meta[property="og:title"]', {
         property: "og:title",
         content: HOME_TITLE,
@@ -631,14 +685,6 @@ export default function MiguelThirty3() {
         name: "twitter:image",
         content: HOME_OG_IMAGE,
       }),
-      upsertMeta('meta[name="twitter:image:alt"]', {
-        name: "twitter:image:alt",
-        content: "Thirty3 Digital Designs selected website work",
-      }),
-      upsertMeta('meta[name="theme-color"]', {
-        name: "theme-color",
-        content: "#d9d5ff",
-      }),
       upsertCanonical(HOME_URL),
     ];
     
@@ -654,25 +700,6 @@ export default function MiguelThirty3() {
           name: "Thirty3 Digital Designs",
           url: HOME_URL,
           description: HOME_DESCRIPTION,
-          image: HOME_OG_IMAGE,
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: "Design services",
-            itemListElement: [
-              {
-                "@type": "Offer",
-                itemOffered: { "@type": "Service", name: "Web design" },
-              },
-              {
-                "@type": "Offer",
-                itemOffered: { "@type": "Service", name: "Brand identity" },
-              },
-              {
-                "@type": "Offer",
-                itemOffered: { "@type": "Service", name: "Digital design" },
-              },
-            ],
-          },
           founder: {
             "@type": "Person",
             name: "Miguel De Jesus",
@@ -711,18 +738,11 @@ export default function MiguelThirty3() {
         behavior: "smooth",
         block: "start",
       });
-      navigate(
-        {
-          pathname: location.pathname,
-          search: location.search,
-          hash: location.hash,
-        },
-        { replace: true, state: null },
-      );
+      window.history.replaceState({}, document.title);
     }, 120);
 
     return () => window.clearTimeout(timer);
-  }, [location.hash, location.pathname, location.search, location.state, navigate]);
+  }, [location.state]);
 
   useEffect(() => {
     const root = pageRef.current;
@@ -802,67 +822,44 @@ export default function MiguelThirty3() {
           <div className="homeShell homeHero__intro">
             <div className="homeHero__eyebrowRow" data-reveal>
               <p className="homeEyebrow">
-                Independent design studio · Clarksville, Tennessee
+                Web design + development · Clarksville, Tennessee
               </p>
               <p className="homeHero__disciplines">
-                Strategy · Design · Development
+                Thirty3 Digital Designs
               </p>
             </div>
 
-            <h1
-              className="homeHero__title"
-              id="home-hero-title"
-              data-reveal
-            >
-              <span className="homeHero__titleLine">
-                <span className="homeHero__titleText">Look ready</span>
-              </span>
-              <span className="homeHero__titleLine homeHero__titleShift">
-                <span className="homeHero__titleText">before you say</span>
-              </span>
-              <span className="homeHero__titleLine homeHero__titleAccent">
-                <span className="homeHero__titleText">
-                  a word<span className="homeHero__period">.</span>
-                </span>
-              </span>
+            <h1 id="home-hero-title" data-reveal>
+              <span>Your business</span>
+              <span className="homeHero__titleShift">is better than</span>
+              <span className="homeHero__titleAccent">your website.</span>
             </h1>
 
-            <div className="homeHero__support">
-              <div className="homeHero__positioning" data-reveal>
-                <span aria-hidden="true" />
-                <p>Good work should look the part.</p>
+            <div className="homeHero__lead" data-reveal>
+              <p>
+                Thirty3 designs strategic websites that help Clarksville and Nashville businesses
+                look trusted, communicate clearly, and turn more visitors into customers.
+              </p>
+
+              <div className="homeHero__actions">
+                <button
+                  type="button"
+                  className="homeButton homeButton--primary"
+                  onClick={(event) =>
+                    openProjectModal(event, "", "Thirty3 homepage hero")
+                  }
+                >
+                  Start a Website Project <ArrowIcon />
+                </button>
+
+                <a className="homeTextLink" href="#work">
+                  See the Work <ArrowIcon />
+                </a>
               </div>
 
-              <div className="homeHero__lead" data-reveal>
-                <p>
-                  Thirty3 designs custom websites and visual identities that make your business
-                  easier to understand, trust, and choose.
-                </p>
-
-                <div className="homeHero__actions">
-                  <button
-                    type="button"
-                    className="homeButton homeButton--primary"
-                    onClick={(event) =>
-                      openProjectModal(
-                        event,
-                        "Website",
-                        "Thirty3 homepage hero",
-                      )
-                    }
-                  >
-                    Start a Website <ArrowIcon />
-                  </button>
-
-                  <a className="homeTextLink" href="#work">
-                    See the Work <ArrowIcon />
-                  </a>
-                </div>
-
-                <p className="homeHero__note">
-                  Direct with Miguel <span aria-hidden="true">·</span> No polished brief required
-                </p>
-              </div>
+              <p className="homeHero__note">
+                Designed and developed by Miguel De Jesus. No polished brief required.
+              </p>
             </div>
           </div>
 
@@ -874,14 +871,9 @@ export default function MiguelThirty3() {
             />
           </div>
 
-          <div
-            className="homeShell homeProof"
-            role="list"
-            aria-label="Thirty3 studio proof"
-            data-reveal
-          >
+          <div className="homeShell homeProof" aria-label="Thirty3 studio proof" data-reveal>
             {PROOF_ITEMS.map((item) => (
-              <div role="listitem" key={item.label}>
+              <div key={item.label}>
                 <strong>{item.value}</strong>
                 <span>{item.label}</span>
               </div>
@@ -896,10 +888,10 @@ export default function MiguelThirty3() {
               <p>Inside the work</p>
             </div>
             <div>
-              <h2 id="home-work-title">Two businesses. Two different design problems.</h2>
+              <h2 id="home-work-title">Built to make the business feel as good online as it does in real life.</h2>
               <p>
-                The project stage gives the quick scan. These two stories show what the design
-                was actually asked to solve and why each answer needed to feel different.
+                Every project begins with a different problem. The goal stays the same: make the
+                next customer understand, trust, and choose the business.
               </p>
               <Link className="homeTextLink" to="/proof-of-work">
                 Explore all work <ArrowIcon />
@@ -910,20 +902,42 @@ export default function MiguelThirty3() {
           <FeaturedCaseStories />
         </section>
 
+        <div className="homeWaveDivider" aria-hidden="true">
+          <svg viewBox="0 0 1440 180" preserveAspectRatio="none">
+            <path
+              className="homeWaveDivider__fill"
+              d="M0 108C184 34 360 24 554 82c224 67 408 102 886 10v88H0Z"
+            />
+            <path
+              className="homeWaveDivider__line"
+              d="M0 108C184 34 360 24 554 82c224 67 408 102 886 10"
+            />
+          </svg>
+        </div>
+
         <section className="homePositioning" aria-labelledby="home-positioning-title">
           <div className="homeShell homePositioning__inner">
             <p className="homeEyebrow homeEyebrow--light" data-reveal>
-              Design changes perception
+              A better website changes the conversation
             </p>
             <h2 id="home-positioning-title" data-reveal>
-              A stronger design changes how the whole business is perceived.
+              Before someone calls, books, visits, donates, or buys, they look you up.
             </h2>
             <div className="homePositioning__footer" data-reveal>
               <p>
-                Before someone calls, visits, books, or buys, they are already deciding what
-                kind of business they believe they are looking at.
+                Your website should answer the questions already forming in their mind and make
+                the next step feel obvious.
               </p>
               <span aria-hidden="true">33</span>
+            </div>
+
+            <div className="homeOutcomes" data-reveal>
+              {OUTCOMES.map((outcome) => (
+                <article key={outcome.title}>
+                  <h3>{outcome.title}</h3>
+                  <p>{outcome.text}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -932,58 +946,80 @@ export default function MiguelThirty3() {
           <div className="homeShell homeSectionHeading" data-reveal>
             <div>
               <span>02</span>
-              <p>Ways to work together</p>
+              <p>Website services</p>
             </div>
             <div>
-              <h2 id="home-services-title">Start with what the business needs to change.</h2>
+              <h2 id="home-services-title">What are we building?</h2>
               <p>
-                Websites lead the studio. Brand identity and ongoing design support help the
-                rest of the business presence catch up and stay consistent.
+                Choose the closest starting point. We will shape the right scope together.
               </p>
             </div>
-          </div>
-
-          <div className="homeShell homeServices__bridge" data-reveal>
-            <span>Not sure what you need?</span>
-            <p>
-              Start with the business problem. We’ll shape the right project around it.
-            </p>
           </div>
 
           <div className="homeShell homeServices__grid">
             {SERVICES.map((service) => (
               <article className={`homeService ${service.className}`} key={service.number} data-reveal>
-                <div className="homeService__topline">
-                  <span className="homeService__number">{service.number}</span>
-                  <span className="homeService__label">{service.label}</span>
-                </div>
+                <span className="homeService__number">{service.number}</span>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+                <ul>
+                  {service.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={(event) =>
+                    openProjectModal(
+                      event,
+                      service.projectType,
+                      `Thirty3 homepage ${service.title} service`,
+                    )
+                  }
+                >
+                  {service.cta} <ArrowIcon />
+                </button>
+              </article>
+            ))}
+          </div>
 
-                <div className="homeService__body">
-                  <h3>{service.title}</h3>
-                  <p className="homeService__headline">{service.headline}</p>
-                  <p className="homeService__description">{service.text}</p>
-                </div>
+          <p className="homeShell homeServices__support" data-reveal>
+            Need the pieces around the website too? Thirty3 also creates flyers, business cards,
+            pricing guides, social graphics, and supporting brand materials.
+          </p>
+        </section>
 
-                <div className="homeService__footer">
-                  <p className="homeService__includes">What the project can include</p>
-                  <ul>
-                    {service.details.map((detail) => (
-                      <li key={detail}>{detail}</li>
-                    ))}
-                  </ul>
-                  <button
-                    type="button"
-                    onClick={(event) =>
-                      openProjectModal(
-                        event,
-                        service.projectType,
-                        `Thirty3 homepage ${service.title} service`,
-                      )
-                    }
-                  >
-                    {service.cta} <ArrowIcon />
-                  </button>
-                </div>
+        <section className="homeClients" aria-labelledby="home-clients-title">
+          <div className="homeShell homeClients__grid">
+            <div data-reveal>
+              <p className="homeEyebrow">Who it is for</p>
+              <h2 id="home-clients-title">Built for businesses where trust matters.</h2>
+              <p>
+                Thirty3 works especially well with service businesses, professional practices,
+                personal brands, organizations, campaigns, and local companies ready to look
+                more established online.
+              </p>
+            </div>
+            <ul data-reveal>
+              {CLIENT_TYPES.map((client) => <li key={client}>{client}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section className="homeProcess" aria-labelledby="home-process-title">
+          <div className="homeShell homeSectionHeading" data-reveal>
+            <div><span>03</span><p>The process</p></div>
+            <div>
+              <h2 id="home-process-title">You bring the business. I’ll help shape the website.</h2>
+              <p>Working directly with Miguel keeps the strategy, design, and development connected.</p>
+            </div>
+          </div>
+          <div className="homeShell homeProcess__grid">
+            {PROCESS.map((step) => (
+              <article key={step.number} data-reveal>
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
               </article>
             ))}
           </div>
@@ -991,68 +1027,80 @@ export default function MiguelThirty3() {
 
         <section className="homeStudio" id="studio" aria-labelledby="home-studio-title">
           <div className="homeShell homeStudio__grid">
-            <div className="homeStudio__identity" data-reveal>
-              <div className="homeStudio__mark" aria-hidden="true">
-                <span>THIR</span>
-                <span>TY3</span>
-              </div>
-              <p>
-                Independent studio<br />
-                Clarksville, Tennessee
-              </p>
+            <div className="homeStudio__mark" aria-hidden="true" data-reveal>
+              <span>THIR</span>
+              <span>TY3</span>
             </div>
 
             <div className="homeStudio__copy" data-reveal>
-              <p className="homeEyebrow homeEyebrow--light">Independent by design</p>
-              <h2 id="home-studio-title">One person sees the whole project through.</h2>
+              <p className="homeEyebrow homeEyebrow--light">The studio</p>
+              <h2 id="home-studio-title">You work with the person doing the work.</h2>
               <p className="homeStudio__lead">
-                You work directly with Miguel from the first conversation through launch.
-                Strategy, message, visual direction, and development stay connected, so the
-                finished work feels like one clear idea instead of pieces passed between teams.
+                I’m Miguel De Jesus, a web designer and developer based in Clarksville. I turn
+                scattered ideas into clear, credible digital experiences without layers of
+                account managers or mysterious design language.
               </p>
 
-              <div
-                className="homeStudio__method"
-                role="list"
-                aria-label="How Thirty3 approaches a project"
-              >
-                <article role="listitem">
+              <div className="homeStudio__principles">
+                <div>
                   <span>01</span>
-                  <div>
-                    <h3>Find the real problem.</h3>
-                    <p>We look past “make it look better” and define what the business needs people to understand, trust, or do.</p>
-                  </div>
-                </article>
-                <article role="listitem">
+                  <p>Direct communication from the first conversation through launch.</p>
+                </div>
+                <div>
                   <span>02</span>
-                  <div>
-                    <h3>Shape the clearest story.</h3>
-                    <p>The structure and message come before decoration, giving every page and visual a reason to exist.</p>
-                  </div>
-                </article>
-                <article role="listitem">
+                  <p>Decisions explained clearly, without burying the project in jargon.</p>
+                </div>
+                <div>
                   <span>03</span>
-                  <div>
-                    <h3>Design the right system.</h3>
-                    <p>The visual direction is built around the business, not pulled from a one-size-fits-everyone template.</p>
-                  </div>
-                </article>
-                <article role="listitem">
-                  <span>04</span>
-                  <div>
-                    <h3>Build toward the next step.</h3>
-                    <p>The finished experience is responsive, intentional, and ready to help visitors move with confidence.</p>
-                  </div>
-                </article>
+                  <p>Custom work shaped around the business instead of a template swap.</p>
+                </div>
               </div>
 
-              <div className="homeStudio__footer">
-                <p>Clear communication. Connected decisions. No black-box process.</p>
-                <Link className="homeTextLink homeTextLink--light" to="/field-notes">
-                  See how I think <ArrowIcon />
-                </Link>
-              </div>
+              <Link className="homeTextLink homeTextLink--light" to="/field-notes">
+                Read Field Notes <ArrowIcon />
+              </Link>
             </div>
+          </div>
+        </section>
+
+        <section className="homeReviews" aria-labelledby="home-reviews-title">
+          <div className="homeShell homeReviews__inner" data-reveal>
+            <div>
+              <p className="homeEyebrow">Client proof</p>
+              <h2 id="home-reviews-title">Good work gets noticed.</h2>
+            </div>
+            <div className="homeReviews__score">
+              <strong>4</strong>
+              <span>Google reviews from real Thirty3 clients</span>
+              <a className="homeTextLink" href="https://www.google.com/search?q=Thirty3+Digital+Designs+Clarksville" target="_blank" rel="noopener noreferrer">
+                Read Google Reviews <ArrowIcon />
+              </a>
+            </div>
+          </div>
+
+          <div className="homeShell homeReviews__grid">
+            {REVIEWS.map((review) => (
+              <figure
+                className={`homeReview${review.featured ? " homeReview--featured" : ""}`}
+                key={review.name}
+                data-reveal
+              >
+                <div className="homeReview__rating" aria-label="5 out of 5 stars">
+                  <span aria-hidden="true">★★★★★</span>
+                  <small>Google Review</small>
+                </div>
+                <blockquote>“{review.quote}”</blockquote>
+                <figcaption>
+                  <strong>{review.name}</strong>
+                  <span>{review.project}</span>
+                  {review.website && (
+                    <a href={review.websiteUrl} target="_blank" rel="noopener noreferrer">
+                      {review.website} <ArrowIcon />
+                    </a>
+                  )}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </section>
 
@@ -1073,50 +1121,40 @@ export default function MiguelThirty3() {
                 href="/downloads/does-your-business-look-ready.pdf?utm_source=website&utm_medium=homepage&utm_campaign=free_scorecard"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Open the free first-impression scorecard PDF in a new tab"
               >
                 Get the Scorecard <ArrowIcon />
               </a>
-              <span>Interactive PDF · About 2 minutes · Opens in a new tab</span>
+              <span>Interactive PDF · About 2 minutes</span>
             </div>
           </div>
         </section>
 
         <section className="homeContact" id="contact" aria-labelledby="home-contact-title">
           <div className="homeShell homeContact__inner" data-reveal>
-            <div className="homeContact__message">
-              <p className="homeEyebrow">Ready when you are</p>
-              <h2 id="home-contact-title">
-                Make the business look as good as the work behind it.
-              </h2>
-              <p>
-                Tell me what is changing, what is not working, and what you want people to do
-                next. A rough idea is enough to start the conversation.
-              </p>
-            </div>
+            <p className="homeEyebrow">Your next website</p>
+            <h2 id="home-contact-title">
+              Let’s make your business
+              <span>look as ready as it really is.</span>
+            </h2>
+            <p>
+              Tell me what you are building, what is not working, or what you wish your website
+              could do. You do not need to have everything figured out yet.
+            </p>
 
-            <aside className="homeContact__card" aria-label="Good project starting points">
-              <p className="homeContact__cardLabel">Good starting points</p>
-              <ul>
-                <li>A new website or strategic redesign</li>
-                <li>A brand that needs a clearer visual system</li>
-                <li>Ongoing design that should finally feel connected</li>
-              </ul>
-
+            <div className="homeContact__actions">
               <button
                 type="button"
-                className="homeButton homeButton--primary"
+                className="homeButton homeButton--dark"
                 onClick={(event) =>
                   openProjectModal(event, "", "Thirty3 homepage final CTA")
                 }
               >
-                Tell Me About the Project <ArrowIcon />
+                Start a Website Project <ArrowIcon />
               </button>
-
-              <Link className="homeTextLink homeTextLink--light" to="/proof-of-work">
-                See All Website Work <ArrowIcon />
+              <Link className="homeTextLink" to="/proof-of-work">
+                View All Work <ArrowIcon />
               </Link>
-            </aside>
+            </div>
           </div>
 
           <footer className="homeShell homeFooter" aria-label="Thirty3 studio details">
