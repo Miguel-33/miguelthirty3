@@ -47,7 +47,7 @@ const PROJECTS = [
   },
   {
     number: "04",
-    name: "Blayneâ€™s Family Research",
+    name: "Blayne's Family Research",
     type: "Genealogy website",
     summary:
       "A welcoming website that makes professional family-history research feel accessible, organized, and trustworthy.",
@@ -55,7 +55,7 @@ const PROJECTS = [
     href: "/proof-of-work/blaynes-family-research",
     image: "/blaynesFamilyResearchHero.png",
     mobileImage: "/blaynesFamilyResearchHeroMobile.png",
-    alt: "Blayneâ€™s Family Research website designed by Thirty3 Digital Designs",
+    alt: "Blayne's Family Research website designed by Thirty3 Digital Designs",
     accent: "#3d6770",
   },
   {
@@ -75,7 +75,7 @@ const PROJECTS = [
 
 const PROOF_ITEMS = [
   { value: "10", label: "websites built for real businesses" },
-  { value: "â˜… â˜… â˜… â˜… â˜…", label: "Google reviews from real clients" },
+  { value: "★★★★★", label: "Google reviews from real clients" },
   { value: "1:1", label: "direct access to Miguel" },
   { value: "Local", label: "Clarksville + Nashville" },
 ];
@@ -154,7 +154,7 @@ const REVIEWS = [
     websiteUrl: "https://glampcampnashville.com",
     featured: true,
     quote:
-      "They created a stunning website for my business, Glamp Camp, and I couldnâ€™t be happier. The design was top-notch, they communicated clearly, and everything was done quickly and professionally. Truly a flawless experience from start to finish!",
+      "They created a stunning website for my business, Glamp Camp, and I couldn't be happier. The design was top-notch, they communicated clearly, and everything was done quickly and professionally. Truly a flawless experience from start to finish!",
   },
   {
     name: "Nick De Leon",
@@ -535,7 +535,7 @@ function FeaturedCaseStories() {
               <span>Result</span>
               <p>
                 A clearer, more established presence that explains the work without flattening
-                the companyâ€™s personality.
+                the company's personality.
               </p>
             </div>
           </div>
@@ -879,7 +879,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeHero__intro">
             <div className="homeHero__eyebrowRow" data-reveal>
               <p className="homeEyebrow">
-                Web design + development Â· Clarksville, Tennessee
+                Web design + development · Clarksville, Tennessee
               </p>
               <p className="homeHero__disciplines">
                 Thirty3 Digital Designs
@@ -1067,7 +1067,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeSectionHeading" data-reveal>
             <div><span>03</span><p>The process</p></div>
             <div>
-              <h2 id="home-process-title">You bring the business. Iâ€™ll help shape the website.</h2>
+              <h2 id="home-process-title">You bring the business. I'll help shape the website.</h2>
               <p>Working directly with Miguel keeps the strategy, design, and development connected.</p>
             </div>
           </div>
@@ -1093,7 +1093,7 @@ export default function MiguelThirty3() {
               <p className="homeEyebrow homeEyebrow--light">The studio</p>
               <h2 id="home-studio-title">You work with the person doing the work.</h2>
               <p className="homeStudio__lead">
-                Iâ€™m Miguel De Jesus, a web designer and developer based in Clarksville. I turn
+                I'm Miguel De Jesus, a web designer and developer based in Clarksville. I turn
                 scattered ideas into clear, credible digital experiences without layers of
                 account managers or mysterious design language.
               </p>
@@ -1190,7 +1190,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeContact__inner" data-reveal>
             <p className="homeEyebrow">Your next website</p>
             <h2 id="home-contact-title">
-              Letâ€™s make your business
+              Let's make your business
               <span>look as ready as it really is.</span>
             </h2>
             <p>

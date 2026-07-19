@@ -1038,7 +1038,6 @@ html.thirty3-intro-active {
 .homeCase__josephMedia {
   position: relative;
   display: block;
-  aspect-ratio: 5 / 4;
   overflow: hidden;
   background: var(--home-ink);
   text-decoration: none;
