@@ -773,10 +773,7 @@ body.pageChromeMenuOpen {
   min-width: 82px;
   min-height: 68px;
   justify-content: center;
-  padding: 9px 16px;
-  border-radius: 12px;
-  background: var(--chrome-bg);
-  box-shadow: 0 10px 24px rgba(17, 18, 20, 0.12);
+
 }
 
 .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)

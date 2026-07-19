@@ -52,8 +52,19 @@ export default function SiteHeader({
     () => navigationItems ?? defaultSectionLinks,
     [navigationItems],
   );
+  const headerLogoSrc =
+    floatingHeader || menuOpen || !isHome
+      ? "/Thirty3-Logo.png"
+      : "/Thirty3-Logo_charcoal.png";
 
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    ["/Thirty3-Logo_charcoal.png", "/Thirty3-Logo.png"].forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+  }, []);
 
   useEffect(() => {
     closeMenu();
@@ -263,11 +274,11 @@ export default function SiteHeader({
             >
               <img
                 className="pageChromeLogoImage"
-                src="/Thirty3-Logo.png"
+                src={headerLogoSrc}
                 alt=""
                 decoding="async"
+                fetchPriority="high"
               />
-
             </Link>
 
             <button
