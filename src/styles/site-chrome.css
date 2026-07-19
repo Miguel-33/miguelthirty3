@@ -968,3 +968,22 @@ body.pageChromeMenuOpen {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-width: 900px) {
+  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeLogo {
+    min-width: 64px;
+    min-height: 64px;
+    padding: 9px 15px;
+  }
+
+  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeLogoImage {
+    height: 64px;
+  }
+
+  .pageChromeMenuButton {
+    width: 140px;
+    height: 64px;
+  }
+}
