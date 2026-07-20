@@ -75,7 +75,7 @@ const PROJECTS = [
 
 const PROOF_ITEMS = [
   { value: "10", label: "websites built for real businesses" },
-  { value: "★★★★★", label: "Google reviews from real clients" },
+  { value: "\u2605 \u2605 \u2605 \u2605 \u2605", label: "Google reviews from real clients" },
   { value: "1:1", label: "direct access to Miguel" },
   { value: "Local", label: "Clarksville + Nashville" },
 ];
@@ -606,7 +606,7 @@ function FeaturedCaseStories() {
                 decoding="async"
               />
             </picture>
-            <span aria-hidden="true">Campaign website Â· 02 / 02</span>
+            <span aria-hidden="true">Campaign website &middot; 02 / 02</span>
           </Link>
 
           <div className="homeCase__josephResult">
@@ -672,7 +672,7 @@ export default function MiguelThirty3() {
     const timer = window.setTimeout(() => {
       document.documentElement.classList.remove("thirty3-intro-active");
       setIntroPlaying(false);
-    }, 2300);
+    }, 1380);
 
     return () => {
       window.clearTimeout(timer);
@@ -879,7 +879,7 @@ export default function MiguelThirty3() {
           <div className="homeShell homeHero__intro">
             <div className="homeHero__eyebrowRow" data-reveal>
               <p className="homeEyebrow">
-                Web design + development · Clarksville, Tennessee
+                Web design + development &middot; Clarksville, Tennessee
               </p>
               <p className="homeHero__disciplines">
                 Thirty3 Digital Designs
@@ -1143,10 +1143,10 @@ export default function MiguelThirty3() {
                 data-reveal
               >
                 <div className="homeReview__rating" aria-label="5 out of 5 stars">
-                  <span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span>
+                  <span aria-hidden="true">{"\u2605\u2605\u2605\u2605\u2605"}</span>
                   <small>Google Review</small>
                 </div>
-                <blockquote>â€œ{review.quote}â€</blockquote>
+                <blockquote>&ldquo;{review.quote}&rdquo;</blockquote>
                 <figcaption>
                   <strong>{review.name}</strong>
                   <span>{review.project}</span>
@@ -1181,7 +1181,7 @@ export default function MiguelThirty3() {
               >
                 Get the Scorecard <ArrowIcon />
               </a>
-              <span>Interactive PDF Â· About 2 minutes</span>
+              <span>Interactive PDF &middot; About 2 minutes</span>
             </div>
           </div>
         </section>
@@ -1216,8 +1216,8 @@ export default function MiguelThirty3() {
 
           <footer className="homeShell homeFooter" aria-label="Thirty3 studio details">
             <span>Thirty3 Digital Designs</span>
-            <span>Clarksville Â· Nashville Â· Middle Tennessee</span>
-            <span>Websites Â· Identity Â· Digital Design</span>
+            <span>Clarksville &middot; Nashville &middot; Middle Tennessee</span>
+            <span>Websites &middot; Identity &middot; Digital Design</span>
           </footer>
         </section>
       </main>
