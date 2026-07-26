@@ -193,7 +193,6 @@
   scrollbar-gutter: stable;
 }
 
-overscroll-behavior: contain;
 .projectInquiryModal__mobileProgress {
   display: none;
 }
