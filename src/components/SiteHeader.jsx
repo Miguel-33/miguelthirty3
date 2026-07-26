@@ -7,7 +7,7 @@ const HEADER_HIDE_START = 220;
 const HEADER_HIDE_DISTANCE = 64;
 const HEADER_SHOW_DISTANCE = 18;
 
-const defaultSectionLinks = [
+const DEFAULT_SECTION_LINKS = [
   { id: "work", label: "Work", number: "01" },
   { id: "services", label: "Services", number: "02" },
   { id: "studio", label: "Studio", number: "03" },
@@ -22,63 +22,28 @@ function ArrowIcon() {
   );
 }
 
-export default function SiteHeader({
-  onStartProject,
-  embedded = false,
-  variant = "default",
-  navigationItems,
-  showFieldNotes = true,
-  ctaLabel = "Start a Project",
-  ctaTo = "/request-website",
-  menuFooterPrimary = "Clarksville / Nashville",
-  menuFooterSecondary = "Websites / Identity / Design",
-}) {
-  const location = useLocation();
-  const menuButtonRef = useRef(null);
-  const navRef = useRef(null);
+function useHeaderVisibility(location) {
   const lastScrollYRef = useRef(0);
   const scrollFrameRef = useRef(null);
   const scrollDirectionRef = useRef("");
   const scrollTravelRef = useRef(0);
   const headerVisibleRef = useRef(true);
   const floatingHeaderRef = useRef(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [floatingHeader, setFloatingHeader] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
-  const [activeSection, setActiveSection] = useState("");
-
-  const isHome = location.pathname === "/";
-  const resolvedLinks = useMemo(
-    () => navigationItems ?? defaultSectionLinks,
-    [navigationItems],
-  );
-  const headerLogoSrc =
-    floatingHeader || menuOpen || !isHome
-      ? "/Thirty3-Logo.png"
-      : "/Thirty3-Logo_charcoal.png";
-
-  const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    ["/Thirty3-Logo_charcoal.png", "/Thirty3-Logo.png"].forEach((src) => {
-      const image = new Image();
-      image.src = src;
-    });
-  }, []);
-
-  useEffect(() => {
-    closeMenu();
     const currentScrollY = Math.max(window.scrollY, 0);
     const shouldFloat = currentScrollY > TOP_HEADER_LIMIT;
 
     headerVisibleRef.current = true;
     floatingHeaderRef.current = shouldFloat;
-    setHeaderVisible(true);
-    setFloatingHeader(shouldFloat);
     lastScrollYRef.current = currentScrollY;
     scrollDirectionRef.current = "";
     scrollTravelRef.current = 0;
-  }, [location.pathname, location.hash]);
+    setHeaderVisible(true);
+    setFloatingHeader(shouldFloat);
+  }, [location.hash, location.pathname]);
 
   useEffect(() => {
     const setVisibleState = (nextVisible) => {
@@ -95,8 +60,7 @@ export default function SiteHeader({
 
     const updateHeader = () => {
       const currentScrollY = Math.max(window.scrollY, 0);
-      const previousScrollY = lastScrollYRef.current;
-      const scrollDelta = currentScrollY - previousScrollY;
+      const scrollDelta = currentScrollY - lastScrollYRef.current;
 
       if (currentScrollY <= TOP_HEADER_LIMIT) {
         setVisibleState(true);
@@ -142,13 +106,6 @@ export default function SiteHeader({
       scrollFrameRef.current = window.requestAnimationFrame(updateHeader);
     };
 
-    const initialScrollY = Math.max(window.scrollY, 0);
-    lastScrollYRef.current = initialScrollY;
-    headerVisibleRef.current = true;
-    floatingHeaderRef.current = initialScrollY > TOP_HEADER_LIMIT;
-    setHeaderVisible(true);
-    setFloatingHeader(initialScrollY > TOP_HEADER_LIMIT);
-
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
@@ -160,6 +117,10 @@ export default function SiteHeader({
     };
   }, []);
 
+  return { floatingHeader, headerVisible };
+}
+
+function useMenuDialog(menuOpen, setMenuOpen, menuButtonRef, navRef) {
   useEffect(() => {
     document.body.classList.toggle("pageChromeMenuOpen", menuOpen);
 
@@ -167,13 +128,14 @@ export default function SiteHeader({
       return () => document.body.classList.remove("pageChromeMenuOpen");
     }
 
-    const focusableInMenu = Array.from(
-      navRef.current?.querySelectorAll('a[href], button:not([disabled])') ?? [],
+    const menuItems = Array.from(
+      navRef.current?.querySelectorAll("a[href], button:not([disabled])") ?? [],
     );
-    const focusableElements = [menuButtonRef.current, ...focusableInMenu].filter(Boolean);
-
+    const focusableElements = [menuButtonRef.current, ...menuItems].filter(
+      Boolean,
+    );
     const focusFrame = window.requestAnimationFrame(() => {
-      focusableInMenu[0]?.focus();
+      menuItems[0]?.focus();
     });
 
     const handleKeyDown = (event) => {
@@ -205,17 +167,20 @@ export default function SiteHeader({
       document.body.classList.remove("pageChromeMenuOpen");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, menuButtonRef, navRef, setMenuOpen]);
+}
+
+function useActiveSection(isHome, navigationItems, resolvedLinks) {
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const localLinks = resolvedLinks.filter(
       (item) => item.id && item.href?.startsWith("#"),
     );
-    const fallbackHomeLinks = navigationItems ? [] : resolvedLinks;
     const observedLinks = localLinks.length
       ? localLinks
       : isHome
-        ? fallbackHomeLinks
+        ? resolvedLinks
         : [];
 
     if (!observedLinks.length) {
@@ -233,7 +198,10 @@ export default function SiteHeader({
       (entries) => {
         const visibleSections = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((first, second) => second.intersectionRatio - first.intersectionRatio);
+          .sort(
+            (first, second) =>
+              second.intersectionRatio - first.intersectionRatio,
+          );
 
         if (visibleSections.length) {
           setActiveSection(visibleSections[0].target.id);
@@ -248,6 +216,56 @@ export default function SiteHeader({
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [isHome, navigationItems, resolvedLinks]);
+
+  return activeSection;
+}
+
+export default function SiteHeader({
+  onStartProject,
+  embedded = false,
+  variant = "default",
+  navigationItems,
+  showFieldNotes = true,
+  ctaLabel = "Start a Project",
+  ctaTo = "/request-website",
+  menuFooterPrimary = "Clarksville / Nashville",
+  menuFooterSecondary = "Websites / Identity / Design",
+}) {
+  const location = useLocation();
+  const menuButtonRef = useRef(null);
+  const navRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { floatingHeader, headerVisible } = useHeaderVisibility(location);
+  const isHome = location.pathname === "/";
+  const resolvedLinks = useMemo(
+    () => navigationItems ?? DEFAULT_SECTION_LINKS,
+    [navigationItems],
+  );
+  const activeSection = useActiveSection(
+    isHome,
+    navigationItems,
+    resolvedLinks,
+  );
+  const topStateIsLight = variant === "paper";
+  const useDarkLogo = topStateIsLight && !floatingHeader && !menuOpen;
+  const headerLogoSrc = useDarkLogo
+    ? "/Thirty3-Logo_charcoal.png"
+    : "/Thirty3-Logo.png";
+
+  const closeMenu = () => setMenuOpen(false);
+
+  useMenuDialog(menuOpen, setMenuOpen, menuButtonRef, navRef);
+
+  useEffect(() => {
+    ["/Thirty3-Logo_charcoal.png", "/Thirty3-Logo.png"].forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    closeMenu();
+  }, [location.hash, location.pathname]);
 
   const headerClasses = [
     "pageChromeHeaderWrap",
@@ -279,6 +297,10 @@ export default function SiteHeader({
                 decoding="async"
                 fetchPriority="high"
               />
+              <span className="pageChromeLogoMeta">
+                <strong>Independent web studio</strong>
+                <small>Clarksville, Tennessee</small>
+              </span>
             </Link>
 
             <button
@@ -286,7 +308,9 @@ export default function SiteHeader({
               type="button"
               className="pageChromeMenuButton"
               onClick={() => setMenuOpen((current) => !current)}
-              aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
               aria-expanded={menuOpen}
               aria-controls="pageChromeNav"
             >
@@ -307,7 +331,8 @@ export default function SiteHeader({
             >
               <div className="pageChromeNavLinks">
                 {resolvedLinks.map((item) => {
-                  const href = item.href ?? (isHome ? `#${item.id}` : `/#${item.id}`);
+                  const href =
+                    item.href ?? (isHome ? `#${item.id}` : `/#${item.id}`);
                   const isActive = activeSection === item.id;
 
                   return (
@@ -330,10 +355,14 @@ export default function SiteHeader({
                   <Link
                     to="/field-notes"
                     className={
-                      location.pathname.startsWith("/field-notes") ? "is-active" : ""
+                      location.pathname.startsWith("/field-notes")
+                        ? "is-active"
+                        : ""
                     }
                     aria-current={
-                      location.pathname.startsWith("/field-notes") ? "page" : undefined
+                      location.pathname.startsWith("/field-notes")
+                        ? "page"
+                        : undefined
                     }
                     onClick={closeMenu}
                   >
@@ -382,7 +411,9 @@ export default function SiteHeader({
         </nav>
       </header>
 
-      {!isHome && !embedded && <div className="pageChromeSpacer" aria-hidden="true" />}
+      {!isHome && !embedded && (
+        <div className="pageChromeSpacer" aria-hidden="true" />
+      )}
     </>
   );
 }

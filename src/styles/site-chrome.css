@@ -1,14 +1,13 @@
 :root {
   --chrome-bg: #111214;
-  --chrome-bg-soft: #17191b;
-  --chrome-paper: #f6f7f4;
+  --chrome-paper: #f4f5f3;
   --chrome-gold: #f4d40a;
   --chrome-ink: #17191b;
-  --chrome-muted: rgba(246, 247, 244, 0.56);
-  --chrome-border: rgba(246, 247, 244, 0.15);
+  --chrome-muted: rgba(244, 245, 243, 0.54);
+  --chrome-border: rgba(244, 245, 243, 0.16);
   --chrome-max: 1650px;
-  --chrome-header-height: 104px;
-  --chrome-scrolled-height: 80px;
+  --chrome-header-height: 88px;
+  --chrome-scrolled-height: 74px;
 }
 
 .pageChromeHeaderWrap,
@@ -29,8 +28,6 @@ body.pageChromeMenuOpen {
   inset: 0 0 auto;
   z-index: 2000;
   width: 100%;
-  padding-top: 0;
-  background: transparent;
   color: var(--chrome-paper);
   pointer-events: none;
   transform: translate3d(0, 0, 0);
@@ -42,14 +39,13 @@ body.pageChromeMenuOpen {
 }
 
 .pageChromeHeaderWrap.is-hidden {
-  transform: translate3d(0, calc(-100% - 28px), 0);
   pointer-events: none;
+  transform: translate3d(0, calc(-100% - 28px), 0);
 }
 
 .pageChromeHeader {
   width: 100%;
-  max-width: none;
-  margin: 0 auto;
+  margin-inline: auto;
   pointer-events: auto;
   transition:
     width 320ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -61,14 +57,11 @@ body.pageChromeMenuOpen {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(24px, 4vw, 64px);
-  padding: 0 clamp(24px, 4.2vw, 74px);
-  border: 0;
+  gap: clamp(22px, 3vw, 48px);
+  padding: 0 clamp(24px, 4vw, 68px);
   border-bottom: 1px solid var(--chrome-border);
-  border-radius: 0;
-  background: rgba(17, 18, 20, 0.99);
+  background: rgba(17, 18, 20, 0.98);
   color: var(--chrome-paper);
-  box-shadow: none;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   transition:
@@ -76,8 +69,8 @@ body.pageChromeMenuOpen {
     padding 320ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 220ms ease,
     border-radius 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 220ms ease;
+    background-color 220ms ease,
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .pageChromeHeaderWrap.is-scrolled,
@@ -94,12 +87,39 @@ body.pageChromeMenuOpen {
 .pageChromeHeaderWrap.is-scrolled .pageChromeHeaderBar,
 .pageChromeHeaderWrap.menu-is-open .pageChromeHeaderBar {
   min-height: var(--chrome-scrolled-height);
-  padding: 0 10px 0 24px;
-  border: 1px solid rgba(246, 247, 244, 0.2);
-  border-radius: 20px;
+  padding: 0 9px 0 22px;
+  border: 1px solid rgba(244, 245, 243, 0.2);
+  border-radius: 18px;
+  background: rgba(17, 18, 20, 0.94);
   box-shadow:
-    0 18px 44px rgba(17, 18, 20, 0.18),
-    0 4px 12px rgba(17, 18, 20, 0.12);
+    0 22px 54px rgba(17, 18, 20, 0.2),
+    0 4px 12px rgba(17, 18, 20, 0.1);
+  backdrop-filter: blur(22px) saturate(1.12);
+  -webkit-backdrop-filter: blur(22px) saturate(1.12);
+}
+
+.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open) {
+  position: absolute;
+  inset: var(--home-screen-gap, 12px) var(--home-screen-gap, 12px) auto;
+  width: auto;
+}
+
+.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeHeader {
+  width: min(var(--chrome-max), calc(100% - clamp(16px, 2.2vw, 36px)));
+  max-width: var(--chrome-max);
+}
+
+.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeHeaderBar {
+  min-height: var(--chrome-header-height);
+  padding: 0 clamp(22px, 3.5vw, 58px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .pageChromeLogo {
@@ -109,40 +129,37 @@ body.pageChromeMenuOpen {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  color: var(--chrome-paper);
+  color: inherit;
   text-decoration: none;
 }
 
 .pageChromeLogoImage {
   width: auto;
-  height: 62px;
-  max-width: 190px;
+  height: 48px;
+  max-width: 102px;
   display: block;
   object-fit: contain;
   transition:
     height 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 220ms ease;
-}
-
-.pageChromeHeaderWrap.is-scrolled .pageChromeLogoImage,
-.pageChromeHeaderWrap.menu-is-open .pageChromeLogoImage {
-  height: 50px;
+    opacity 180ms ease;
 }
 
 .pageChromeLogoMeta {
   display: grid;
   gap: 5px;
-  padding-left: 18px;
+  padding-left: 16px;
   border-left: 1px solid var(--chrome-border);
   line-height: 1;
   text-transform: uppercase;
   transition:
+    max-width 260ms cubic-bezier(0.22, 1, 0.36, 1),
     padding 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
     opacity 220ms ease;
 }
 
 .pageChromeLogoMeta strong {
-  color: var(--chrome-paper);
+  color: inherit;
   font-size: 0.61rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -155,19 +172,33 @@ body.pageChromeMenuOpen {
   letter-spacing: 0.13em;
 }
 
+.pageChromeHeaderWrap.is-scrolled .pageChromeLogoImage,
+.pageChromeHeaderWrap.menu-is-open .pageChromeLogoImage {
+  height: 44px;
+}
+
+.pageChromeHeaderWrap.is-scrolled .pageChromeLogoMeta,
+.pageChromeHeaderWrap.menu-is-open .pageChromeLogoMeta {
+  max-width: 0;
+  padding-left: 0;
+  border-left-color: transparent;
+  opacity: 0;
+  overflow: hidden;
+}
+
 .pageChromeNav {
   min-width: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: clamp(22px, 3vw, 44px);
+  gap: clamp(22px, 2.8vw, 42px);
 }
 
 .pageChromeNavLinks {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: clamp(18px, 2.1vw, 34px);
+  gap: clamp(16px, 1.8vw, 30px);
 }
 
 .pageChromeNavLinks a {
@@ -175,9 +206,9 @@ body.pageChromeMenuOpen {
   display: inline-flex;
   align-items: baseline;
   gap: 7px;
-  padding: 27px 0;
-  color: rgba(246, 247, 244, 0.62);
-  font-size: 0.71rem;
+  padding: 24px 0;
+  color: rgba(244, 245, 243, 0.62);
+  font-size: 0.7rem;
   font-weight: 850;
   letter-spacing: 0.08em;
   line-height: 1;
@@ -193,7 +224,7 @@ body.pageChromeMenuOpen {
 .pageChromeNavLinks a::after {
   position: absolute;
   right: 0;
-  bottom: 11px;
+  bottom: 10px;
   width: 18px;
   height: 2px;
   background: var(--chrome-gold);
@@ -201,12 +232,6 @@ body.pageChromeMenuOpen {
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 180ms ease;
-}
-
-
-.pageChromeHeaderWrap.is-scrolled .pageChromeNavLinks a,
-.pageChromeHeaderWrap.menu-is-open .pageChromeNavLinks a {
-  padding-block: 20px;
 }
 
 .pageChromeNavLinks a:hover,
@@ -220,6 +245,11 @@ body.pageChromeMenuOpen {
   transform-origin: left;
 }
 
+.pageChromeHeaderWrap.is-scrolled .pageChromeNavLinks a,
+.pageChromeHeaderWrap.menu-is-open .pageChromeNavLinks a {
+  padding-block: 19px;
+}
+
 .pageChromeNavNumber {
   color: var(--chrome-gold);
   font-family: "Inter", sans-serif;
@@ -229,19 +259,19 @@ body.pageChromeMenuOpen {
 }
 
 .pageChromeCta {
-  min-width: 184px;
-  min-height: 54px;
+  min-width: 170px;
+  min-height: 50px;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
   padding: 6px 7px 6px 17px;
-  border: 1px solid rgba(246, 247, 244, 0.3);
-  border-radius: 11px;
-  background: transparent;
-  color: var(--chrome-paper);
+  border: 1px solid var(--chrome-gold);
+  border-radius: 999px;
+  background: var(--chrome-gold);
+  color: var(--chrome-ink);
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.69rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   line-height: 1;
@@ -250,17 +280,10 @@ body.pageChromeMenuOpen {
   white-space: nowrap;
   cursor: pointer;
   transition:
-    min-height 260ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 180ms ease,
     border-color 180ms ease,
     color 180ms ease,
     transform 180ms ease;
-}
-
-
-.pageChromeHeaderWrap.is-scrolled .pageChromeCta,
-.pageChromeHeaderWrap.menu-is-open .pageChromeCta {
-  min-height: 48px;
 }
 
 .pageChromeCtaIcon {
@@ -269,9 +292,9 @@ body.pageChromeMenuOpen {
   display: inline-grid;
   place-items: center;
   flex: 0 0 auto;
-  border-radius: 7px;
-  background: var(--chrome-gold);
-  color: var(--chrome-ink);
+  border-radius: 50%;
+  background: var(--chrome-ink);
+  color: var(--chrome-gold);
   transition:
     background-color 180ms ease,
     color 180ms ease;
@@ -290,8 +313,8 @@ body.pageChromeMenuOpen {
 
 .pageChromeCta:hover,
 .pageChromeCta:focus-visible {
-  border-color: var(--chrome-gold);
-  background: var(--chrome-gold);
+  border-color: var(--chrome-paper);
+  background: var(--chrome-paper);
   color: var(--chrome-ink);
   transform: translateY(-2px);
 }
@@ -310,18 +333,22 @@ body.pageChromeMenuOpen {
 .pageChromeMenuButton {
   position: relative;
   z-index: 2005;
-  min-width: 90px;
-  height: 46px;
+  min-width: 106px;
+  height: 48px;
   display: none;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 0 12px 0 14px;
-  border: 1px solid rgba(246, 247, 244, 0.34);
-  border-radius: 11px;
-  background: transparent;
+  padding: 0 14px 0 16px;
+  border: 1px solid rgba(244, 245, 243, 0.24);
+  border-radius: 999px;
+  background: rgba(244, 245, 243, 0.06);
   color: var(--chrome-paper);
   cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
 }
 
 .pageChromeMenuButtonText {
@@ -391,12 +418,44 @@ body.pageChromeMenuOpen {
   outline-offset: 4px;
 }
 
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeHeaderBar {
+  border-color: rgba(23, 25, 27, 0.14);
+  background: rgba(244, 245, 243, 0.96);
+  color: var(--chrome-ink);
+}
+
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeLogoMeta {
+  border-left-color: rgba(23, 25, 27, 0.18);
+}
+
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeLogoMeta
+  small {
+  color: rgba(23, 25, 27, 0.54);
+}
+
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeNavLinks
+  a {
+  color: rgba(23, 25, 27, 0.62);
+}
+
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeNavLinks
+  a:hover,
+.pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeNavLinks
+  a.is-active {
+  color: var(--chrome-ink);
+}
+
 .pageChromeHeaderWrap.is-embedded {
   position: relative;
   inset: auto;
   z-index: 30;
   padding: 0;
-  pointer-events: none;
 }
 
 .pageChromeHeaderWrap.is-embedded .pageChromeHeader,
@@ -407,33 +466,27 @@ body.pageChromeMenuOpen {
 
 .pageChromeHeaderWrap.is-embedded .pageChromeHeaderBar,
 .pageChromeHeaderWrap.is-embedded.is-scrolled .pageChromeHeaderBar {
-  min-height: 76px;
+  min-height: 72px;
   padding: 0 clamp(18px, 2.5vw, 30px);
   border: 1px solid var(--chrome-border);
-  border-radius: 16px;
+  border-radius: 14px;
   background: rgba(17, 18, 20, 0.98);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
-  pointer-events: auto;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.2);
 }
 
 .pageChromeHeaderWrap.is-embedded .pageChromeLogoImage,
 .pageChromeHeaderWrap.is-embedded.is-scrolled .pageChromeLogoImage {
-  height: 48px;
-}
-
-.pageChromeHeaderWrap.is-embedded.is-editorial .pageChromeHeaderBar {
-  min-height: 72px;
-  border-radius: 14px;
+  height: 44px;
 }
 
 @media (max-width: 1120px) {
   .pageChromeHeaderBar {
-    gap: 22px;
+    gap: 20px;
   }
 
   .pageChromeNav,
   .pageChromeNavLinks {
-    gap: 18px;
+    gap: 17px;
   }
 
   .pageChromeLogoMeta {
@@ -441,29 +494,19 @@ body.pageChromeMenuOpen {
   }
 
   .pageChromeCta {
-    min-width: 166px;
+    min-width: 160px;
   }
 }
 
 @media (max-width: 900px) {
   :root {
-    --chrome-header-height: 86px;
-    --chrome-scrolled-height: 66px;
-  }
-
-  .pageChromeHeaderWrap {
-    padding-top: 0;
-  }
-
-  .pageChromeHeader {
-    width: 100%;
-    max-width: none;
+    --chrome-header-height: 76px;
+    --chrome-scrolled-height: 64px;
   }
 
   .pageChromeHeaderBar {
     min-height: var(--chrome-header-height);
-    padding: 0 18px;
-    border-radius: 0;
+    padding: 0 16px;
   }
 
   .pageChromeHeaderWrap.is-scrolled,
@@ -479,22 +522,41 @@ body.pageChromeMenuOpen {
   .pageChromeHeaderWrap.is-scrolled .pageChromeHeaderBar,
   .pageChromeHeaderWrap.menu-is-open .pageChromeHeaderBar {
     min-height: var(--chrome-scrolled-height);
-    padding: 0 9px 0 14px;
+    padding: 0 8px 0 13px;
     border-radius: 14px;
   }
 
+  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeHeader {
+    width: calc(100% - 8px);
+  }
+
+  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeHeaderBar {
+    min-height: var(--chrome-header-height);
+    padding: 0 10px;
+    border-radius: 17px;
+  }
+
   .pageChromeLogoImage {
-    height: 52px;
-    max-width: 160px;
+    height: 42px;
+    max-width: 84px;
   }
 
   .pageChromeHeaderWrap.is-scrolled .pageChromeLogoImage,
   .pageChromeHeaderWrap.menu-is-open .pageChromeLogoImage {
-    height: 42px;
+    height: 38px;
   }
 
   .pageChromeMenuButton {
     display: inline-flex;
+  }
+
+  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeMenuButton {
+    border-color: rgba(23, 25, 27, 0.22);
+    background: rgba(23, 25, 27, 0.04);
+    color: var(--chrome-ink);
   }
 
   .pageChromeNav {
@@ -503,18 +565,19 @@ body.pageChromeMenuOpen {
     z-index: 2002;
     width: 100%;
     min-height: 100svh;
+    min-height: 100dvh;
     display: grid;
     grid-template-rows: 1fr auto auto;
     align-items: stretch;
-    gap: 24px;
-    padding: clamp(112px, 16vh, 150px) 20px 28px;
+    gap: 22px;
+    padding: clamp(108px, 15vh, 142px) 20px 26px;
     background: var(--chrome-bg);
     color: var(--chrome-paper);
     overflow-y: auto;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-14px);
+    transform: translateY(-12px);
     transition:
       opacity 220ms ease,
       visibility 220ms ease,
@@ -536,52 +599,58 @@ body.pageChromeMenuOpen {
     border-top: 1px solid var(--chrome-border);
   }
 
-  .pageChromeNavLinks a {
+  .pageChromeNavLinks a,
+  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeNavLinks
+    a {
     width: 100%;
-    min-height: clamp(72px, 10vh, 94px);
+    min-height: clamp(68px, 9.5vh, 88px);
     display: grid;
-    grid-template-columns: 38px minmax(0, 1fr);
-    gap: 16px;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 14px;
     align-items: center;
-    padding: 16px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--chrome-border);
-    color: rgba(246, 247, 244, 0.48);
-    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
-    font-size: clamp(2.8rem, 10vw, 4.8rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 0.86;
-    text-transform: uppercase;
+    color: rgba(244, 245, 243, 0.48);
+    font-family: "Manrope", "Inter", sans-serif;
+    font-size: clamp(2.2rem, 8.5vw, 4rem);
+    font-weight: 750;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+    text-transform: none;
   }
 
   .pageChromeNavLinks a::after {
     right: auto;
     bottom: -1px;
-    left: 38px;
-    width: 82px;
+    left: 36px;
+    width: 78px;
     height: 3px;
   }
 
   .pageChromeNavLinks a:hover,
-  .pageChromeNavLinks a.is-active {
+  .pageChromeNavLinks a.is-active,
+  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeNavLinks
+    a:hover,
+  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeNavLinks
+    a.is-active {
     color: var(--chrome-paper);
-    transform: translateX(6px);
+    transform: translateX(5px);
   }
 
   .pageChromeNavNumber {
     align-self: center;
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     letter-spacing: 0.1em;
   }
 
   .pageChromeCta {
     width: 100%;
-    min-height: 60px;
+    min-height: 58px;
     padding-left: 20px;
-    border-color: var(--chrome-paper);
-    background: transparent;
-    color: var(--chrome-paper);
-    font-size: 0.76rem;
+    font-size: 0.74rem;
   }
 
   .pageChromeMenuFooter {
@@ -589,9 +658,9 @@ body.pageChromeMenuOpen {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px 20px;
-    padding-top: 20px;
+    padding-top: 18px;
     border-top: 1px solid var(--chrome-border);
-    color: rgba(246, 247, 244, 0.4);
+    color: rgba(244, 245, 243, 0.4);
     font-size: 0.56rem;
     font-weight: 850;
     letter-spacing: 0.12em;
@@ -600,16 +669,17 @@ body.pageChromeMenuOpen {
   }
 
   .pageChromeHeaderWrap.is-embedded .pageChromeHeaderBar,
-  .pageChromeHeaderWrap.is-embedded.is-editorial .pageChromeHeaderBar {
-    min-height: 64px;
-    padding: 0 9px 0 14px;
+  .pageChromeHeaderWrap.is-embedded.is-scrolled .pageChromeHeaderBar {
+    min-height: 62px;
+    padding: 0 8px 0 13px;
     border-radius: 13px;
   }
 }
 
 @media (max-width: 560px) {
   .pageChromeMenuButton {
-    min-width: 84px;
+    min-width: 98px;
+    height: 46px;
   }
 
   .pageChromeNav {
@@ -617,14 +687,17 @@ body.pageChromeMenuOpen {
     padding-left: 16px;
   }
 
-  .pageChromeNavLinks a {
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 12px;
-    font-size: clamp(2.55rem, 13vw, 4.2rem);
+  .pageChromeNavLinks a,
+  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
+    .pageChromeNavLinks
+    a {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 11px;
+    font-size: clamp(2.15rem, 11.2vw, 3.55rem);
   }
 
   .pageChromeNavLinks a::after {
-    left: 32px;
+    left: 30px;
   }
 
   .pageChromeMenuFooter {
@@ -633,354 +706,29 @@ body.pageChromeMenuOpen {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pageChromeHeaderWrap,
   .pageChromeHeaderBar,
   .pageChromeNav,
   .pageChromeNavLinks a,
   .pageChromeNavLinks a::after,
   .pageChromeCta,
   .pageChromeCta svg,
+  .pageChromeMenuButton,
   .pageChromeMenuButtonIcon i {
     transition-duration: 0.01ms !important;
   }
 }
-
-.thirty3-home .pageChromeHeaderWrap,
-.thirty3-home .pageChromeHeaderWrap.is-paper,
-.thirty3-home .pageChromeHeaderWrap.is-paper.is-scrolled,
-.thirty3-home .pageChromeHeaderWrap.is-paper.menu-is-open {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
+  .pageChromeLogoImage {
+  height: 40px;
+  max-width: 84px;
 }
 
-.thirty3-home
-  .pageChromeHeaderWrap:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeHeader {
-  width: 100% !important;
-  max-width: none !important;
-}
-
-.thirty3-home
-  .pageChromeHeaderWrap:not(.is-scrolled):not(.menu-is-open)
+.pageChromeHeaderWrap.is-home.is-paper:not(.is-scrolled):not(.menu-is-open)
   .pageChromeHeaderBar {
-  min-height: var(--chrome-header-height) !important;
-  padding-inline: clamp(24px, 4.2vw, 74px) !important;
-  border: 0 !important;
-  border-bottom: 1px solid var(--chrome-border) !important;
-  border-radius: 0 !important;
-  background: rgba(17, 18, 20, 0.99) !important;
-  box-shadow: none !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-scrolled .pageChromeHeader,
-.thirty3-home .pageChromeHeaderWrap.menu-is-open .pageChromeHeader {
-  width: min(var(--chrome-max), calc(100% - 48px)) !important;
-  max-width: var(--chrome-max) !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-scrolled .pageChromeHeaderBar,
-.thirty3-home .pageChromeHeaderWrap.menu-is-open .pageChromeHeaderBar {
-  min-height: var(--chrome-scrolled-height) !important;
-  padding: 0 10px 0 24px !important;
-  border: 1px solid rgba(246, 247, 244, 0.2) !important;
-  border-radius: 20px !important;
-  background: rgba(17, 18, 20, 0.97) !important;
-  color: var(--chrome-paper) !important;
-  box-shadow:
-    0 18px 44px rgba(17, 18, 20, 0.18),
-    0 4px 12px rgba(17, 18, 20, 0.12) !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeNavLinks a,
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeMenuButton,
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeLogoMeta,
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeLogo {
-  color: var(--chrome-paper) !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeLogoMeta small {
-  color: var(--chrome-muted) !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeCta {
-  border-color: rgba(246, 247, 244, 0.3) !important;
-  background: transparent !important;
-  color: var(--chrome-paper) !important;
-}
-
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeCta:hover,
-.thirty3-home .pageChromeHeaderWrap.is-paper .pageChromeCta:focus-visible {
-  border-color: var(--chrome-gold) !important;
-  background: var(--chrome-gold) !important;
-  color: var(--chrome-ink) !important;
-}
-
-@media (max-width: 900px) {
-  .thirty3-home
-    .pageChromeHeaderWrap:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeHeaderBar {
-    padding-inline: 18px !important;
-  }
-
-  .thirty3-home .pageChromeHeaderWrap.is-scrolled .pageChromeHeader,
-  .thirty3-home .pageChromeHeaderWrap.menu-is-open .pageChromeHeader {
-    width: min(100% - 20px, 760px) !important;
-  }
-
-  .thirty3-home .pageChromeHeaderWrap.is-scrolled .pageChromeHeaderBar,
-  .thirty3-home .pageChromeHeaderWrap.menu-is-open .pageChromeHeaderBar {
-    padding: 0 9px 0 14px !important;
-    border-radius: 14px !important;
-  }
-}
-
-
-/* Homepage top state: transparent navigation with a dark logo tile.
-   The rounded dark header is reserved for the scroll-up state. */
-
-:root {
-  --chrome-header-height: 88px;
-  --chrome-scrolled-height: 76px;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open) {
-  padding-top: 0;
   background: transparent;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeHeader {
-  width: 100%;
-  max-width: none;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeHeaderBar {
-  min-height: var(--chrome-header-height);
-  padding: 10px clamp(24px, 4.2vw, 72px);
   border: 0;
-  border-radius: 0;
-  background: transparent;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeLogo {
-  min-width: 82px;
-  min-height: 68px;
-  justify-content: center;
-
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeLogoImage {
-  height: 50px;
-  max-width: 94px;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a {
-  color: rgba(23, 25, 27, 0.68);
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a:hover,
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a.is-active {
-  color: var(--chrome-ink);
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavNumber {
-  color: #8d7600;
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta {
-  min-height: 52px;
-  border-color: var(--chrome-gold);
-  background: var(--chrome-gold);
-  color: var(--chrome-ink);
-  box-shadow: 0 8px 20px rgba(23, 25, 27, 0.08);
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCtaIcon {
-  background: var(--chrome-ink);
-  color: var(--chrome-gold);
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta:hover,
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta:focus-visible {
-  border-color: var(--chrome-ink);
-  background: var(--chrome-ink);
-  color: var(--chrome-paper);
-}
-
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta:hover
-  .pageChromeCtaIcon,
-.pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta:focus-visible
-  .pageChromeCtaIcon {
-  background: var(--chrome-gold);
-  color: var(--chrome-ink);
-}
-
-.pageChromeHeaderWrap.is-scrolled .pageChromeLogo,
-.pageChromeHeaderWrap.menu-is-open .pageChromeLogo {
-  min-width: 0;
-  min-height: 0;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.pageChromeHeaderWrap.is-scrolled .pageChromeLogoImage,
-.pageChromeHeaderWrap.menu-is-open .pageChromeLogoImage {
-  height: 46px;
-  max-width: 96px;
-}
-
-@media (max-width: 1080px) and (min-width: 901px) {
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeHeaderBar {
-    padding-inline: 28px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeNavLinks {
-    gap: 18px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeNavLinks a {
-    font-size: 0.65rem;
-  }
-}
-
-@media (max-width: 900px) {
-  :root {
-    --chrome-header-height: 78px;
-    --chrome-scrolled-height: 66px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeHeaderBar {
-    min-height: var(--chrome-header-height);
-    padding: 8px 14px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeLogo {
-    min-width: 68px;
-    min-height: 60px;
-    padding: 8px 13px;
-    border-radius: 10px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeLogoImage {
-    height: 43px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeMenuButton {
-    border-color: var(--chrome-ink);
-    background: var(--chrome-ink);
-    color: var(--chrome-paper);
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeMenuButton:hover,
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeMenuButton:focus-visible {
-    border-color: var(--chrome-gold);
-    background: var(--chrome-gold);
-    color: var(--chrome-ink);
-  }
-
-  .pageChromeHeaderWrap.is-scrolled .pageChromeLogoImage,
-  .pageChromeHeaderWrap.menu-is-open .pageChromeLogoImage {
-    height: 40px;
-  }
-}
-
-/* Override homepage paper-header rules from Home.css. */
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeHeaderBar {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a {
-  color: rgba(23, 25, 27, 0.68) !important;
-}
-
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a:hover,
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeNavLinks a.is-active {
-  color: var(--chrome-ink) !important;
-}
-
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCta {
-  border-color: var(--chrome-gold) !important;
-  background: var(--chrome-gold) !important;
-  color: var(--chrome-ink) !important;
-}
-
-.thirty3-home
-  .pageChromeHeaderWrap.is-paper:not(.is-scrolled):not(.menu-is-open)
-  .pageChromeCtaIcon {
-  background: var(--chrome-ink) !important;
-  color: var(--chrome-gold) !important;
-}
-
-
-/* Smooth directional header movement */
-.pageChromeHeaderWrap.is-hidden .pageChromeHeader {
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pageChromeHeaderWrap {
-    transition-duration: 0.01ms !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeLogo {
-    min-width: 64px;
-    min-height: 64px;
-    padding: 9px 15px;
-  }
-
-  .pageChromeHeaderWrap.is-home:not(.is-scrolled):not(.menu-is-open)
-    .pageChromeLogoImage {
-    height: 64px;
-  }
-
-  .pageChromeMenuButton {
-    width: 140px;
-    height: 64px;
-  }
 }
