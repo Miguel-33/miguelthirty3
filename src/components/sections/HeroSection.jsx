@@ -126,8 +126,7 @@ const HeroSection = forwardRef(function HeroSection({ onStartProject }, ref) {
 
           <div className="homeHero__footer" data-hero-footer>
             <p>
-              Real client work <span aria-hidden="true">·</span> Direct access
-              to Miguel
+              Se habla español.<span aria-hidden="true">·</span>
             </p>
             <a href="#story">
               Scroll to discover <span aria-hidden="true" />
