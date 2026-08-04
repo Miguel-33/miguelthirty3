@@ -6,18 +6,22 @@ import "../styles/project-inquiry-modal.css";
 const PROJECT_FORM_ENDPOINT = "https://formspree.io/f/xvzybvrd";
 
 const PROJECT_OPTIONS = [
-  { value: "Website", label: "New website", note: "Build a credible online home from the ground up." },
-  { value: "Website redesign", label: "Website redesign", note: "Replace a site that no longer reflects the business." },
-  { value: "Brand and identity", label: "Brand + identity", note: "Create or sharpen the visual foundation." },
-  { value: "Flyer or campaign", label: "Flyer or campaign", note: "Give one offer, event, or message a stronger stage." },
-  { value: "Design support", label: "Ongoing design", note: "Keep the brand consistent across recurring needs." },
-  { value: "Not sure", label: "Not sure yet", note: "Start with the problem. We will shape the right project." },
+  { value: "Website", label: "New website", note: "Build a clear, credible online home from the ground up." },
+  { value: "Website redesign", label: "Website refresh", note: "Improve a site that no longer works or feels right." },
+  { value: "Flyer, invitation, or quick design", label: "Quick design", note: "Create a flyer, invitation, business card, social graphic, or price list." },
+  { value: "School or PTO materials", label: "School + PTO", note: "Create coordinated materials for a program, fundraiser, or event." },
+  { value: "Birthday or celebration design", label: "Party + celebration", note: "Make a special moment feel coordinated and ready to share." },
+  { value: "QR code and form", label: "QR code + form", note: "Make registration, RSVPs, or sign-ups easier." },
+  { value: "Logo design", label: "Starter logo", note: "Create a focused visual starting point for a new idea." },
+  { value: "Not sure", label: "Not sure yet", note: "Start with the need. We will shape the right project." },
 ];
 
 const BUDGET_OPTIONS = [
-  { value: "Under $1,000", label: "Under $1,000" },
-  { value: "$1,000–$2,500", label: "$1,000–$2,500" },
-  { value: "$2,500–$5,000", label: "$2,500–$5,000" },
+  { value: "$50-$150", label: "$50-$150" },
+  { value: "$150-$500", label: "$150-$500" },
+  { value: "$500-$1,000", label: "$500-$1,000" },
+  { value: "$1,000-$2,500", label: "$1,000-$2,500" },
+  { value: "$2,500-$5,000", label: "$2,500-$5,000" },
   { value: "$5,000+", label: "$5,000+" },
   { value: "Not sure", label: "Not sure yet" },
 ];
@@ -98,6 +102,7 @@ export default function ProjectInquiryModal({
   useEffect(() => {
     if (!open) return undefined;
 
+    const returnTarget = returnFocusRef?.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -149,8 +154,6 @@ export default function ProjectInquiryModal({
       window.removeEventListener("keydown", handleKeyDown);
 
       window.requestAnimationFrame(() => {
-        const returnTarget = returnFocusRef?.current;
-
         if (returnTarget && document.contains(returnTarget)) {
           returnTarget.focus();
         }
@@ -353,7 +356,7 @@ export default function ProjectInquiryModal({
     if (currentStepId === "business") {
       return (
         <label className="projectInquiryModal__field" htmlFor={`${questionId}-business`}>
-          <span>Business, organization, or project name</span>
+          <span>Business, school, event, organization, or project name</span>
           <input
             ref={activeFieldRef}
             id={`${questionId}-business`}
@@ -363,7 +366,7 @@ export default function ProjectInquiryModal({
             onChange={handleChange}
             onKeyDown={handleInputKeyDown}
             autoComplete="organization"
-            placeholder="Thirty3 Digital Designs"
+            placeholder="Thirty3 Digital Designs or Camila’s Birthday"
           />
         </label>
       );
@@ -400,7 +403,7 @@ export default function ProjectInquiryModal({
             value={form.details}
             onChange={handleChange}
             rows="5"
-            placeholder="What is not working now, and what would a better result look like?"
+            placeholder="What do you need, who is it for, and when do you need it?"
             required
           />
         </label>
@@ -477,8 +480,8 @@ export default function ProjectInquiryModal({
     },
     business: {
       eyebrow: "Make it real",
-      title: "What should I call the business?",
-      description: "A business, organization, or project name is enough. You can skip this for now.",
+      title: "What should I call the project?",
+      description: "A business, school, event, organization, or project name is enough. You can skip this for now.",
     },
     currentSite: {
       eyebrow: "The starting point",
@@ -487,8 +490,8 @@ export default function ProjectInquiryModal({
     },
     details: {
       eyebrow: "The part that matters",
-      title: "What needs to move forward?",
-      description: "Tell me what feels stuck, unclear, outdated, or ready for something better.",
+      title: "What do you need made?",
+      description: "A few plain-language details are perfect. No polished brief required.",
     },
     budget: {
       eyebrow: "Roughly speaking",

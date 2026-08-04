@@ -1,11 +1,10 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { fieldNotes } from "../data/fieldNotes";
 import FieldNotesHeader from "../components/FieldNotesHeader";
 
 export default function FieldNoteSingle() {
     const { slug } = useParams();
-    const navigate = useNavigate();
     const note = fieldNotes.find((item) => item.slug === slug);
 
     if (!note) {

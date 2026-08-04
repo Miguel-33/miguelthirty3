@@ -41,8 +41,13 @@ function useHeaderVisibility(location) {
     lastScrollYRef.current = currentScrollY;
     scrollDirectionRef.current = "";
     scrollTravelRef.current = 0;
-    setHeaderVisible(true);
-    setFloatingHeader(shouldFloat);
+
+    const resetFrame = window.requestAnimationFrame(() => {
+      setHeaderVisible(true);
+      setFloatingHeader(shouldFloat);
+    });
+
+    return () => window.cancelAnimationFrame(resetFrame);
   }, [location.hash, location.pathname]);
 
   useEffect(() => {
@@ -184,8 +189,10 @@ function useActiveSection(isHome, navigationItems, resolvedLinks) {
         : [];
 
     if (!observedLinks.length) {
-      setActiveSection("");
-      return undefined;
+      const clearFrame = window.requestAnimationFrame(() => {
+        setActiveSection("");
+      });
+      return () => window.cancelAnimationFrame(clearFrame);
     }
 
     const sections = observedLinks
@@ -230,6 +237,9 @@ export default function SiteHeader({
   ctaTo = "/request-website",
   menuFooterPrimary = "Clarksville / Nashville",
   menuFooterSecondary = "Websites / Identity / Design",
+  logoAriaLabel = "Thirty3 Digital Designs homepage",
+  logoMetaPrimary = "Independent web studio",
+  logoMetaSecondary = "Clarksville, Tennessee",
 }) {
   const location = useLocation();
   const menuButtonRef = useRef(null);
@@ -264,7 +274,11 @@ export default function SiteHeader({
   }, []);
 
   useEffect(() => {
-    closeMenu();
+    const closeFrame = window.requestAnimationFrame(() => {
+      setMenuOpen(false);
+    });
+
+    return () => window.cancelAnimationFrame(closeFrame);
   }, [location.hash, location.pathname]);
 
   const headerClasses = [
@@ -287,7 +301,7 @@ export default function SiteHeader({
             <Link
               className="pageChromeLogo"
               to="/"
-              aria-label="Thirty3 Digital Designs homepage"
+              aria-label={logoAriaLabel}
               onClick={closeMenu}
             >
               <img
@@ -298,8 +312,8 @@ export default function SiteHeader({
                 fetchPriority="high"
               />
               <span className="pageChromeLogoMeta">
-                <strong>Independent web studio</strong>
-                <small>Clarksville, Tennessee</small>
+                <strong>{logoMetaPrimary}</strong>
+                <small>{logoMetaSecondary}</small>
               </span>
             </Link>
 

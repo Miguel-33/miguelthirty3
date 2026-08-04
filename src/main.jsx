@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import App from "./App.jsx";
+import HomeConcierge from "./pages/HomeConcierge.jsx";
 import SiteMotion from "./components/SiteMotion.jsx";
 import ClarksvilleWebDesign from "./ClarksvilleWebDesign";
 import FieldNotes from "./pages/FieldNotes.jsx";
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <SiteMotion />
 
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<HomeConcierge />} />
           <Route path="/clarksville-web-design" element={<ClarksvilleWebDesign />} />
           <Route path="/field-notes" element={<FieldNotes />} />
           <Route path="/field-notes/:slug" element={<FieldNoteSingle />} />
