@@ -487,15 +487,15 @@ export default function HomeConcierge() {
                 </a>
                 <a href="#project-picker" className="is-blue">
                   <span>Flyer</span>
-                  <strong>$65</strong>
+                  <strong>$35</strong>
                 </a>
                 <a href="#project-picker" className="is-coral">
                   <span>Party set</span>
-                  <strong>$120</strong>
+                  <strong>$45</strong>
                 </a>
                 <a href="#project-picker" className="is-mint">
                   <span>School kit</span>
-                  <strong>$225</strong>
+                  <strong>$95</strong>
                 </a>
               </div>
               <p>Creative designs that help businesses grow and moments stand out.</p>
@@ -511,6 +511,16 @@ export default function HomeConcierge() {
 
           <div className="conciergeTicker" aria-hidden="true">
             <div>
+              <span>WEBSITES</span><b>✦</b><span>FLYERS</span><b>✦</b>
+              <span>INVITATIONS</span><b>✦</b><span>SCHOOL MATERIALS</span><b>✦</b>
+              <span>QR FORMS</span><b>✦</b><span>LOGOS</span><b>✦</b>
+              <span>WEBSITES</span><b>✦</b><span>FLYERS</span><b>✦</b>
+              <span>INVITATIONS</span><b>✦</b><span>SCHOOL MATERIALS</span><b>✦</b>
+              <span>WEBSITES</span><b>✦</b><span>FLYERS</span><b>✦</b>
+              <span>INVITATIONS</span><b>✦</b><span>SCHOOL MATERIALS</span><b>✦</b>
+              <span>QR FORMS</span><b>✦</b><span>LOGOS</span><b>✦</b>
+              <span>WEBSITES</span><b>✦</b><span>FLYERS</span><b>✦</b>
+              <span>INVITATIONS</span><b>✦</b><span>SCHOOL MATERIALS</span><b>✦</b>
               <span>WEBSITES</span><b>✦</b><span>FLYERS</span><b>✦</b>
               <span>INVITATIONS</span><b>✦</b><span>SCHOOL MATERIALS</span><b>✦</b>
               <span>QR FORMS</span><b>✦</b><span>LOGOS</span><b>✦</b>
