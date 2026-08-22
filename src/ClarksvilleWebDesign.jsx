@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
 import ProjectInquiryModal from "./components/ProjectInquiryModal";
 import "./ClarksvilleWebDesign.css";
 
@@ -975,13 +976,7 @@ function ClarksvilleWebDesign() {
         </section>
       </main>
 
-      <footer className="cwd-footer">
-        <div className="cwd-shell cwd-footer__inner">
-          <p>Thirty3 Digital Designs</p>
-          <p>Clarksville, Tennessee · Serving Middle Tennessee</p>
-          <Link to="/">miguelthirty3.com</Link>
-        </div>
-      </footer>
+      <SiteFooter onStartProject={openProjectModal} />
 
       <ProjectInquiryModal
         open={projectModalOpen}

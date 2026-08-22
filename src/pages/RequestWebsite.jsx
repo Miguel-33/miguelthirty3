@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "../styles/request-website.css";
+import "../styles/site-flow.css";
 import SiteHeader from "../components/SiteHeader.jsx";
+import SiteFooter from "../components/SiteFooter.jsx";
 
 const WEBSITE_TYPES = [
     "Small Business",
@@ -61,8 +60,6 @@ export default function RequestWebsite() {
         message: "",
     });
 
-    const navigate = useNavigate();
-
     const location = useLocation();
 
 useEffect(() => {
@@ -84,14 +81,9 @@ useEffect(() => {
   return () => window.clearTimeout(timer);
 }, [location.hash]);
 
-    const goToHomepagePicker = () => {
-        navigate("/", {
-            state: { scrollTo: "project-picker" },
-        });
-    };
-
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const set = (key) => (event) => {
         setForm((current) => ({ ...current, [key]: event.target.value }));
@@ -107,6 +99,7 @@ useEffect(() => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setErrorMessage("");
 
         try {
             const response = await fetch("https://formspree.io/f/xvzybvrd", {
@@ -123,46 +116,55 @@ useEffect(() => {
                 }),
             });
 
-            if (response.ok) {
-                setSent(true);
-                setForm({
-                    name: "",
-                    email: "",
-                    business: "",
-                    type: "",
-                    goal: "",
-                    timeline: "",
-                    budget: "",
-                    currentSite: "",
-                    message: "",
-                });
-            }
+            if (!response.ok) throw new Error("Website request could not be sent.");
+
+            setSent(true);
+            setForm({
+                name: "",
+                email: "",
+                business: "",
+                type: "",
+                goal: "",
+                timeline: "",
+                budget: "",
+                currentSite: "",
+                message: "",
+            });
         } catch (error) {
             console.error("Website request form submission failed:", error);
+            setErrorMessage(
+                "That did not go through. Please try again or email hello@thirty3digitaldesigns.com.",
+            );
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <main className="requestWebsite">
+        <>
             <Helmet>
                 <title>Request a Website | Thirty3 Digital Designs in Clarksville, TN</title>
                 <meta
                     name="description"
                     content="Request a website for your small business, brand, campaign, nonprofit, or organization. Thirty3 Digital Designs helps create clear, mobile-friendly websites in Clarksville, TN."
                 />
-                <link rel="canonical" href="https://www.miguelthirty3.com/request-website" />
+                <link rel="canonical" href="https://miguelthirty3.com/request-website" />
                 <meta property="og:title" content="Request a Website | Thirty3 Digital Designs" />
                 <meta
                     property="og:description"
                     content="Need a website? Send a request and get help shaping the next step for your business, brand, campaign, or organization."
                 />
-                <meta property="og:url" content="https://www.miguelthirty3.com/request-website" />
+                <meta property="og:url" content="https://miguelthirty3.com/request-website" />
                 <meta property="og:type" content="website" />
             </Helmet>
 
-            <SiteHeader />
+            <SiteHeader
+                variant="paper"
+                ctaLabel="Request a Website"
+                onStartProject={scrollToForm}
+            />
+
+            <main className="requestWebsite">
 
             <section className="requestWebsite__hero">
                 <div className="requestWebsite__heroCopy">
@@ -190,32 +192,29 @@ useEffect(() => {
                     </div>
                 </div>
 
-                <div className="requestWebsite__visual" aria-label="Website request preview">
-                    <div className="requestWebsite__browser">
-                        <div className="requestWebsite__browserTop">
-                            <span />
-                            <span />
-                            <span />
-                            <b>Website first impression</b>
-                        </div>
+                <div className="requestWebsite__visual">
+                    <Link
+                        className="requestWebsite__projectProof"
+                        to="/proof-of-work/glamp-camp-nashville"
+                        aria-label="View the Glamp Camp Nashville website case study"
+                    >
+                        <picture>
+                            <source
+                                media="(max-width: 700px)"
+                                srcSet="/glampCampNashvilleHeroMobile.png"
+                            />
+                            <img
+                                src="/glampCampNashvilleHero.png"
+                                alt="Glamp Camp Nashville website designed by Thirty3 Digital Designs"
+                            />
+                        </picture>
+                        <span>
+                            <small>Real project</small>
+                            <strong>Glamp Camp Nashville</strong>
+                            <b>View case study ↗</b>
+                        </span>
+                    </Link>
 
-                        <div className="requestWebsite__browserBody">
-                            <span className="requestWebsite__tag">Clear Offer</span>
-                            <div className="requestWebsite__line requestWebsite__lineLarge" />
-                            <div className="requestWebsite__line" />
-                            <div className="requestWebsite__buttonMock" />
-                            <div className="requestWebsite__mockGrid">
-                                <span />
-                                <span />
-                                <span />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="requestWebsite__stat">
-                        <strong>3 sec</strong>
-                        <span>to feel clear, credible, and worth the next click.</span>
-                    </div>
                 </div>
             </section>
 
@@ -224,7 +223,7 @@ useEffect(() => {
                     <p className="requestWebsite__eyebrow requestWebsite__eyebrowDark">
                         What the site should do
                     </p>
-                    <h2>Pretty is not enough. The page has to work.</h2>
+                    <h2>A strong website makes the next step easier.</h2>
                 </div>
 
                 <div className="requestWebsite__focusGrid">
@@ -265,7 +264,7 @@ useEffect(() => {
                 </div>
 
                 {sent ? (
-                    <div className="requestWebsite__success">
+                    <div className="requestWebsite__success" role="status">
                         <strong>Website request received.</strong>
                         <p>I’ll follow up with the next step.</p>
                     </div>
@@ -346,7 +345,7 @@ useEffect(() => {
                             <Field label="Budget range" id="rw-budget">
                                 <select id="rw-budget" value={form.budget} onChange={set("budget")}>
                                     <option value="">Roughly speaking...</option>
-                                    {["Under $500", "$500-$1,000", "$1,000-$2,500", "$2,500-$5,000", "$5,000+", "Not sure yet"].map((item) => (
+                                    {["$750-$1,200", "$1,200-$1,800", "$1,800-$2,400", "$2,400-$5,000", "$5,000+", "Not sure yet"].map((item) => (
                                         <option value={item} key={item}>
                                             {item}
                                         </option>
@@ -375,6 +374,16 @@ useEffect(() => {
                             />
                         </Field>
 
+                        {errorMessage && (
+                            <p className="requestWebsite__formError" role="alert">
+                                {errorMessage}
+                            </p>
+                        )}
+
+                        <p className="requestLegalNotice">
+                            By submitting this form, you agree to the <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Use</Link>.
+                        </p>
+
                         <button type="submit" disabled={loading}>
                             {loading ? "Sending..." : "Send Website Request →"}
                         </button>
@@ -383,17 +392,23 @@ useEffect(() => {
             </section>
 
             <section className="requestWebsite__finalCta">
-                <h2>Need more than a website?</h2>
-                <p>Flyers, logos, QR signs, social graphics, and other design requests can start from the homepage.</p>
-                <button type="button" onClick={goToHomepagePicker}>
-                    Start a different project →
-                </button>
+                <h2>Need a flyer instead?</h2>
+                <p>Flyers and promotional graphics have their own shorter request form.</p>
+                <Link to="/request-flyer">Request a Flyer →</Link>
+                <Link to="/" state={{ scrollTo: "services" }}>
+                    See all services →
+                </Link>
             </section>
 
-            <button type="button" className="requestWebsite__sticky" onClick={scrollToForm}>
-                Request Website →
-            </button>
-        </main>
+                {!sent && (
+                    <button type="button" className="requestWebsite__sticky" onClick={scrollToForm}>
+                        Request Website →
+                    </button>
+                )}
+            </main>
+
+            <SiteFooter />
+        </>
     );
 }
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ArrowIcon from "../components/ArrowIcon.jsx";
 import ProjectInquiryModal from "../components/ProjectInquiryModal.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
+import SiteFooter from "../components/SiteFooter.jsx";
 import {
   featuredWork,
   labColors,
@@ -799,14 +800,11 @@ export default function HomeConcierge() {
         </section>
       </main>
 
-      <footer className="conciergeFooter">
-        <div className="conciergeShell">
-          <strong>MIGUELTHIRTY3.COM</strong>
-          <span>Thirty3 Digital Designs</span>
-          <span>Clarksville, Tennessee</span>
-          <span>© {new Date().getFullYear()} Miguel De Jesus</span>
-        </div>
-      </footer>
+      <SiteFooter
+        onStartProject={(event) =>
+          openProjectModal(event, "", "MiguelThirty3 homepage footer")
+        }
+      />
 
       {foundCount > 0 && (
         <div className={`conciergeSparkProgress ${bonusUnlocked ? "is-complete" : ""}`} aria-live="polite">

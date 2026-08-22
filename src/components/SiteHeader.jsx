@@ -264,6 +264,19 @@ export default function SiteHeader({
 
   const closeMenu = () => setMenuOpen(false);
 
+  const handleLogoClick = () => {
+    closeMenu();
+
+    if (!isHome) return;
+
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  };
+
   useMenuDialog(menuOpen, setMenuOpen, menuButtonRef, navRef);
 
   useEffect(() => {
@@ -302,7 +315,7 @@ export default function SiteHeader({
               className="pageChromeLogo"
               to="/"
               aria-label={logoAriaLabel}
-              onClick={closeMenu}
+              onClick={handleLogoClick}
             >
               <img
                 className="pageChromeLogoImage"
@@ -345,22 +358,57 @@ export default function SiteHeader({
             >
               <div className="pageChromeNavLinks">
                 {resolvedLinks.map((item) => {
-                  const href =
-                    item.href ?? (isHome ? `#${item.id}` : `/#${item.id}`);
-                  const isActive = activeSection === item.id;
-
-                  return (
-                    <a
-                      key={`${item.id}-${item.label}`}
-                      href={href}
-                      className={isActive ? "is-active" : ""}
-                      aria-current={isActive ? "location" : undefined}
-                      onClick={closeMenu}
-                    >
+                  const isWorkRoute =
+                    item.id === "work" &&
+                    location.pathname.startsWith("/proof-of-work");
+                  const isActive = activeSection === item.id || isWorkRoute;
+                  const content = (
+                    <>
                       <span className="pageChromeNavNumber" aria-hidden="true">
                         {item.number}
                       </span>
                       <span className="pageChromeNavLabel">{item.label}</span>
+                    </>
+                  );
+
+                  if (item.href) {
+                    return (
+                      <a
+                        key={`${item.id}-${item.label}`}
+                        href={item.href}
+                        className={isActive ? "is-active" : ""}
+                        aria-current={isActive ? "location" : undefined}
+                        onClick={closeMenu}
+                      >
+                        {content}
+                      </a>
+                    );
+                  }
+
+                  if (!isHome) {
+                    return (
+                      <Link
+                        key={`${item.id}-${item.label}`}
+                        to="/"
+                        state={{ scrollTo: item.id }}
+                        className={isActive ? "is-active" : ""}
+                        aria-current={isActive ? "location" : undefined}
+                        onClick={closeMenu}
+                      >
+                        {content}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={`${item.id}-${item.label}`}
+                      href={`#${item.id}`}
+                      className={isActive ? "is-active" : ""}
+                      aria-current={isActive ? "location" : undefined}
+                      onClick={closeMenu}
+                    >
+                      {content}
                     </a>
                   );
                 })}

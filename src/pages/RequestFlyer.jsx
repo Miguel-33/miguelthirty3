@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import SiteHeader from "../components/SiteHeader.jsx";
+import SiteFooter from "../components/SiteFooter.jsx";
 import "../styles/request-flyer.css";
+import "../styles/site-flow.css";
 
 const FLYER_TYPES = [
   "Business Promo",
@@ -48,8 +51,6 @@ const PROCESS = [
 ];
 
 export default function RequestFlyer() {
-  const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -66,6 +67,7 @@ export default function RequestFlyer() {
 
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const set = (key) => (event) => {
     setForm((current) => ({ ...current, [key]: event.target.value }));
@@ -78,15 +80,10 @@ export default function RequestFlyer() {
     });
   };
 
-  const goToHomepagePicker = () => {
-    navigate("/", {
-      state: { scrollTo: "project-picker" },
-    });
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setErrorMessage("");
 
     try {
       const response = await fetch("https://formspree.io/f/xvzybvrd", {
@@ -103,61 +100,57 @@ export default function RequestFlyer() {
         }),
       });
 
-      if (response.ok) {
-        setSent(true);
-        setForm({
-          name: "",
-          email: "",
-          business: "",
-          type: "",
-          format: "",
-          goal: "",
-          timeline: "",
-          budget: "",
-          eventDate: "",
-          referenceLink: "",
-          message: "",
-        });
-      }
+      if (!response.ok) throw new Error("Flyer request could not be sent.");
+
+      setSent(true);
+      setForm({
+        name: "",
+        email: "",
+        business: "",
+        type: "",
+        format: "",
+        goal: "",
+        timeline: "",
+        budget: "",
+        eventDate: "",
+        referenceLink: "",
+        message: "",
+      });
     } catch (error) {
       console.error("Flyer request form submission failed:", error);
+      setErrorMessage(
+        "That did not go through. Please try again or email hello@thirty3digitaldesigns.com.",
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="requestFlyer">
+    <>
       <Helmet>
         <title>Request a Flyer | Thirty3 Digital Designs in Clarksville, TN</title>
         <meta
           name="description"
           content="Request a flyer, promo graphic, event design, social post, or print-ready design from Thirty3 Digital Designs in Clarksville, TN."
         />
-        <link rel="canonical" href="https://www.miguelthirty3.com/request-flyer" />
+        <link rel="canonical" href="https://miguelthirty3.com/request-flyer" />
         <meta property="og:title" content="Request a Flyer | Thirty3 Digital Designs" />
         <meta
           property="og:description"
           content="Need a flyer or promo graphic? Send the details and get help shaping a clean, ready-to-use design."
         />
-        <meta property="og:url" content="https://www.miguelthirty3.com/request-flyer" />
+        <meta property="og:url" content="https://miguelthirty3.com/request-flyer" />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <nav className="requestFlyer__nav" aria-label="Flyer request navigation">
-        <Link className="requestFlyer__logo" to="/">
-          MIGUEL<span>33</span>
-        </Link>
+      <SiteHeader
+        variant="paper"
+        ctaLabel="Request a Flyer"
+        onStartProject={scrollToForm}
+      />
 
-        <div>
-          <Link to="/">Home</Link>
-          <Link to="/request-website">Request Website</Link>
-          <Link to="/field-notes">Notes</Link>
-          <button type="button" onClick={scrollToForm}>
-            Request Flyer
-          </button>
-        </div>
-      </nav>
+      <main className="requestFlyer">
 
       <section className="requestFlyer__hero">
         <div className="requestFlyer__heroCopy">
@@ -250,7 +243,7 @@ export default function RequestFlyer() {
         </div>
 
         {sent ? (
-          <div className="requestFlyer__success">
+          <div className="requestFlyer__success" role="status">
             <strong>Flyer request received.</strong>
             <p>I’ll follow up with the next step.</p>
           </div>
@@ -383,7 +376,17 @@ export default function RequestFlyer() {
               />
             </Field>
 
-            <button type="submit" disabled={loading}>
+          {errorMessage && (
+            <p className="requestFlyer__formError" role="alert">
+              {errorMessage}
+            </p>
+          )}
+
+          <p className="requestLegalNotice">
+            By submitting this form, you agree to the <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Use</Link>.
+          </p>
+
+          <button type="submit" disabled={loading}>
               {loading ? "Sending..." : "Send Flyer Request →"}
             </button>
           </form>
@@ -394,15 +397,20 @@ export default function RequestFlyer() {
         <h2>Need a website instead?</h2>
         <p>Website requests have their own focused page so we can gather the right details.</p>
         <Link to="/request-website">Request a website →</Link>
-        <button type="button" onClick={goToHomepagePicker}>
-          Start a different project →
-        </button>
+        <Link to="/" state={{ scrollTo: "services" }}>
+          See all services →
+        </Link>
       </section>
 
-      <button type="button" className="requestFlyer__sticky" onClick={scrollToForm}>
-        Request Flyer →
-      </button>
-    </main>
+        {!sent && (
+          <button type="button" className="requestFlyer__sticky" onClick={scrollToForm}>
+            Request Flyer →
+          </button>
+        )}
+      </main>
+
+      <SiteFooter />
+    </>
   );
 }
 

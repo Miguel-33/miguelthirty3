@@ -13,6 +13,8 @@ import RequestFlyer from "./pages/RequestFlyer";
 import ProofOfWork from "./pages/ProofOfWork.jsx";
 import ProjectSingle from "./pages/ProjectSingle.jsx";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import TermsOfUse from "./pages/TermsOfUse.jsx";
 
 import "./index.css";
 import "./App.css";
@@ -35,6 +37,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/request-flyer" element={<RequestFlyer />} />
           <Route path="/proof-of-work" element={<ProofOfWork />} />
           <Route path="/proof-of-work/:slug" element={<ProjectSingle />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfUse />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

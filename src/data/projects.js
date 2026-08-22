@@ -31,6 +31,7 @@ export const projects = [
       "Foundation for Google Business Profile growth",
     ],
     quote: "It looks wonderful.",
+    quoteAttribution: "Isabella Transport",
     next: "Google Business Profile optimization",
   },
   {
@@ -56,6 +57,7 @@ export const projects = [
       "Flexible foundation for future content",
     ],
     quote: "I really appreciate his attentiveness to detail! The website really exceeded my expectations!",
+    quoteAttribution: "Gregory S. Chatman",
     next: "Weekly content and updates",
   },
   {
@@ -81,6 +83,7 @@ export const projects = [
       "Simple path to contact",
     ],
     quote: "",
+    quoteAttribution: "Blayne’s Family Research",
     next: "Future content and service expansion",
   },
   {
@@ -116,8 +119,9 @@ export const projects = [
     "Simpler access to events, voter information, and campaign actions",
   ],
   quote: "",
-  next:
-    "Build a campaign website that makes the record, the message, and the next action easy to understand.",
+  quoteAttribution: "",
+ next:
+  "Keep campaign updates, events, and voter information current through election season.",
   url: "https://josephpday.com/",
 },
 {
@@ -160,6 +164,7 @@ export const projects = [
     "A flexible foundation for new themes and photography",
   ],
   quote: "The design was top-notch, they communicated clearly, and everything was done quickly and professionally.",
+  quoteAttribution: "Glamp Camp Nashville",
   next:
     "Continue expanding the gallery as new themes and glamping experiences are photographed.",
 },

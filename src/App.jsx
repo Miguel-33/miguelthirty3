@@ -6,6 +6,7 @@ import "./App.css";
 import "./Home.css";
 import ArrowIcon from "./components/ArrowIcon.jsx";
 import ProjectInquiryModal from "./components/ProjectInquiryModal.jsx";
+import SiteFooter from "./components/SiteFooter.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 import HeroSection from "./components/sections/HeroSection.jsx";
 
@@ -1094,16 +1095,14 @@ export default function MiguelThirty3() {
             </button>
           </div>
 
-          <footer
-            className="homeShell homeFooter"
-            aria-label="Thirty3 studio details"
-          >
-            <span>Thirty3 Digital Designs</span>
-            <span>Clarksville · Nashville · Middle Tennessee</span>
-            <span>Websites · Identity · Digital Design</span>
-          </footer>
         </section>
       </main>
+
+      <SiteFooter
+        onStartProject={(event) =>
+          openProjectModal(event, "", "Thirty3 homepage footer")
+        }
+      />
 
       <ProjectInquiryModal
         key={modalInstance}
